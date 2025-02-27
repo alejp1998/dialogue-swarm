@@ -1,0 +1,151 @@
+:root {
+  --primary-accent: #6366f1;
+  --chat-user-bg: #4038df;
+  --chat-ai-bg: #eeeeee;
+}
+
+/* Canvas Section */
+#canvasContainer {
+  position: relative;
+  height: 90vh;
+}
+
+#canvas {
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+}
+
+/* Data Tree */
+#treeView {
+  background: white;
+  border-radius: 8px;
+  padding: 0.2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+#treeView li {
+  font-size: 14px;
+  padding: 0.1rem 0.3rem;
+  margin: 0.1rem 0;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+#treeView li:hover {
+  background: #f8fafc;
+}
+
+#treeView .keytoggle {
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  color: var(--primary-accent);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+#treeView .keytoggle:hover {
+  transform: scale(1.1);
+}
+
+#treeView .keylabel {
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+#treeView .keylabel:hover {
+  transform: scale(1.1);
+}
+
+/* Chat Interface */
+#chatPanel {
+  height: 90vh;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#chatLog {
+  height: 78vh;
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow-y: scroll;
+}
+
+.chat-message {
+  max-width: 85%;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+.chat-message ol{
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.chat-message h1 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.chat-message h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.chat-message h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.chat-message p {
+  margin-bottom: 0.5rem;
+}
+
+
+.user-message {
+  background: var(--chat-user-bg);
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.ai-message {
+  background: var(--chat-ai-bg);
+  color: black;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+/* Button Animation */
+.button {
+  transition: transform 0.1s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .columns {
+    flex-direction: column;
+  }
+  
+  .column.is-8 {
+    order: -1;
+  }
+}
