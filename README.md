@@ -1,6 +1,6 @@
-# Obedient Swarm
+# Dialogue Swarm
 
-**Obedient Swarm** is a web-based simulation where you can interact with and control a swarm of drones using natural language commands. Powered by a Large Language Model (LLM) agent, your messages are interpreted, and the corresponding actions are executed in real-time within the simulation.
+**Dialogue Swarm** is a web-based simulation where you can interact with and control a swarm of drones using natural language commands. Powered by a Large Language Model (LLM) agent, your messages are interpreted, and the corresponding actions are executed in real-time within the simulation.
 
 ## Features
 
@@ -24,8 +24,8 @@
 1.  Clone the repository:
 
     ```bash
-    git clone https://github.com/alejp1998/obedient-swarm.git
-    cd obedient-swarm
+    git clone https://github.com/alejp1998/dialogue-swarm.git
+    cd dialogue-swarm
     ```
 
 2.  Set your OpenAI API key:

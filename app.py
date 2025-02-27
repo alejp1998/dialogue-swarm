@@ -72,7 +72,7 @@ simulation_state = {
 
 # Chat variables
 initial_messages = [
-    {"role": "ai", "content": "Hello! Welcome to **Obedient Swarm** ;)"},
+    {"role": "ai", "content": "Hello! Welcome to **Dialogue Swarm** ;)"},
     {"role": "ai", "content": "Tell me how to group the drones and what behaviors the groups should have, and I'll do it for you."},
 ]
 
