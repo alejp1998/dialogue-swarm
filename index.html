@@ -37,13 +37,17 @@
         <div class="is-flex is-justify-content-space-between mb-0">
           <p class="title is-3 has-text-grey-dark">Simulation</p>
           <div class="buttons">
+            <button id="reset-button" class="button is-danger">
+              <span class="icon"><i class="fas fa-power-off"></i></span>
+              <span class="text">Reset</span>
+            </button>
             <button id="pause-button" class="button is-link">
               <span class="icon"><i class="fas fa-pause"></i></span>
               <span class="text">Pause</span>
             </button>
-            <button id="reset-button" class="button is-warning">
+            <button id="resetViewButton" class="button is-warning">
               <span class="icon"><i class="fas fa-redo"></i></span>
-              <span class="text">Reset</span>
+              <span class="text">View</span>
             </button>
           </div>
           <span id="stepCounter" class="tag is-primary is-light is-large" style="min-width: 180px;">Step: 0</span>
@@ -62,8 +66,11 @@
           </div>
           <div class="field mt-4">
             <div class="control has-icons-right">
-              <textarea id="chatInput" class="textarea is-rounded" placeholder="Type message..." rows="3"></textarea>
-              <span id="sendButton" class="icon is-right is-clickable">
+              <textarea id="chatInput" class="textarea is-rounded" placeholder="Type message or press CTRL+R to record..." rows="3"></textarea>
+              <span id="recordButton" class="icon is-right is-clickable">
+                <i class="fas fa-microphone has-text-link"></i>
+              </span>
+              <span id="sendButton" class="icon is-right is-clickable is-hidden">
                 <i class="fas fa-paper-plane has-text-link"></i>
               </span>
             </div>

@@ -25,8 +25,19 @@ const COLORS = [
 ];
 
 // -------------------- Canvas and Simulation Data --------------------
+const canvasContainer = document.getElementById('canvasContainer');
 const canvas = document.getElementById('canvas');
+const resetButton = document.getElementById('resetViewButton');
 const ctx = canvas.getContext('2d');
+
+// Canvas interaction variables
+let zoomLevel = 1;
+const zoomSensitivity = 0.1; // Adjust for zoom speed
+
+let panOffsetX = 0;
+let panOffsetY = 0;
+let isDragging = false;
+let dragStartX, dragStartY;
 
 // Simulation variables
 let arena = {};
@@ -38,7 +49,6 @@ let groups = [];
 
 // -------------------- Canvas Sizing --------------------
 function setCanvasSize() {
-  const canvasContainer = document.getElementById('canvasContainer');
   const containerWidth = canvasContainer.clientWidth;
   const containerHeight = canvasContainer.clientHeight;
   
@@ -276,14 +286,25 @@ function drawRobot(robot, color) {
   ctx.lineTo(endX, endY);
   ctx.stroke();
 
-  // Robot body (circle with inner white circle)
+  // Robot body (circle with inner white circle and battery level circle)
+  // Outer circle
   ctx.fillStyle = color;
   ctx.beginPath();
   ctx.arc(px, py, 25, 0, 2 * Math.PI);
   ctx.fill();
+  // Battery level circle (pie chart)
+  const batteryLevel = robot.battery_level;
+  const batteryLevelAngle = batteryLevel * 2 * Math.PI;
+  ctx.fillStyle = '#000'; // Or any color you want for the battery
+  ctx.beginPath();
+  ctx.moveTo(px, py); // Move to the center of the circle
+  ctx.arc(px, py, 22, -Math.PI / 2, -Math.PI / 2 + batteryLevelAngle); // Draw the arc from the top
+  ctx.closePath(); // Close the path to create a pie slice
+  ctx.fill();
+  // Inner circle
   ctx.fillStyle = '#fff';
   ctx.beginPath();
-  ctx.arc(px, py, 20, 0, 2 * Math.PI);
+  ctx.arc(px, py, 19, 0, 2 * Math.PI);
   ctx.fill();
 
   // Robot index label
@@ -322,8 +343,8 @@ function drawStatus() {
   let behaviorString = ""
   groups.forEach((group, idx) => {
     switch (group.bhvr.name) {
-      case "move_around":
-        behaviorString = "Move Around";
+      case "random_walk":
+        behaviorString = "Random Walk";
         break;
       case "form_and_follow_trajectory":
         trajectoryStr = "";
@@ -353,18 +374,82 @@ function drawStatus() {
 // Main update function: clear canvas and redraw every element
 function updateDisplay() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.save(); // Save the initial state
+
+  ctx.translate(panOffsetX, panOffsetY); // Apply pan
+  ctx.scale(zoomLevel, zoomLevel); // Apply zoom
+
   drawMap();
   drawGrid();
   groups.forEach(group => {
-    // drawFormation(group);
     drawDestination(group);
     group.robots.forEach(robot => {
-      const color = group.robots.length > 1 ? COLORS[group.idx%COLORS.length] : '#000';
+      const color = group.robots.length > 1 ? COLORS[group.idx % COLORS.length] : '#000';
       drawRobot(robot, color);
     });
   });
   drawStatus();
+
+  ctx.restore(); // Restore the original state
 }
+
+// -------------------- Canvas Interaction Functions --------------------
+
+function resetView() {
+  zoomLevel = 1;
+  panOffsetX = 0;
+  panOffsetY = 0;
+  updateDisplay();
+}
+
+// Event listeners for zoom and pan
+canvasContainer.addEventListener('wheel', (e) => {
+  e.preventDefault();
+
+  const rect = canvas.getBoundingClientRect();
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
+
+  const preZoomMouseX = (mouseX - panOffsetX) / zoomLevel;
+  const preZoomMouseY = (mouseY - panOffsetY) / zoomLevel;
+
+  const zoomChange = e.deltaY > 0 ? -zoomSensitivity : zoomSensitivity;
+  const newZoomLevel = Math.max(0.1, zoomLevel + zoomChange);
+
+  panOffsetX = mouseX - preZoomMouseX * newZoomLevel;
+  panOffsetY = mouseY - preZoomMouseY * newZoomLevel;
+
+  zoomLevel = newZoomLevel;
+  updateDisplay();
+});
+
+canvasContainer.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  dragStartX = e.clientX - panOffsetX;
+  dragStartY = e.clientY - panOffsetY;
+});
+
+canvasContainer.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  panOffsetX = e.clientX - dragStartX;
+  panOffsetY = e.clientY - dragStartY;
+  
+  updateDisplay();
+});
+
+canvasContainer.addEventListener('mouseup', () => {
+  isDragging = false;
+});
+
+canvasContainer.addEventListener('mouseleave', () => {
+    isDragging = false;
+});
+
+// Reset view button event listener
+resetButton.addEventListener('click', () => {
+  resetView();
+});
 
 // -------------------- Expandable Tree View Functions --------------------
 const nodeStates = {};
@@ -471,10 +556,29 @@ function updateObjectNode(li, key, value, currentPath) {
   reconcileTree(childUl, value || {}, currentPath);
 }
 
+function formatValue(value) {
+  if (typeof value === "number") {
+    let formatted = value.toFixed(3); // Format to 3 decimal places
+
+    // Remove trailing zeros and decimal point if unnecessary
+    if (formatted.endsWith('.000')) {
+      return parseInt(formatted); // Convert to integer if no decimal part
+    } else {
+      return parseFloat(formatted); // Convert to float, removes trailing zeros
+    }
+
+  } else if (typeof value === "object" && value !== null) {
+    return JSON.stringify(value);
+  } else {
+    return value; // Return original value for other types
+  }
+}
+
 function updateLeafNode(li, key, value, currentPath) {
   // Remove any nested elements
   li.querySelectorAll('.keytoggle, .keylabel, ul').forEach(el => el.remove());
-  li.textContent = `${key}: ${JSON.stringify(value)}`;
+  value = formatValue(value);
+  li.innerHTML= `<b>${key}</b>: ${value}`;
 }
 
 function updateTreeView(data) {
@@ -488,6 +592,81 @@ function updateTreeView(data) {
   reconcileTree(treeContainer.querySelector('ul'), data);
 }
 
+// -------------------- Speech Recognition Functionality --------------------
+let recordingOngoing = false;
+const recordButton = document.getElementById('recordButton');
+const chatInput = document.getElementById('chatInput');
+
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+
+  recognition.lang = 'en-US';
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  recognition.onstart = () => {
+    console.log('Speech recognition started');
+    recordingOngoing = true;
+    recordButton.innerHTML = '<i class="fas fa-spinner fa-spin has-text-link"></i>';
+    chatInput.value = '';
+    chatInput.placeholder = 'Listening...';
+  };
+
+  recognition.onspeechend = () => {
+    console.log('Speech recognition ended');
+    recognition.stop();
+    recordingOngoing = false;
+    recordButton.innerHTML = '<i class="fas fa-microphone has-text-link"></i>';
+    chatInput.placeholder = 'Type message or press CTRL+R to record...';
+    chatInput.focus();
+  };
+
+  recognition.onerror = (event) => {
+    console.error('Speech recognition error:', event.error);
+    recordingOngoing = false;
+    recordButton.innerHTML = '<i class="fas fa-microphone has-text-link"></i>';
+    chatInput.placeholder = 'Type message or press CTRL+R to record...';
+  };
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    console.log('Transcript:', transcript);
+    chatInput.value = transcript;
+    recordButton.innerHTML = '<i class="fas fa-microphone has-text-link"></i>';
+    chatInput.placeholder = 'Type message or press CTRL+R to record...';
+    recordingOngoing = false;
+  };
+
+  // Event listener for the record button
+  recordButton.addEventListener('click', () => {
+    if (!recordingOngoing) {
+      console.log('Starting speech recognition');
+      recognition.start();
+    } else {
+      console.log('Stopping speech recognition');
+      recognition.stop();
+    }
+  });
+
+  // Event listenner for key "CTRL+R" to start/stop recording
+  document.addEventListener('keydown', (event) => {
+    if ((event.ctrlKey && event.key === 'r') || (event.ctrlKey && event.key === 'R')) {
+      if (!recordingOngoing) {
+        event.preventDefault();
+        console.log('Starting speech recognition');
+        recognition.start();
+      } else {
+        event.preventDefault();
+        console.log('Stopping speech recognition');
+        recognition.stop();
+      }
+    }
+  });
+} else {
+  console.error("Speech recognition is not supported in this browser.");
+  document.getElementById('result').textContent = "Speech recognition is not supported in this browser.";
+}
 
 // -------------------- Chat Functionality --------------------
 
@@ -625,6 +804,8 @@ function toggleReset() {
   n_updates = 0;
   // Reset simulation state
   sendCommand('reset'); 
+  // Reset view
+  resetView();
 }
 
 
@@ -646,7 +827,10 @@ document.getElementById("pause-button").onclick = togglePause;
 document.getElementById("reset-button").onclick = toggleReset;
 
 // Add canvas sizing event listener
-window.addEventListener('resize', setCanvasSize);
+window.addEventListener('resize', () => {
+  setCanvasSize();
+  updateDisplay();
+});
 
 // Fetch initial state
 fetchState();

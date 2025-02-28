@@ -45,7 +45,7 @@
 1.  **Chat Interface:** Use the chat interface to send commands to the swarm. For example:
     -   "Group the drones into 3 groups."
     -   "Make group 1 move in a circle formation along the river."
-    -   "Make group 2 move around randomly."
+    -   "I want the robots in group 2 to move randomly."
 
 2.  **Visualization:** Observe the drones' movements and formations in the real-time visualization.
 

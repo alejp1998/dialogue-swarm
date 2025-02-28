@@ -2,7 +2,7 @@
 Swarm
 
 This module contains the Swarm, Group, and Robot classes. 
-It also has some auxiliary functions.
+It also has the SwarmAgent class, which is an agent that controls the swarm by interpreting user commands with an LLM.
 """
 
 import random
@@ -29,7 +29,7 @@ BEHAVIORS = {
             "trajectory": [[0.0, 0.0], [1.0, 1.0], [2.0, 2.0], [3.0, 3.0]]
         }
     },
-    "move_around": {
+    "random_walk": {
         "states": ["move"],
         "params": {}
     }
@@ -64,6 +64,7 @@ class Robot:
         self.vx = 0.0
         self.vy = 0.0
         self.rotation_speed = 0.0
+        self.battery_level = 1.0
     
     def update_target_angle(self, target_x, target_y):
         """Update target angle for robot"""
@@ -80,9 +81,18 @@ class Robot:
         """
         Move robot towards target position with rotation and velocity control
         """
+        # Do not move if robot is out of battery
+        if self.battery_level <= 0:
+            return
+        
+        # Update battery level
+        self._update_battery_level()
+        
+        # First align robot with assigned target angle
         if not self.is_robot_aligned():
             self.rotation_speed = np.sign(self.angle_diff) * max(0.1 * (abs(self.angle_diff) / np.pi), 0.005)
             # print('Robot is rotating', self.rotation_speed)
+        # Move if it is not in position when aligned
         else:
             if not self.is_robot_in_position():
                 self.vx = (self.dx / self.dist) * self.max_speed
@@ -127,6 +137,12 @@ class Robot:
         self.vx = 0.0
         self.vy = 0.0
         self.rotation_speed = 0.0
+
+    def _update_battery_level(self):
+        """Update robot battery level"""
+        self.battery_level = self.battery_level - 1/10000;
+        if self.battery_level <= 0:
+            self.battery_level = 0
 
 class Group:
     """
@@ -182,7 +198,7 @@ class Group:
             behavior_dict["state"] = 0
             self.bhvr = behavior_dict
 
-        elif behavior_name == "move_around":
+        elif behavior_name == "random_walk":
             # Initialize behavior state
             behavior_dict["state"] = 0
             self.bhvr = behavior_dict
@@ -241,8 +257,8 @@ class Group:
                                 bhvr["state"] = 1
                                 bhvr["data"]["traj_index"] += 1
 
-            # State machine for moving around
-            case "move_around":
+            # State machine for random walk
+            case "random_walk":
                 for robot in self.robots:
                     # If they havent reached their target, move them
                     if not robot.is_robot_in_position():
@@ -286,10 +302,10 @@ class Swarm:
         groups = [group for group in self.groups if group.idx == group_idx]
         return groups[0]
     
-    def assign_move_around_behavior_to_group(self, group_idx):
-        """Assign move_around behavior to a group"""
+    def assign_random_walk_behavior_to_group(self, group_idx):
+        """Assign random_walk behavior to a group"""
         self._get_group_by_idx(group_idx).set_behavior({
-            "name": "move_around",
+            "name": "random_walk",
             "params": {}
         })
 
@@ -379,7 +395,7 @@ class SwarmAgent:
         self.tools = [
             self.gen_group_by_ids,
             self.gen_groups_by_clustering,
-            self.assign_move_around_behavior_to_group,
+            self.assign_random_walk_behavior_to_group,
             self.assign_form_and_follow_trajectory_behavior_to_group
         ]
         self.memory = []
@@ -415,11 +431,11 @@ class SwarmAgent:
         Example: To cluster 20 robots into 3 groups:
         gen_groups_by_clustering(3)
 
-        3. Assign "Move Around" Behavior
-        Function: assign_move_around_behavior_to_group(group_idx: int)
+        3. Assign "Random Walk" Behavior
+        Function: assign_random_walk_behavior_to_group(group_idx: int)
         Description: Assigns a random movement behavior to the drones in the specified group.
-        Example: To make drones in group 1 move around:
-        assign_move_around_behavior_to_group(1)
+        Example: To make drones in group 1 move randomly:
+        assign_random_walk_behavior_to_group(1)
         
         4. Assign "Form and Follow Trajectory" Behavior
         Function: assign_form_and_follow_trajectory_behavior_to_group(group_idx: int, formation_shape: str, formation_radius: float, trajectory: list)
@@ -492,7 +508,7 @@ class SwarmAgent:
                 },
                 "required": ["num_groups"]
             }
-        elif func.__name__ == "assign_move_around_behavior_to_group":
+        elif func.__name__ == "assign_random_walk_behavior_to_group":
             return {
                 "type": "object",
                 "properties": {
@@ -551,6 +567,8 @@ class SwarmAgent:
             # First API call to get initial response
             response = client.chat.completions.create(
                 model=MODEL_NAME,
+                temperature=0,
+                max_tokens=4192,
                 messages=messages,
                 tools=self._get_tool_schemas()
             )
@@ -603,6 +621,8 @@ class SwarmAgent:
                 ]
                 final_response = client.chat.completions.create(
                     model=MODEL_NAME,
+                    temperature=0,
+                    max_tokens=4192,
                     messages=final_messages
                 )
                 ai_message = final_response.choices[0].message.content
@@ -629,9 +649,9 @@ class SwarmAgent:
         self.swarm.gen_groups_by_clustering(num_groups)
         return f"Drones grouped successfully in {num_groups} groups"
 
-    def assign_move_around_behavior_to_group(self, group_idx: int):
-        self.swarm.assign_move_around_behavior_to_group(group_idx)
-        return f"move_around behavior assigned to group {group_idx}"
+    def assign_random_walk_behavior_to_group(self, group_idx: int):
+        self.swarm.assign_random_walk_behavior_to_group(group_idx)
+        return f"random_walk behavior assigned to group {group_idx}"
     
     def assign_form_and_follow_trajectory_behavior_to_group(self, group_idx: int,
                                                             formation_shape: str,

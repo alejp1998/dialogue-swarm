@@ -116,7 +116,7 @@ def get_state():
         groups = []
         for group in simulation_state["swarm"].groups:
             robots = [{"idx": r.idx, "x": r.x, "y": r.y, "angle": r.angle, 
-                      "target_x": r.target_x, "target_y": r.target_y} 
+                      "target_x": r.target_x, "target_y": r.target_y, "battery_level": r.battery_level}
                      for r in group.robots]
             groups.append({
                 "idx": group.idx,

@@ -6,6 +6,7 @@
 
 /* Canvas Section */
 #canvasContainer {
+  overflow: hidden;
   position: relative;
   height: 90vh;
 }
@@ -28,9 +29,9 @@
 }
 
 #treeView li {
-  font-size: 14px;
-  padding: 0.1rem 0.3rem;
-  margin: 0.1rem 0;
+  font-size: 16px;
+  padding: 0.1rem 0.1rem;
+  margin: 0.1rem 0.5rem;
   border-radius: 6px;
   transition: all 0.2s ease;
 }
@@ -82,32 +83,39 @@
 }
 
 .chat-message {
+  position: relative;
+  min-width: 85%;
   max-width: 85%;
   padding: 0.5rem 1rem;
   border-radius: 12px;
-  font-size: 0.9rem;
+  font-size: 1.0rem;
 }
 
 .chat-message ol{
-  padding-left: 1.5rem;
+  padding-left: 1.4rem;
   margin-bottom: 0.5rem;
 }
 
 .chat-message h1 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
 .chat-message h2 {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
 .chat-message h3 {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.chat-message code {
+  font-size: 0.8rem;
   margin-bottom: 0.5rem;
 }
 
