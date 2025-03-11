@@ -1,0 +1,1549 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": 614894480,
+      "properties": {
+        "name": "Geelså",
+        "waterway": "river",
+        "unique_name": "river_geelså"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 534
+    },
+    {
+      "id": 24969336,
+      "properties": {
+        "highway": "unclassified",
+        "lane_markings": "no",
+        "lit": "no",
+        "maxspeed": "80",
+        "name": "Ørnfeldtvej",
+        "source:maxspeed": "DK:rural",
+        "surface": "asphalt",
+        "unique_name": "road_ornfeldtvej"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 48
+    },
+    {
+      "id": 24969576,
+      "properties": {
+        "highway": "tertiary",
+        "maxspeed": "80",
+        "name": "Radstrupvejen",
+        "name:etymology:wikidata": "Q129860806",
+        "source:maxspeed": "DK:rural",
+        "surface": "asphalt",
+        "unique_name": "road_radstrupvejen"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 82
+    },
+    {
+      "id": 484179493,
+      "properties": {
+        "name": "Skjoldmose Rende",
+        "waterway": "ditch",
+        "unique_name": "ditch_skjoldmose_rende"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 62
+    },
+    {
+      "id": 460707410,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 126
+    },
+    {
+      "id": 460707409,
+      "properties": {
+        "natural": "scrub",
+        "unique_name": "scrub_1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 17
+    },
+    {
+      "id": 772760145,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 772760425,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_2"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 460707400,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_2"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 78
+    },
+    {
+      "id": 526674767,
+      "properties": {
+        "building": "shed",
+        "unique_name": "shed_1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 526668206,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_3"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 526674766,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_4"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 484179499,
+      "properties": {
+        "natural": "water",
+        "unique_name": "water_1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 17
+    },
+    {
+      "id": 791222373,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_5"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 913189430,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_6"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 113520270,
+      "properties": {
+        "highway": "service",
+        "lit": "no",
+        "name": "Odensevej",
+        "name:etymology:wikidata": "Q25331",
+        "service": "driveway",
+        "unique_name": "road_odensevej_1"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 20
+    },
+    {
+      "id": 526451753,
+      "properties": {
+        "landuse": "forest",
+        "unique_name": "forest_1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 13
+    },
+    {
+      "id": 913158215,
+      "properties": {
+        "building": "garage",
+        "unique_name": "garage_1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 994871275,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_1"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 6
+    },
+    {
+      "id": 141425619,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_2"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8
+    },
+    {
+      "id": 913158214,
+      "properties": {
+        "building": "detached",
+        "unique_name": "house_1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 526454617,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_7"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 141425620,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_3"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 10
+    },
+    {
+      "id": 141425621,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_4"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4
+    },
+    {
+      "id": 526674771,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_8"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 141425622,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_5"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4
+    },
+    {
+      "id": 660245337,
+      "properties": {
+        "bicycle": "use_sidepath",
+        "highway": "tertiary",
+        "lanes": "2",
+        "maxspeed": "80",
+        "maxspeed:advisory": "60",
+        "name": "Kertemindevejen",
+        "name:etymology:wikidata": "Q29969",
+        "oneway": "no",
+        "source:maxspeed": "DK:rural",
+        "surface": "asphalt",
+        "unique_name": "road_kertemindevejen_1"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 16
+    },
+    {
+      "id": 526674770,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_9"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 557588132,
+      "properties": {
+        "highway": "tertiary",
+        "lanes": "2",
+        "maxspeed": "80",
+        "name": "Mejerivejen",
+        "oneway": "no",
+        "source:maxspeed": "DK:rural",
+        "surface": "asphalt",
+        "unique_name": "road_mejerivejen"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 56
+    },
+    {
+      "id": 614894481,
+      "properties": {
+        "layer": "-1",
+        "name": "Geelså",
+        "tunnel": "culvert",
+        "waterway": "river",
+        "unique_name": "river_geelså_culvert"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4
+    },
+    {
+      "id": 526454614,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_10"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 526674772,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_11"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 913158213,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_12"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 913158212,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_13"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 660245336,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_6"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8
+    },
+    {
+      "id": 526674773,
+      "properties": {
+        "building": "shed",
+        "unique_name": "shed_2"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 526674775,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_14"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 913158209,
+      "properties": {
+        "building": "apartments",
+        "unique_name": "apartments_1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 141425618,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_7"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 20
+    },
+    {
+      "id": 660238198,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_8"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 6
+    },
+    {
+      "id": 526454615,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_15"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 913158211,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_16"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 679030961,
+      "properties": {
+        "name": "Råbæk",
+        "waterway": "stream",
+        "unique_name": "stream_råbæk_1"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 20
+    },
+    {
+      "id": 526454616,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_17"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 660245338,
+      "properties": {
+        "bicycle": "use_sidepath",
+        "highway": "tertiary",
+        "lanes": "2",
+        "maxspeed": "80",
+        "maxspeed:advisory": "60",
+        "name": "Odensevej",
+        "name:etymology:wikidata": "Q25331",
+        "oneway": "no",
+        "source:maxspeed": "DK:rural",
+        "surface": "asphalt",
+        "unique_name": "road_odensevej_2"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 10
+    },
+    {
+      "id": 913158210,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_18"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 526674774,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_19"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 660245335,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_9"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 6
+    },
+    {
+      "id": 679030962,
+      "properties": {
+        "layer": "-1",
+        "name": "Råbæk",
+        "tunnel": "culvert",
+        "waterway": "stream",
+        "unique_name": "stream_råbæk_culvert"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4
+    },
+    {
+      "id": 526674776,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_20"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 6
+    },
+    {
+      "id": 526679234,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_21"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 526674777,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_22"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 627594939,
+      "properties": {
+        "landuse": "meadow",
+        "unique_name": "meadow_1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 6
+    },
+    {
+      "id": 526679232,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_23"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 526674778,
+      "properties": {
+        "building": "shed",
+        "unique_name": "shed_3"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 526679233,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_24"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 913158208,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_25"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 141425549,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_10"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4
+    },
+    {
+      "id": 141425547,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_11"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4
+    },
+    {
+      "id": 141425550,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_12"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4
+    },
+    {
+      "id": 526679227,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_26"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 526679229,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_27"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 526679228,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_28"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 141080967,
+      "properties": {
+        "landuse": "forest",
+        "unique_name": "forest_2"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 8
+    },
+    {
+      "id": 526679230,
+      "properties": {
+        "building": "shed",
+        "unique_name": "shed_4"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 141425548,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_13"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 14
+    },
+    {
+      "id": 526679231,
+      "properties": {
+        "building": "shed",
+        "unique_name": "shed_5"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 791224454,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_29"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 560834893,
+      "properties": {
+        "highway": "path",
+        "unique_name": "path_1"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4
+    },
+    {
+      "id": 660245339,
+      "properties": {
+        "highway": "service",
+        "lit": "no",
+        "service": "driveway",
+        "unique_name": "driveway_14"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 6
+    },
+    {
+      "id": 560830926,
+      "properties": {
+        "bicycle": "use_sidepath",
+        "highway": "tertiary",
+        "lanes": "2",
+        "maxspeed": "80",
+        "name": "Odensevej",
+        "name:etymology:wikidata": "Q25331",
+        "oneway": "no",
+        "source:maxspeed": "DK:rural",
+        "surface": "asphalt",
+        "unique_name": "road_odensevej_3"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 34
+    },
+    {
+      "id": 560834896,
+      "properties": {
+        "highway": "cycleway",
+        "surface": "asphalt",
+        "unique_name": "cycleway_1"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4
+    },
+    {
+      "id": 791223891,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_30"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 791224261,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_31"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 526679235,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_32"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 913158224,
+      "properties": {
+        "building": "detached",
+        "unique_name": "house_2"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 19
+    },
+    {
+      "id": 913158225,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_33"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 460728907,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_3"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 8
+    },
+    {
+      "id": 913158206,
+      "properties": {
+        "building": "greenhouse",
+        "unique_name": "greenhouse_1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 44
+    },
+    {
+      "id": 460731409,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_4"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 16
+    },
+    {
+      "id": 460731418,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_5"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 11
+    },
+    {
+      "id": 460731422,
+      "properties": {
+        "landuse": "meadow",
+        "unique_name": "meadow_2"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 11
+    },
+    {
+      "id": 913158223,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_34"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 913158221,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_35"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 913158222,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_36"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 913158207,
+      "properties": {
+        "building": "greenhouse",
+        "unique_name": "greenhouse_2"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 11
+    },
+    {
+      "id": 141080680,
+      "properties": {
+        "highway": "service",
+        "lit": "no",
+        "unique_name": "service_1"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 46
+    },
+    {
+      "id": 913158220,
+      "properties": {
+        "building": "detached",
+        "unique_name": "house_3"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 11
+    },
+    {
+      "id": 141080961,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_15"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 6
+    },
+    {
+      "id": 526679236,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_37"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 913158219,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_38"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 526679237,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_39"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 913158218,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_40"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 460729100,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_6"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 18
+    },
+    {
+      "id": 913158217,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_41"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 24
+    },
+    {
+      "id": 460728898,
+      "properties": {
+        "bicycle": "use_sidepath",
+        "highway": "tertiary",
+        "lanes": "2",
+        "maxspeed": "80",
+        "name": "Kertemindevejen",
+        "name:etymology:wikidata": "Q29969",
+        "oneway": "no",
+        "source:maxspeed": "DK:rural",
+        "surface": "asphalt",
+        "unique_name": "road_kertemindevejen_2"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 38
+    },
+    {
+      "id": 460731412,
+      "properties": {
+        "landuse": "meadow",
+        "unique_name": "meadow_3"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 526679238,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_42"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 141080679,
+      "properties": {
+        "highway": "service",
+        "lit": "no",
+        "name": "Odensevej",
+        "name:etymology:wikidata": "Q25331",
+        "service": "driveway",
+        "unique_name": "driveway_16"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 50
+    },
+    {
+      "id": 141080960,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_17"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8
+    },
+    {
+      "id": 460731898,
+      "properties": {
+        "landuse": "meadow",
+        "unique_name": "meadow_4"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 15
+    },
+    {
+      "id": 526679239,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_43"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 141080962,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_18"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4
+    },
+    {
+      "id": 526679241,
+      "properties": {
+        "building": "shed",
+        "unique_name": "shed_6"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 526679240,
+      "properties": {
+        "building": "shed",
+        "unique_name": "shed_7"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 141427752,
+      "properties": {
+        "landuse": "forest",
+        "leaf_type": "broadleaved",
+        "name": "Råbæk Skov",
+        "unique_name": "forest_råbæk_skov"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 460728911,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_7"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 65
+    },
+    {
+      "id": 141080963,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_19"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8
+    },
+    {
+      "id": 627594943,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_8"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 57
+    },
+    {
+      "id": 913158216,
+      "properties": {
+        "building": "hotel",
+        "building:levels": "1",
+        "roof:levels": "1",
+        "unique_name": "hotel_1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 460728884,
+      "properties": {
+        "natural": "grassland",
+        "unique_name": "grassland_1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 12
+    },
+    {
+      "id": 679030984,
+      "properties": {
+        "name": "Råbæk",
+        "waterway": "stream",
+        "unique_name": "stream_råbæk_2"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 64
+    },
+    {
+      "id": 141080030,
+      "properties": {
+        "landuse": "forest",
+        "name": "Geelsskov",
+        "unique_name": "forest_geelsskov"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 99
+    },
+    {
+      "id": 460728893,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_9"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 460728891,
+      "properties": {
+        "landuse": "meadow",
+        "unique_name": "meadow_5"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 6
+    },
+    {
+      "id": 913158205,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_44"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 141080964,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_20"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 16
+    },
+    {
+      "id": 912433893,
+      "properties": {
+        "building": "greenhouse",
+        "unique_name": "greenhouse_3"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 100
+    },
+    {
+      "id": 113523547,
+      "properties": {
+        "natural": "water",
+        "unique_name": "water_2"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 21
+    },
+    {
+      "id": 913158204,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_45"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 11
+    },
+    {
+      "id": 141081296,
+      "properties": {
+        "landuse": "forest",
+        "unique_name": "forest_3"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 141081297,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_21"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 12
+    },
+    {
+      "id": 913158200,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_46"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 913158199,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_47"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 913158202,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_48"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 913158203,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_49"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 460825238,
+      "properties": {
+        "bicycle": "designated",
+        "foot": "designated",
+        "highway": "cycleway",
+        "oneway": "no",
+        "surface": "asphalt",
+        "unique_name": "cycleway_2"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 212
+    },
+    {
+      "id": 913158201,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_50"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 660312252,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_22"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8
+    },
+    {
+      "id": 912390643,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_51"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 912390644,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_52"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 13
+    },
+    {
+      "id": 912390642,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_53"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 460731414,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_10"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 41
+    },
+    {
+      "id": 912390645,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_54"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 460731901,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_11"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 675564142,
+      "properties": {
+        "bicycle": "use_sidepath",
+        "highway": "tertiary",
+        "lanes": "2",
+        "maxspeed": "80",
+        "maxspeed:practical": "60",
+        "name": "Kertemindevejen",
+        "name:etymology:wikidata": "Q29969",
+        "oneway": "no",
+        "source:maxspeed": "DK:rural",
+        "surface": "asphalt",
+        "unique_name": "road_kertemindevejen_3"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 20
+    },
+    {
+      "id": 141427750,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_23"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 20
+    },
+    {
+      "id": 912390641,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_55"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 460731415,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_12"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 44
+    },
+    {
+      "id": 912390640,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_56"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9
+    },
+    {
+      "id": 912390639,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_57"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 460731903,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_13"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 17
+    },
+    {
+      "id": 141427747,
+      "properties": {
+        "highway": "residential",
+        "maxspeed": "20",
+        "name": "Kertemindevejen",
+        "name:etymology:wikidata": "Q29969",
+        "surface": "gravel",
+        "unique_name": "road_kertemindevejen_4"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8
+    },
+    {
+      "id": 460825235,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_24"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4
+    },
+    {
+      "id": 912390634,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_58"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 21
+    },
+    {
+      "id": 460728918,
+      "properties": {
+        "landuse": "meadow",
+        "unique_name": "meadow_6"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 13
+    },
+    {
+      "id": 912390636,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_59"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 912390627,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_60"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 141427748,
+      "properties": {
+        "landuse": "forest",
+        "unique_name": "forest_4"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 6
+    },
+    {
+      "id": 912390625,
+      "properties": {
+        "building": "yes",
+        "unique_name": "building_61"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5
+    },
+    {
+      "id": 1174762790,
+      "properties": {
+        "highway": "service",
+        "unique_name": "service_2"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 6
+    },
+    {
+      "id": 141081294,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_25"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 6
+    },
+    {
+      "id": 912390623,
+      "properties": {
+        "building": "greenhouse",
+        "unique_name": "greenhouse_4"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 35
+    },
+    {
+      "id": 141081293,
+      "properties": {
+        "highway": "service",
+        "service": "driveway",
+        "unique_name": "driveway_26"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 18
+    },
+    {
+      "id": 460728877,
+      "properties": {
+        "landuse": "farmland",
+        "unique_name": "farmland_14"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 12
+    },
+    {
+      "id": 141081395,
+      "properties": {
+        "landuse": "forest",
+        "unique_name": "forest_5"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7
+    },
+    {
+      "id": 614894482,
+      "properties": {
+        "name": "Geelså",
+        "waterway": "river",
+        "unique_name": "river_geelså_2"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 598
+    },
+    {
+      "id": 113523552,
+      "properties": {
+        "landuse": "forest",
+        "leaf_type": "broadleaved",
+        "name": "Letmose Skov",
+        "unique_name": "forest_letmose_skov"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 32
+    }
+  ]
+}

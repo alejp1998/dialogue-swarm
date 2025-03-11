@@ -2,12 +2,14 @@ import logging
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from threading import Thread, Lock
+import os
+import json
 import random
 import time
 import numpy as np
 
 # Import Swarm and Robot classes
-from swarm import SwarmAgent, Swarm, Robot
+from src.swarm import SwarmAgent, Swarm, Robot
 
 # Create the Flask application
 app = Flask(__name__)
@@ -23,38 +25,37 @@ class NoSuccessFilter(logging.Filter):
 
 log.addFilter(NoSuccessFilter())
 
-# SIMULATION ENV
-ARENA_WIDTH = 20
-ARENA_HEIGHT = 20
-FORMATION_RADIUS = 2
+# CONFIGURATION FILES (within /data folder)
+SIM_CONFIG_FILE = os.path.join(app.root_path, "data", "sim_config.json")
+# FEATURES_FILE = os.path.join(app.root_path, "data", "features.json")
 
-# SIMULATION SETTINGS
-NUMBER_OF_ROBOTS = 20
-NUMBER_OF_GROUPS = 3
-MAX_SPEED = 0.02
-FORMATION_SHAPES = ['circle', 'square', 'triangle', 'hexagon']
-FIELD_START_X = 1
-FIELD_START_Y = 0
-FIELD_WIDTH = 7
-FIELD_HEIGHT = 5
+# Load config and features from JSON files
+with open(SIM_CONFIG_FILE, "r") as file:
+    SIM_CONFIG = json.load(file)
+# with open(FEATURES_FILE, "r") as file:
+#     FEATURES = json.load(file)
+
+# Assign values to Python variables
+ENV = SIM_CONFIG["env"]
+SETTINGS = SIM_CONFIG["settings"]
 
 # Simulation functions
-def initialize_robot_positions(n, x_min=0, y_min=0, x_max=ARENA_WIDTH, y_max=ARENA_HEIGHT, distance_from_edge=FORMATION_RADIUS):
+def initialize_robot_positions(n, x_min=0, y_min=0, x_max=ENV["arena_width"], y_max=ENV["arena_height"], distance_from_edge=ENV["formation_radius"]):
     x = np.random.uniform(x_min + distance_from_edge, x_max - distance_from_edge, n)
     y = np.random.uniform(y_min + distance_from_edge, y_max - distance_from_edge, n)
     return x, y
 
 # Initialize destination positions with some distance from the edge
-def initialize_destinations(n):
-    x = np.random.uniform(FORMATION_RADIUS, ARENA_WIDTH-FORMATION_RADIUS, n)
-    y = np.random.uniform(FORMATION_RADIUS, ARENA_HEIGHT-FORMATION_RADIUS, n)
+def initialize_destinations(n, distance_from_edge=ENV["formation_radius"], arena_width=ENV["arena_width"], arena_height=ENV["arena_height"]):
+    x = np.random.uniform(distance_from_edge, arena_width - distance_from_edge, n)
+    y = np.random.uniform(distance_from_edge, arena_height - distance_from_edge, n)
     return x, y
 
 # Initialize the swarm
-def initialize_swarm():
-    x, y = initialize_robot_positions(NUMBER_OF_ROBOTS, FIELD_START_X, FIELD_START_Y, 
-                                    FIELD_START_X + FIELD_WIDTH, FIELD_START_Y + FIELD_HEIGHT)
-    robots = [Robot(idx, x, y, max_speed=MAX_SPEED) for idx, (x, y) in enumerate(zip(x, y))]
+def initialize_swarm(n=SETTINGS["number_of_robots"], x_i=SETTINGS["field_start_x"], y_i=SETTINGS["field_start_y"],
+                     x_width=SETTINGS["field_width"], y_height=SETTINGS["field_height"], max_speed=SETTINGS["max_speed"]):
+    x, y = initialize_robot_positions(n, x_i, y_i, x_i + x_width, y_i + y_height)
+    robots = [Robot(idx, x, y, max_speed=max_speed) for idx, (x, y) in enumerate(zip(x, y))]
     swarm = Swarm(robots)
     
     return swarm
@@ -129,7 +130,7 @@ def get_state():
             "running": simulation_state["running"],
             "current_step": simulation_state["current_step"],
             "groups": groups,
-            "arena": {"width": ARENA_WIDTH, "height": ARENA_HEIGHT}
+            "arena": {"width": ENV["arena_width"], "height": ENV["arena_height"]}
         })
 
 @app.route('/control', methods=['POST'])

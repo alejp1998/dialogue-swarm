@@ -22,7 +22,7 @@ with open("mykeys/openai_api_key.txt", "r") as f:
 # POSSIBLE BEHAVIORS AND PARAMS
 BEHAVIORS = {
     "form_and_follow_trajectory": {
-        "states": ["form", "follow"],
+        "states": ["form", "rotate", "move"],
         "params": {
             "formation_shape": ["circle", "square", "triangle", "hexagon"],
             "formation_radius": [0.5, 1.0, 1.5, 2.0, 2.5, 3.0],

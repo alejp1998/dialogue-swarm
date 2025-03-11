@@ -1,0 +1,16 @@
+{
+  "env": {
+    "arena_width": 20,
+    "arena_height": 20,
+    "formation_radius": 2
+  },
+  "settings": {
+    "number_of_robots": 20,
+    "number_of_groups": 3,
+    "max_speed": 0.02,
+    "field_start_x": 1,
+    "field_start_y": 0,
+    "field_width": 7,
+    "field_height": 5
+  }
+}
