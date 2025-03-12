@@ -9,7 +9,11 @@
         "unique_name": "river_geelså"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 534
+      "geometry_n_coords": 534,
+      "geometry_centroid": [
+        10.543788732307611,
+        55.416269353544905
+      ]
     },
     {
       "id": 24969336,
@@ -24,7 +28,11 @@
         "unique_name": "road_ornfeldtvej"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 48
+      "geometry_n_coords": 48,
+      "geometry_centroid": [
+        10.561726981879954,
+        55.41478796983824
+      ]
     },
     {
       "id": 24969576,
@@ -38,7 +46,11 @@
         "unique_name": "road_radstrupvejen"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 82
+      "geometry_n_coords": 82,
+      "geometry_centroid": [
+        10.537173492879159,
+        55.4146558172036
+      ]
     },
     {
       "id": 484179493,
@@ -48,7 +60,11 @@
         "unique_name": "ditch_skjoldmose_rende"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 62
+      "geometry_n_coords": 62,
+      "geometry_centroid": [
+        10.563998966616188,
+        55.414575704578205
+      ]
     },
     {
       "id": 460707410,
@@ -57,7 +73,11 @@
         "unique_name": "farmland_1"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 126
+      "geometry_n_coords": 126,
+      "geometry_centroid": [
+        10.569294955060098,
+        55.41270938427134
+      ]
     },
     {
       "id": 460707409,
@@ -66,7 +86,11 @@
         "unique_name": "scrub_1"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 17
+      "geometry_n_coords": 17,
+      "geometry_centroid": [
+        10.548696134895227,
+        55.41227651218898
+      ]
     },
     {
       "id": 772760145,
@@ -75,7 +99,11 @@
         "unique_name": "building_1"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.56805751900008,
+        55.41182237637711
+      ]
     },
     {
       "id": 772760425,
@@ -84,7 +112,11 @@
         "unique_name": "building_2"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.567825500000001,
+        55.411637
+      ]
     },
     {
       "id": 460707400,
@@ -93,7 +125,11 @@
         "unique_name": "farmland_2"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 78
+      "geometry_n_coords": 78,
+      "geometry_centroid": [
+        10.551682595937573,
+        55.411344112067745
+      ]
     },
     {
       "id": 526674767,
@@ -102,7 +138,11 @@
         "unique_name": "shed_1"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.544502145664197,
+        55.40999614448759
+      ]
     },
     {
       "id": 526668206,
@@ -111,7 +151,11 @@
         "unique_name": "building_3"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.544380416178736,
+        55.40989982168097
+      ]
     },
     {
       "id": 526674766,
@@ -120,7 +164,11 @@
         "unique_name": "building_4"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.544774135885524,
+        55.409766612153874
+      ]
     },
     {
       "id": 484179499,
@@ -129,7 +177,11 @@
         "unique_name": "water_1"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 17
+      "geometry_n_coords": 17,
+      "geometry_centroid": [
+        10.554822895715962,
+        55.40919878401066
+      ]
     },
     {
       "id": 791222373,
@@ -138,7 +190,11 @@
         "unique_name": "building_5"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.567364691566304,
+        55.40803677675841
+      ]
     },
     {
       "id": 913189430,
@@ -147,7 +203,11 @@
         "unique_name": "building_6"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.567043380748744,
+        55.40799572647725
+      ]
     },
     {
       "id": 113520270,
@@ -160,7 +220,11 @@
         "unique_name": "road_odensevej_1"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 20
+      "geometry_n_coords": 20,
+      "geometry_centroid": [
+        10.569186180091794,
+        55.40679818107388
+      ]
     },
     {
       "id": 526451753,
@@ -169,7 +233,11 @@
         "unique_name": "forest_1"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 13
+      "geometry_n_coords": 13,
+      "geometry_centroid": [
+        10.557803033143822,
+        55.406623824970495
+      ]
     },
     {
       "id": 913158215,
@@ -178,7 +246,11 @@
         "unique_name": "garage_1"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.560558596831742,
+        55.406037190190766
+      ]
     },
     {
       "id": 994871275,
@@ -188,7 +260,11 @@
         "unique_name": "driveway_1"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 6
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        10.560841899116001,
+        55.4059977544128
+      ]
     },
     {
       "id": 141425619,
@@ -198,7 +274,11 @@
         "unique_name": "driveway_2"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 8
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        10.544839727739877,
+        55.40594938011472
+      ]
     },
     {
       "id": 913158214,
@@ -207,7 +287,11 @@
         "unique_name": "house_1"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.560790260550547,
+        55.40588983098258
+      ]
     },
     {
       "id": 526454617,
@@ -216,7 +300,11 @@
         "unique_name": "building_7"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.54567783360781,
+        55.40576705565839
+      ]
     },
     {
       "id": 141425620,
@@ -226,7 +314,11 @@
         "unique_name": "driveway_3"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 10
+      "geometry_n_coords": 10,
+      "geometry_centroid": [
+        10.545999572397186,
+        55.40575275316459
+      ]
     },
     {
       "id": 141425621,
@@ -236,7 +328,11 @@
         "unique_name": "driveway_4"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 4
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        10.547287,
+        55.4057215
+      ]
     },
     {
       "id": 526674771,
@@ -245,7 +341,11 @@
         "unique_name": "building_8"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.546629333196831,
+        55.40568989613856
+      ]
     },
     {
       "id": 141425622,
@@ -255,7 +355,11 @@
         "unique_name": "driveway_5"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 4
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        10.5479835,
+        55.405636
+      ]
     },
     {
       "id": 660245337,
@@ -273,7 +377,11 @@
         "unique_name": "road_kertemindevejen_1"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 16
+      "geometry_n_coords": 16,
+      "geometry_centroid": [
+        10.559620797201594,
+        55.40561230495366
+      ]
     },
     {
       "id": 526674770,
@@ -282,7 +390,11 @@
         "unique_name": "building_9"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.54627000958722,
+        55.40560699479177
+      ]
     },
     {
       "id": 557588132,
@@ -297,7 +409,11 @@
         "unique_name": "road_mejerivejen"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 56
+      "geometry_n_coords": 56,
+      "geometry_centroid": [
+        10.545297775238039,
+        55.405606080932465
+      ]
     },
     {
       "id": 614894481,
@@ -309,7 +425,11 @@
         "unique_name": "river_geelså_culvert"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 4
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        10.5590035,
+        55.405593499999995
+      ]
     },
     {
       "id": 526454614,
@@ -318,7 +438,11 @@
         "unique_name": "building_10"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.544928229364402,
+        55.40558944043498
+      ]
     },
     {
       "id": 526674772,
@@ -327,7 +451,11 @@
         "unique_name": "building_11"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.546864580193933,
+        55.40558385612335
+      ]
     },
     {
       "id": 913158213,
@@ -336,7 +464,11 @@
         "unique_name": "building_12"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.557769738161422,
+        55.40553065803462
+      ]
     },
     {
       "id": 913158212,
@@ -345,7 +477,11 @@
         "unique_name": "building_13"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.557626686868689,
+        55.40552803030303
+      ]
     },
     {
       "id": 660245336,
@@ -355,7 +491,11 @@
         "unique_name": "driveway_6"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 8
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        10.55805299519379,
+        55.405513985825834
+      ]
     },
     {
       "id": 526674773,
@@ -364,7 +504,11 @@
         "unique_name": "shed_2"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.547242297228495,
+        55.40551008540388
+      ]
     },
     {
       "id": 526674775,
@@ -373,7 +517,11 @@
         "unique_name": "building_14"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.548053590011275,
+        55.40549471277071
+      ]
     },
     {
       "id": 913158209,
@@ -382,7 +530,11 @@
         "unique_name": "apartments_1"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.559328652204305,
+        55.40548197304012
+      ]
     },
     {
       "id": 141425618,
@@ -392,7 +544,11 @@
         "unique_name": "driveway_7"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 20
+      "geometry_n_coords": 20,
+      "geometry_centroid": [
+        10.545161098232398,
+        55.40547221553791
+      ]
     },
     {
       "id": 660238198,
@@ -402,7 +558,11 @@
         "unique_name": "driveway_8"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 6
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        10.559743239401879,
+        55.40545985217187
+      ]
     },
     {
       "id": 526454615,
@@ -411,7 +571,11 @@
         "unique_name": "building_15"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.545335559582755,
+        55.40544899738036
+      ]
     },
     {
       "id": 913158211,
@@ -420,7 +584,11 @@
         "unique_name": "building_16"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.557876187926276,
+        55.4054370482916
+      ]
     },
     {
       "id": 679030961,
@@ -430,7 +598,11 @@
         "unique_name": "stream_råbæk_1"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 20
+      "geometry_n_coords": 20,
+      "geometry_centroid": [
+        10.543747933081358,
+        55.40542961861556
+      ]
     },
     {
       "id": 526454616,
@@ -439,7 +611,11 @@
         "unique_name": "building_17"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.545626374943007,
+        55.405400515873296
+      ]
     },
     {
       "id": 660245338,
@@ -457,7 +633,11 @@
         "unique_name": "road_odensevej_2"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 10
+      "geometry_n_coords": 10,
+      "geometry_centroid": [
+        10.561471212920178,
+        55.40538720839884
+      ]
     },
     {
       "id": 913158210,
@@ -466,7 +646,11 @@
         "unique_name": "building_18"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.559236894813637,
+        55.40536873351904
+      ]
     },
     {
       "id": 526674774,
@@ -475,7 +659,11 @@
         "unique_name": "building_19"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.548183256897783,
+        55.405333699610836
+      ]
     },
     {
       "id": 660245335,
@@ -485,7 +673,11 @@
         "unique_name": "driveway_9"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 6
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        10.557954681195067,
+        55.40533350901057
+      ]
     },
     {
       "id": 679030962,
@@ -497,7 +689,11 @@
         "unique_name": "stream_råbæk_culvert"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 4
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        10.545262999999998,
+        55.4051755
+      ]
     },
     {
       "id": 526674776,
@@ -506,7 +702,11 @@
         "unique_name": "building_20"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 6
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        10.551274970099284,
+        55.40517490718851
+      ]
     },
     {
       "id": 526679234,
@@ -515,7 +715,11 @@
         "unique_name": "building_21"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.554307781624127,
+        55.4051662388303
+      ]
     },
     {
       "id": 526674777,
@@ -524,7 +728,11 @@
         "unique_name": "building_22"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.551552805106823,
+        55.405160000019286
+      ]
     },
     {
       "id": 627594939,
@@ -533,7 +741,11 @@
         "unique_name": "meadow_1"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 6
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        10.5467285599512,
+        55.405146877320234
+      ]
     },
     {
       "id": 526679232,
@@ -542,7 +754,11 @@
         "unique_name": "building_23"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.554565473599824,
+        55.40514524669651
+      ]
     },
     {
       "id": 526674778,
@@ -551,7 +767,11 @@
         "unique_name": "shed_3"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.550959710873196,
+        55.40513994888621
+      ]
     },
     {
       "id": 526679233,
@@ -560,7 +780,11 @@
         "unique_name": "building_24"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.554761698807408,
+        55.40509514911613
+      ]
     },
     {
       "id": 913158208,
@@ -569,7 +793,11 @@
         "unique_name": "building_25"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.5452165,
+        55.405015
+      ]
     },
     {
       "id": 141425549,
@@ -579,7 +807,11 @@
         "unique_name": "driveway_10"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 4
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        10.553035000000001,
+        55.404981500000005
+      ]
     },
     {
       "id": 141425547,
@@ -589,7 +821,11 @@
         "unique_name": "driveway_11"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 4
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        10.554368,
+        55.404954000000004
+      ]
     },
     {
       "id": 141425550,
@@ -599,7 +835,11 @@
         "unique_name": "driveway_12"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 4
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        10.5540065,
+        55.404919
+      ]
     },
     {
       "id": 526679227,
@@ -608,7 +848,11 @@
         "unique_name": "building_26"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.55281442811792,
+        55.40491054933985
+      ]
     },
     {
       "id": 526679229,
@@ -617,7 +861,11 @@
         "unique_name": "building_27"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.554144836541488,
+        55.40485071004126
+      ]
     },
     {
       "id": 526679228,
@@ -626,7 +874,11 @@
         "unique_name": "building_28"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.553363290793039,
+        55.404831024283276
+      ]
     },
     {
       "id": 141080967,
@@ -635,7 +887,11 @@
         "unique_name": "forest_2"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 8
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        10.558325262399256,
+        55.40482682700731
+      ]
     },
     {
       "id": 526679230,
@@ -644,7 +900,11 @@
         "unique_name": "shed_4"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.554400168590803,
+        55.40476112131208
+      ]
     },
     {
       "id": 141425548,
@@ -654,7 +914,11 @@
         "unique_name": "driveway_13"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 14
+      "geometry_n_coords": 14,
+      "geometry_centroid": [
+        10.551246068015791,
+        55.404755382940344
+      ]
     },
     {
       "id": 526679231,
@@ -663,7 +927,11 @@
         "unique_name": "shed_5"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.554761099938156,
+        55.40471746147187
+      ]
     },
     {
       "id": 791224454,
@@ -672,7 +940,11 @@
         "unique_name": "building_29"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.56751125986079,
+        55.404678972931166
+      ]
     },
     {
       "id": 560834893,
@@ -681,7 +953,11 @@
         "unique_name": "path_1"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 4
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        10.563745,
+        55.404661
+      ]
     },
     {
       "id": 660245339,
@@ -692,7 +968,11 @@
         "unique_name": "driveway_14"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 6
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        10.567752449434389,
+        55.40465595607969
+      ]
     },
     {
       "id": 560830926,
@@ -709,7 +989,11 @@
         "unique_name": "road_odensevej_3"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 34
+      "geometry_n_coords": 34,
+      "geometry_centroid": [
+        10.56830944547355,
+        55.40465345366059
+      ]
     },
     {
       "id": 560834896,
@@ -719,7 +1003,11 @@
         "unique_name": "cycleway_1"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 4
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        10.5646075,
+        55.404633999999994
+      ]
     },
     {
       "id": 791223891,
@@ -728,7 +1016,11 @@
         "unique_name": "building_30"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.567491264239028,
+        55.404584239028935
+      ]
     },
     {
       "id": 791224261,
@@ -737,7 +1029,11 @@
         "unique_name": "building_31"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.567606122432077,
+        55.404551189032475
+      ]
     },
     {
       "id": 526679235,
@@ -746,7 +1042,11 @@
         "unique_name": "building_32"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.554056100411241,
+        55.40453277926281
+      ]
     },
     {
       "id": 913158224,
@@ -755,7 +1055,11 @@
         "unique_name": "house_2"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 19
+      "geometry_n_coords": 19,
+      "geometry_centroid": [
+        10.563586886441273,
+        55.40447429874707
+      ]
     },
     {
       "id": 913158225,
@@ -764,7 +1068,11 @@
         "unique_name": "building_33"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.564373520019807,
+        55.40446393002352
+      ]
     },
     {
       "id": 460728907,
@@ -773,7 +1081,11 @@
         "unique_name": "farmland_3"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 8
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        10.556999032198393,
+        55.40432190656241
+      ]
     },
     {
       "id": 913158206,
@@ -782,7 +1094,11 @@
         "unique_name": "greenhouse_1"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 44
+      "geometry_n_coords": 44,
+      "geometry_centroid": [
+        10.550290099318234,
+        55.404226413782254
+      ]
     },
     {
       "id": 460731409,
@@ -791,7 +1107,11 @@
         "unique_name": "farmland_4"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 16
+      "geometry_n_coords": 16,
+      "geometry_centroid": [
+        10.561978251921206,
+        55.404144629289945
+      ]
     },
     {
       "id": 460731418,
@@ -800,7 +1120,11 @@
         "unique_name": "farmland_5"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 11
+      "geometry_n_coords": 11,
+      "geometry_centroid": [
+        10.565421754545923,
+        55.40413461377781
+      ]
     },
     {
       "id": 460731422,
@@ -809,7 +1133,11 @@
         "unique_name": "meadow_2"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 11
+      "geometry_n_coords": 11,
+      "geometry_centroid": [
+        10.55503093357682,
+        55.4041257747212
+      ]
     },
     {
       "id": 913158223,
@@ -818,7 +1146,11 @@
         "unique_name": "building_34"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.564134091863517,
+        55.40410086351707
+      ]
     },
     {
       "id": 913158221,
@@ -827,7 +1159,11 @@
         "unique_name": "building_35"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.564152353062061,
+        55.40404226551582
+      ]
     },
     {
       "id": 913158222,
@@ -836,7 +1172,11 @@
         "unique_name": "building_36"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.5642435420765,
+        55.40400666120218
+      ]
     },
     {
       "id": 913158207,
@@ -845,7 +1185,11 @@
         "unique_name": "greenhouse_2"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 11
+      "geometry_n_coords": 11,
+      "geometry_centroid": [
+        10.552670330454296,
+        55.40398761281871
+      ]
     },
     {
       "id": 141080680,
@@ -855,7 +1199,11 @@
         "unique_name": "service_1"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 46
+      "geometry_n_coords": 46,
+      "geometry_centroid": [
+        10.566326262075492,
+        55.40392053199559
+      ]
     },
     {
       "id": 913158220,
@@ -864,7 +1212,11 @@
         "unique_name": "house_3"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 11
+      "geometry_n_coords": 11,
+      "geometry_centroid": [
+        10.564410042247683,
+        55.40378647792304
+      ]
     },
     {
       "id": 141080961,
@@ -874,7 +1226,11 @@
         "unique_name": "driveway_15"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 6
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        10.556122270070752,
+        55.4037646731954
+      ]
     },
     {
       "id": 526679236,
@@ -883,7 +1239,11 @@
         "unique_name": "building_37"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.556290399218964,
+        55.40364947274756
+      ]
     },
     {
       "id": 913158219,
@@ -892,7 +1252,11 @@
         "unique_name": "building_38"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.565736031670626,
+        55.40361834283452
+      ]
     },
     {
       "id": 526679237,
@@ -901,7 +1265,11 @@
         "unique_name": "building_39"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.55669927801792,
+        55.40359152733938
+      ]
     },
     {
       "id": 913158218,
@@ -910,7 +1278,11 @@
         "unique_name": "building_40"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.5663145,
+        55.4035635
+      ]
     },
     {
       "id": 460729100,
@@ -919,7 +1291,11 @@
         "unique_name": "farmland_6"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 18
+      "geometry_n_coords": 18,
+      "geometry_centroid": [
+        10.558742351306366,
+        55.403557130282465
+      ]
     },
     {
       "id": 913158217,
@@ -928,7 +1304,11 @@
         "unique_name": "building_41"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 24
+      "geometry_n_coords": 24,
+      "geometry_centroid": [
+        10.56597568629001,
+        55.40342636511543
+      ]
     },
     {
       "id": 460728898,
@@ -945,7 +1325,11 @@
         "unique_name": "road_kertemindevejen_2"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 38
+      "geometry_n_coords": 38,
+      "geometry_centroid": [
+        10.556124061824272,
+        55.402848189137195
+      ]
     },
     {
       "id": 460731412,
@@ -954,7 +1338,11 @@
         "unique_name": "meadow_3"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.552630020006912,
+        55.40264175902085
+      ]
     },
     {
       "id": 526679238,
@@ -963,7 +1351,11 @@
         "unique_name": "building_42"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.556099695758524,
+        55.402306245576696
+      ]
     },
     {
       "id": 141080679,
@@ -976,7 +1368,11 @@
         "unique_name": "driveway_16"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 50
+      "geometry_n_coords": 50,
+      "geometry_centroid": [
+        10.565468584853463,
+        55.40229618007956
+      ]
     },
     {
       "id": 141080960,
@@ -986,7 +1382,11 @@
         "unique_name": "driveway_17"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 8
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        10.555971873877244,
+        55.402019203153934
+      ]
     },
     {
       "id": 460731898,
@@ -995,7 +1395,11 @@
         "unique_name": "meadow_4"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 15
+      "geometry_n_coords": 15,
+      "geometry_centroid": [
+        10.559626411542569,
+        55.401774140894794
+      ]
     },
     {
       "id": 526679239,
@@ -1004,7 +1408,11 @@
         "unique_name": "building_43"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.555924845409105,
+        55.40121036960328
+      ]
     },
     {
       "id": 141080962,
@@ -1014,7 +1422,11 @@
         "unique_name": "driveway_18"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 4
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        10.55573,
+        55.401101499999996
+      ]
     },
     {
       "id": 526679241,
@@ -1023,7 +1435,11 @@
         "unique_name": "shed_6"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.556043248677248,
+        55.401036920634915
+      ]
     },
     {
       "id": 526679240,
@@ -1032,7 +1448,11 @@
         "unique_name": "shed_7"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.556125521407624,
+        55.40103483949169
+      ]
     },
     {
       "id": 141427752,
@@ -1043,7 +1463,11 @@
         "unique_name": "forest_råbæk_skov"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.551458870749654,
+        55.40097318792588
+      ]
     },
     {
       "id": 460728911,
@@ -1052,7 +1476,11 @@
         "unique_name": "farmland_7"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 65
+      "geometry_n_coords": 65,
+      "geometry_centroid": [
+        10.535765874753267,
+        55.40093925489295
+      ]
     },
     {
       "id": 141080963,
@@ -1062,7 +1490,11 @@
         "unique_name": "driveway_19"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 8
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        10.55823357263189,
+        55.400831894680664
+      ]
     },
     {
       "id": 627594943,
@@ -1071,7 +1503,11 @@
         "unique_name": "farmland_8"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 57
+      "geometry_n_coords": 57,
+      "geometry_centroid": [
+        10.5728543842579,
+        55.40078298893086
+      ]
     },
     {
       "id": 913158216,
@@ -1082,7 +1518,11 @@
         "unique_name": "hotel_1"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.564417672968997,
+        55.4007085500685
+      ]
     },
     {
       "id": 460728884,
@@ -1091,7 +1531,11 @@
         "unique_name": "grassland_1"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 12
+      "geometry_n_coords": 12,
+      "geometry_centroid": [
+        10.54881057469609,
+        55.40069776282118
+      ]
     },
     {
       "id": 679030984,
@@ -1101,7 +1545,11 @@
         "unique_name": "stream_råbæk_2"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 64
+      "geometry_n_coords": 64,
+      "geometry_centroid": [
+        10.547308448530568,
+        55.400404011103205
+      ]
     },
     {
       "id": 141080030,
@@ -1111,7 +1559,11 @@
         "unique_name": "forest_geelsskov"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 99
+      "geometry_n_coords": 99,
+      "geometry_centroid": [
+        10.568328950897047,
+        55.40031123850384
+      ]
     },
     {
       "id": 460728893,
@@ -1120,7 +1572,11 @@
         "unique_name": "farmland_9"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.553927547184285,
+        55.40012459158647
+      ]
     },
     {
       "id": 460728891,
@@ -1129,7 +1585,11 @@
         "unique_name": "meadow_5"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 6
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        10.55048030961266,
+        55.39990592035981
+      ]
     },
     {
       "id": 913158205,
@@ -1138,7 +1598,11 @@
         "unique_name": "building_44"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.556178959655044,
+        55.3998475807478
+      ]
     },
     {
       "id": 141080964,
@@ -1148,7 +1612,11 @@
         "unique_name": "driveway_20"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 16
+      "geometry_n_coords": 16,
+      "geometry_centroid": [
+        10.55595269411557,
+        55.39976300035772
+      ]
     },
     {
       "id": 912433893,
@@ -1157,7 +1625,11 @@
         "unique_name": "greenhouse_3"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 100
+      "geometry_n_coords": 100,
+      "geometry_centroid": [
+        10.558996132076178,
+        55.39967539470408
+      ]
     },
     {
       "id": 113523547,
@@ -1166,7 +1638,11 @@
         "unique_name": "water_2"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 21
+      "geometry_n_coords": 21,
+      "geometry_centroid": [
+        10.546174115510302,
+        55.39951187228628
+      ]
     },
     {
       "id": 913158204,
@@ -1175,7 +1651,11 @@
         "unique_name": "building_45"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 11
+      "geometry_n_coords": 11,
+      "geometry_centroid": [
+        10.556123426399735,
+        55.39929596468469
+      ]
     },
     {
       "id": 141081296,
@@ -1184,7 +1664,11 @@
         "unique_name": "forest_3"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.555784389340909,
+        55.398982207746826
+      ]
     },
     {
       "id": 141081297,
@@ -1194,7 +1678,11 @@
         "unique_name": "driveway_21"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 12
+      "geometry_n_coords": 12,
+      "geometry_centroid": [
+        10.555434292778232,
+        55.398754338623235
+      ]
     },
     {
       "id": 913158200,
@@ -1203,7 +1691,11 @@
         "unique_name": "building_46"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.556024663099667,
+        55.39870659767976
+      ]
     },
     {
       "id": 913158199,
@@ -1212,7 +1704,11 @@
         "unique_name": "building_47"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.555530750045438,
+        55.39854849996214
+      ]
     },
     {
       "id": 913158202,
@@ -1221,7 +1717,11 @@
         "unique_name": "building_48"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.554746696090819,
+        55.39852248546843
+      ]
     },
     {
       "id": 913158203,
@@ -1230,7 +1730,11 @@
         "unique_name": "building_49"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.554555383617723,
+        55.39844169681764
+      ]
     },
     {
       "id": 460825238,
@@ -1243,7 +1747,11 @@
         "unique_name": "cycleway_2"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 212
+      "geometry_n_coords": 212,
+      "geometry_centroid": [
+        10.553369698425389,
+        55.39844078724148
+      ]
     },
     {
       "id": 913158201,
@@ -1252,7 +1760,11 @@
         "unique_name": "building_50"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.554775761261192,
+        55.39833567005171
+      ]
     },
     {
       "id": 660312252,
@@ -1262,7 +1774,11 @@
         "unique_name": "driveway_22"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 8
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        10.554746652197544,
+        55.39825367640132
+      ]
     },
     {
       "id": 912390643,
@@ -1271,7 +1787,11 @@
         "unique_name": "building_51"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.549938777943593,
+        55.39822860629821
+      ]
     },
     {
       "id": 912390644,
@@ -1280,7 +1800,11 @@
         "unique_name": "building_52"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 13
+      "geometry_n_coords": 13,
+      "geometry_centroid": [
+        10.549836907534072,
+        55.39805783213252
+      ]
     },
     {
       "id": 912390642,
@@ -1289,7 +1813,11 @@
         "unique_name": "building_53"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.5495585,
+        55.3979775
+      ]
     },
     {
       "id": 460731414,
@@ -1298,7 +1826,11 @@
         "unique_name": "farmland_10"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 41
+      "geometry_n_coords": 41,
+      "geometry_centroid": [
+        10.560766444604576,
+        55.397959624824935
+      ]
     },
     {
       "id": 912390645,
@@ -1307,7 +1839,11 @@
         "unique_name": "building_54"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.549839877350776,
+        55.39784480635051
+      ]
     },
     {
       "id": 460731901,
@@ -1316,7 +1852,11 @@
         "unique_name": "farmland_11"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.552400236821983,
+        55.397807670153924
+      ]
     },
     {
       "id": 675564142,
@@ -1334,7 +1874,11 @@
         "unique_name": "road_kertemindevejen_3"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 20
+      "geometry_n_coords": 20,
+      "geometry_centroid": [
+        10.554716576739953,
+        55.397721892329955
+      ]
     },
     {
       "id": 141427750,
@@ -1344,7 +1888,11 @@
         "unique_name": "driveway_23"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 20
+      "geometry_n_coords": 20,
+      "geometry_centroid": [
+        10.549722263955683,
+        55.3976033053226
+      ]
     },
     {
       "id": 912390641,
@@ -1353,7 +1901,11 @@
         "unique_name": "building_55"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.549502,
+        55.39753300000001
+      ]
     },
     {
       "id": 460731415,
@@ -1362,7 +1914,11 @@
         "unique_name": "farmland_12"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 44
+      "geometry_n_coords": 44,
+      "geometry_centroid": [
+        10.564969653667687,
+        55.39744794783378
+      ]
     },
     {
       "id": 912390640,
@@ -1371,7 +1927,11 @@
         "unique_name": "building_56"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 9
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        10.549293599833671,
+        55.39736762264944
+      ]
     },
     {
       "id": 912390639,
@@ -1380,7 +1940,11 @@
         "unique_name": "building_57"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.549304234098244,
+        55.39719720494356
+      ]
     },
     {
       "id": 460731903,
@@ -1389,7 +1953,11 @@
         "unique_name": "farmland_13"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 17
+      "geometry_n_coords": 17,
+      "geometry_centroid": [
+        10.555906549439278,
+        55.397167921221524
+      ]
     },
     {
       "id": 141427747,
@@ -1402,7 +1970,11 @@
         "unique_name": "road_kertemindevejen_4"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 8
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        10.551825870166834,
+        55.39709646807984
+      ]
     },
     {
       "id": 460825235,
@@ -1412,7 +1984,11 @@
         "unique_name": "driveway_24"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 4
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        10.550539,
+        55.397037999999995
+      ]
     },
     {
       "id": 912390634,
@@ -1421,7 +1997,11 @@
         "unique_name": "building_58"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 21
+      "geometry_n_coords": 21,
+      "geometry_centroid": [
+        10.553203025136838,
+        55.396905898473264
+      ]
     },
     {
       "id": 460728918,
@@ -1430,7 +2010,11 @@
         "unique_name": "meadow_6"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 13
+      "geometry_n_coords": 13,
+      "geometry_centroid": [
+        10.542887288451961,
+        55.396810770668004
+      ]
     },
     {
       "id": 912390636,
@@ -1439,7 +2023,11 @@
         "unique_name": "building_59"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.550000685466577,
+        55.39679448147123
+      ]
     },
     {
       "id": 912390627,
@@ -1448,7 +2036,11 @@
         "unique_name": "building_60"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.555482,
+        55.396765
+      ]
     },
     {
       "id": 141427748,
@@ -1457,7 +2049,11 @@
         "unique_name": "forest_4"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 6
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        10.551943374578242,
+        55.396660520050816
+      ]
     },
     {
       "id": 912390625,
@@ -1466,7 +2062,11 @@
         "unique_name": "building_61"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 5
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        10.555717,
+        55.3966595
+      ]
     },
     {
       "id": 1174762790,
@@ -1475,7 +2075,11 @@
         "unique_name": "service_2"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 6
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        10.555099160625396,
+        55.39660717585758
+      ]
     },
     {
       "id": 141081294,
@@ -1485,7 +2089,11 @@
         "unique_name": "driveway_25"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 6
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        10.555251209114008,
+        55.396464770949294
+      ]
     },
     {
       "id": 912390623,
@@ -1494,7 +2102,11 @@
         "unique_name": "greenhouse_4"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 35
+      "geometry_n_coords": 35,
+      "geometry_centroid": [
+        10.557445670043146,
+        55.396404519887184
+      ]
     },
     {
       "id": 141081293,
@@ -1504,7 +2116,11 @@
         "unique_name": "driveway_26"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 18
+      "geometry_n_coords": 18,
+      "geometry_centroid": [
+        10.557364271900953,
+        55.39638707535837
+      ]
     },
     {
       "id": 460728877,
@@ -1513,7 +2129,11 @@
         "unique_name": "farmland_14"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 12
+      "geometry_n_coords": 12,
+      "geometry_centroid": [
+        10.54931992925941,
+        55.39613278119867
+      ]
     },
     {
       "id": 141081395,
@@ -1522,7 +2142,11 @@
         "unique_name": "forest_5"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 7
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        10.567192570343765,
+        55.39601459234705
+      ]
     },
     {
       "id": 614894482,
@@ -1532,7 +2156,11 @@
         "unique_name": "river_geelså_2"
       },
       "geometry_type": "LineString",
-      "geometry_n_coords": 598
+      "geometry_n_coords": 598,
+      "geometry_centroid": [
+        10.572880704004556,
+        55.39525759632947
+      ]
     },
     {
       "id": 113523552,
@@ -1543,7 +2171,11 @@
         "unique_name": "forest_letmose_skov"
       },
       "geometry_type": "Polygon",
-      "geometry_n_coords": 32
+      "geometry_n_coords": 32,
+      "geometry_centroid": [
+        10.550368280350549,
+        55.39372685778395
+      ]
     }
   ]
 }

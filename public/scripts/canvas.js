@@ -92,20 +92,25 @@ function setCanvasSize() {
 // -------------------- OSM Background --------------------
 // const bbox = [55.328827, 10.528357, 55.343826, 10.558462]; // Davinde Sjø
 const orig_bbox = [55.39671, 10.544325, 55.411684, 10.567929]; // Rivers, lakes, roads and buildings
-const gridSize = 10;
-const extraTiles = 5;
-const cellWidth = canvas.width / gridSize;
-const cellHeight = canvas.height / gridSize;
-let zoom = 19;
+const extraTiles = 3;
+let zoom = 17;
 let topLeft = latLonToTile(orig_bbox[2], orig_bbox[1], zoom);
 let bottomRight = latLonToTile(orig_bbox[0], orig_bbox[3], zoom);
 let topLeftLatLon = tileToLatLon(topLeft.x, topLeft.y, zoom);
 let bottomRightLatLon = tileToLatLon(bottomRight.x + 1, bottomRight.y + 1, zoom);
 const bbox = [bottomRightLatLon.lat, topLeftLatLon.lon, topLeftLatLon.lat, bottomRightLatLon.lon];
+console.log(bbox);
 let tilesX = bottomRight.x - topLeft.x + 1;
 let tilesY = bottomRight.y - topLeft.y + 1;
 let images = [];
 
+function latLonToTile(lat, lon, zoom) {
+  const sin = Math.sin(lat * Math.PI / 180);
+  const z2 = Math.pow(2, zoom);
+  const x = Math.floor(z2 * (lon / 360 + 0.5));
+  const y = Math.floor(z2 * (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI)));
+  return { x, y };
+}
 
 function tileToLatLon(x, y, zoom) {
   const n = Math.pow(2, zoom);
@@ -116,14 +121,6 @@ function tileToLatLon(x, y, zoom) {
   const lat_deg = lat_rad * (180 / Math.PI);
 
   return { lat: lat_deg, lon: lon_deg };
-}
-
-function latLonToTile(lat, lon, zoom) {
-    const sin = Math.sin(lat * Math.PI / 180);
-    const z2 = Math.pow(2, zoom);
-    const x = Math.floor(z2 * (lon / 360 + 0.5));
-    const y = Math.floor(z2 * (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI)));
-    return { x, y };
 }
 
 function getTileURL(x, y, zoom) {
@@ -163,7 +160,11 @@ function drawCanvas() {
         }
     }
 
-    drawGeoJSON();
+    if (geoJSON) {
+        drawGeoJSON();
+    } else {
+        loadAndProcessGeoJSON();
+    }
 
     // Draw a dashed bounding box from 0 to tiles X and Y
     drawDashedLine(ctx, [0, 0], [tilesX * tileWidth, 0], 10);
@@ -183,10 +184,10 @@ function removeCoordsOutsideBbox(coords) {
 }
 
 function latLonToCanvas(lat, lon) {
-  const west = topLeftLatLon.lon;
-  const east = bottomRightLatLon.lon;
-  const south = bottomRightLatLon.lat;
-  const north = topLeftLatLon.lat;
+  const west = bbox[1];
+  const east = bbox[3];
+  const south = bbox[0];
+  const north = bbox[2];
   
   const x = ((lon - west) / (east - west)) * canvas.width;
   const y = ((north - lat) / (north - south)) * canvas.height;
@@ -205,7 +206,7 @@ function calculateCentroid(coords) {
   };
 }
 
-function drawPolygon(points, name, centroid) {
+function drawPolygon(points, name) {
   try {
     // Get the first word in the name as the feature type
     featureType = name.split('_')[0];
@@ -227,21 +228,21 @@ function drawPolygon(points, name, centroid) {
       ctx.stroke();
     }
     
-    if (showNames) {
-      // Text
-      ctx.fillStyle = 'black';
-      ctx.font = '12px Arial';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(name, centroid.x, centroid.y);
-    }
+    // if (showNames) {
+    //   // Text
+    //   ctx.fillStyle = 'black';
+    //   ctx.font = '12px Arial';
+    //   ctx.textAlign = 'center';
+    //   ctx.textBaseline = 'middle';
+    //   ctx.fillText(name, centroid.x, centroid.y);
+    // }
 
   } catch (error) {
     console.log(error);
   }
 }
 
-function drawLineString(points, name, centroid) {
+function drawLineString(points, name) {
   try {
     // Get the first word in the name as the feature type
     featureType = name.split('_')[0];
@@ -260,24 +261,27 @@ function drawLineString(points, name, centroid) {
       ctx.stroke();
     }
 
-    if (showNames) {
-      // Choose text coords as median point
-      const textX = points[Math.floor(points.length / 2)].x;
-      const textY = points[Math.floor(points.length / 2)].y;
+    // if (showNames) {
+    //   // Choose text coords as median point
+    //   const textX = points[Math.floor(points.length / 2)].x;
+    //   const textY = points[Math.floor(points.length / 2)].y;
       
-      // Text
-      ctx.fillStyle = 'black';
-      ctx.font = '12px Arial';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(name, textX, textY);
-    }
+    //   // Text
+    //   ctx.fillStyle = 'black';
+    //   ctx.font = '12px Arial';
+    //   ctx.textAlign = 'center';
+    //   ctx.textBaseline = 'middle';
+    //   ctx.fillText(name, textX, textY);
+    // }
   } catch (error) {
     console.log(error);
   }
 }
 
 function drawGeoJSON() {
+  // Names to draw list
+  const namesToDraw = [];
+  // Order features first with polygons, then linestrings
   geoJSON.features.forEach(feature => {
       const coords = feature.geometry.coordinates;
       const uniqueName = feature.properties.unique_name;
@@ -297,17 +301,34 @@ function drawGeoJSON() {
           return latLonToCanvas(lat, lon);
       });
       
-      // Calculate centroid
-      const centroidGeo = calculateCentroid(geoCoords);
-      const centroidCanvas = latLonToCanvas(centroidGeo.lat, centroidGeo.lon);
-      
       // Draw feature
       if (feature.geometry.type === 'Polygon') {
-          drawPolygon(points, uniqueName, centroidCanvas);
+          const centroidGeo = calculateCentroid(geoCoords);
+          const centroidCanvas = latLonToCanvas(centroidGeo.lat, centroidGeo.lon);
+          drawPolygon(points, uniqueName);
+          namesToDraw.push(uniqueName, centroidCanvas);
       } else if (feature.geometry.type === 'LineString') {
-          drawLineString(points, uniqueName, centroidCanvas);
+          const textX = points[Math.floor(points.length / 2)].x;
+          const textY = points[Math.floor(points.length / 2)].y;
+          drawLineString(points, uniqueName);
+          namesToDraw.push(uniqueName, { x: textX, y: textY });
       }
   });
+
+  // Draw names
+  if (showNames) {
+    namesToDraw.forEach((name, idx) => {
+      if (idx % 2 === 0) {
+        const textX = namesToDraw[idx + 1].x;
+        const textY = namesToDraw[idx + 1].y;
+        ctx.fillStyle = 'black';
+        ctx.font = '12px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(name, textX, textY);
+      }
+    });
+  }
 }
 
 // -------------------- Drawing Functions --------------------
@@ -582,14 +603,15 @@ function drawStatus() {
         behaviorString = "Random Walk";
         break;
       case "form_and_follow_trajectory":
-        let trajectoryStr = "";
-        for (let i = 0; i < group.bhvr.params.trajectory.length; i++) {
-          const dest = group.bhvr.params.trajectory[i];
-          trajectoryStr += `(${dest[0]}, ${dest[1]})`;
-          if (i < group.bhvr.params.trajectory.length - 1) {
-            trajectoryStr += " → ";
-          }
-        }
+        let trajectoryStr = "" + group.bhvr.params.trajectory.length + " points";
+        // let trajectoryStr = "";
+        // for (let i = 0; i < group.bhvr.params.trajectory.length; i++) {
+        //   const dest = group.bhvr.params.trajectory[i];
+        //   trajectoryStr += `(${dest[0]}, ${dest[1]})`;
+        //   if (i < group.bhvr.params.trajectory.length - 1) {
+        //     trajectoryStr += " → ";
+        //   }
+        // }
         behaviorString = `Form & Follow Trajectory (${group.bhvr.params.formation_shape}) [${trajectoryStr}]`;
         break;
       default:

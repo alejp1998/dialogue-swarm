@@ -8,7 +8,7 @@ function sleep(ms) {
 }
 
 // -------------------- Constants --------------------
-const TIME_STEP = 10; // Time step in milliseconds
+const TIME_STEP = 25; // Time step in milliseconds
 
 // -------------------- Simulation Variables --------------------
 

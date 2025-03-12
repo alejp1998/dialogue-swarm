@@ -1,15 +1,16 @@
 import geopandas as gpd
-import folium
 import requests
 import geojson
 import json
+import os
 from shapely.geometry import shape
 
+# VARIABLES
 overpass_url = "http://overpass-api.de/api/interpreter"
-bbox = "55.39671, 10.544325, 55.411684, 10.567929"
+data_dir = "data/"
 output_prefix = "features"
 
-
+# FUNCTIONS
 def overpass_to_geojson_featurecollection(overpass_json):
     """Converts Overpass JSON to GeoJSON FeatureCollection, creating polygons when possible."""
     features = []
@@ -31,8 +32,14 @@ def overpass_to_geojson_featurecollection(overpass_json):
         shape(f['geometry']).centroid.x    # x coordinate ascending
     ))
 
-    # Read features_mapped_to_names.json dict
-    with open('features_mapped_to_names.json', 'r') as f:
+    # Check if features_mapped_to_names.json exists
+    file_path = data_dir + 'features_mapped_to_names.json'
+    if not os.path.exists(file_path):
+        print(f"{file_path} not found, skipping feature names")
+        return geojson.FeatureCollection(features)
+    
+    # Load features_mapped_to_names.json
+    with open(file_path, 'r') as f:
         features_mapped_to_names = json.load(f)
     
     # Flip keys and values in features_mapped_to_names dict
@@ -41,30 +48,13 @@ def overpass_to_geojson_featurecollection(overpass_json):
     # Add names to features
     for feature in features:
         if feature['id'] in features_mapped_to_names:
-            print(features_mapped_to_names[feature['id']])
+            # print(features_mapped_to_names[feature['id']])
             feature['properties']['unique_name'] = features_mapped_to_names[feature['id']]
 
     return geojson.FeatureCollection(features)
 
-def plot_overpass_features(overpass_query, output_file="map.html"):
-    """Plots features from an Overpass Turbo query on a Folium map."""
-
-    # 1. Run the Overpass Turbo Query
-    formatted_overpass_query = overpass_query.format(bbox=bbox)
-    print(f"Running Overpass Turbo Query:\n {formatted_overpass_query}")
-    response = requests.get(overpass_url, params={"data": formatted_overpass_query})
-    response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
-    overpass_data = response.json()
-
-    # 2. Convert to GeoJSON string
-    feature_collection = overpass_to_geojson_featurecollection(overpass_data)
-    geojson_str = geojson.dumps(feature_collection, indent=2)
-
-    # Save GeoJSON
-    with open(f"{output_prefix}.geojson", "w") as f:
-        f.write(geojson_str)
-
-    # Modify features to replace coordinates with count
+def replace_coordinates_with_count(feature_collection):
+    """Replaces coordinates with count and centroid, simplifying the GeoJSON."""
     for feature in feature_collection["features"]:
         if "geometry" in feature and "coordinates" in feature["geometry"]:
             coordinates = feature["geometry"]["coordinates"]
@@ -84,88 +74,104 @@ def plot_overpass_features(overpass_query, output_file="map.html"):
                 geometry = feature["geometry"]
                 feature["geometry_type"] = geometry["type"]
                 feature["geometry_n_coords"] = num_coords
+                feature["geometry_centroid"] = shape(geometry).centroid.coords[0]
                 del feature["geometry"]
 
-    # Convert to GeoJSON string
-    geojson_str_no_coords = geojson.dumps(feature_collection, indent=2)
+    return feature_collection
 
-    # Save GeoJSON
-    with open(f"{output_prefix}_no_coords.geojson", "w") as f:
+def save_overpass_features_as_geojson(overpass_query):
+    """Plots features from an Overpass Turbo query on a Folium map."""
+
+    # Run the Overpass Turbo Query
+    formatted_overpass_query = overpass_query.format(bbox=bbox)
+    # print(f"Running Overpass Turbo Query:\n {formatted_overpass_query}")
+    response = requests.get(overpass_url, params={"data": formatted_overpass_query})
+    response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
+    overpass_data = response.json()
+
+    # Convert to GeoJSON string (if features_mapped_to_names.json exists, add unique names as properties)
+    feature_collection = overpass_to_geojson_featurecollection(overpass_data)
+    geojson_str = geojson.dumps(feature_collection, indent=2)
+
+    # Save original GeoJSON
+    file_path_geojson = data_dir + output_prefix + ".geojson"
+    with open(file_path_geojson, "w") as f:
+        f.write(geojson_str)
+
+    # Modify features to replace coordinates with count and other simplifications
+    feature_collection_no_coords = replace_coordinates_with_count(feature_collection)
+
+    # Convert to GeoJSON string
+    geojson_str_no_coords = geojson.dumps(feature_collection_no_coords, indent=2)
+
+    # Save simplified GeoJSON
+    file_path_geojson_no_coords = data_dir + output_prefix + "_no_coords.geojson"
+    with open(file_path_geojson_no_coords, "w") as f:
         f.write(geojson_str_no_coords)
 
-    # Load GeoJSON
-    gdf = gpd.read_file(f"{output_prefix}.geojson")
 
-    # 3. Create Folium Map
-    if not gdf.empty:
-      center = [gdf.geometry.centroid.y.mean(), gdf.geometry.centroid.x.mean()]
-    else:
-      print("Geodataframe is empty, please check your query and your bounding box")
-      return
+###############################################
+#################### MAIN #####################
+###############################################
 
-    m = folium.Map(location=center, zoom_start=16)
+# Bounding Box
+bbox = "55.39671, 10.544325, 55.411684, 10.567929"
 
-    # 4. Add GeoJSON Layer
-    folium.GeoJson(gdf).add_to(m)
-
-    # 5. Save the Map
-    m.save(output_file)
-    print(f"Map saved to {output_file}")
-
-# Example Usage
+# Overpass Query
 overpass_query = f"""
 [out:json];
 (
   // Lakes, Reservoirs, Ponds, Pools
-  way[natural~"water|reservoir"][water~"lake|reservoir|pond|pool"]({{bbox}});
-  relation[natural~"water|reservoir"][water~"lake|reservoir|pond|pool"]({{bbox}});
-  node[natural="water"][water~"lake|reservoir|pond|pool"]({{bbox}});
-  way[natural="water"]({{bbox}});
-  relation[natural="water"]({{bbox}});
-  way[landuse="reservoir"]({{bbox}});
-  relation[landuse="reservoir"]({{bbox}});
+  way[natural~"water|reservoir"][water~"lake|reservoir|pond|pool"]({bbox});
+  relation[natural~"water|reservoir"][water~"lake|reservoir|pond|pool"]({bbox});
+  node[natural="water"][water~"lake|reservoir|pond|pool"]({bbox});
+  way[natural="water"]({bbox});
+  relation[natural="water"]({bbox});
+  way[landuse="reservoir"]({bbox});
+  relation[landuse="reservoir"]({bbox});
 
   // Rivers, Streams, Canals, Ditches
-  way[waterway~"river|stream|canal|ditch"]({{bbox}});
-  relation[waterway~"river|stream|canal|ditch"]({{bbox}});
+  way[waterway~"river|stream|canal|ditch"]({bbox});
+  relation[waterway~"river|stream|canal|ditch"]({bbox});
 
   // Coastlines
-  way[natural="coastline"]({{bbox}});
+  way[natural="coastline"]({bbox});
 
   // Wetlands
-  way[natural="wetland"]({{bbox}});
-  relation[natural="wetland"]({{bbox}});
+  way[natural="wetland"]({bbox});
+  relation[natural="wetland"]({bbox});
 
   // Buildings
-  way[building]({{bbox}});
-  relation[building]({{bbox}});
+  way[building]({bbox});
+  relation[building]({bbox});
 
   // Forests and Woodlands
-  way[natural~"wood|forest"]({{bbox}});
-  relation[natural~"wood|forest"]({{bbox}});
-  way[landuse="forest"]({{bbox}});
-  relation[landuse="forest"]({{bbox}});
+  way[natural~"wood|forest"]({bbox});
+  relation[natural~"wood|forest"]({bbox});
+  way[landuse="forest"]({bbox});
+  relation[landuse="forest"]({bbox});
 
   // Parks and Recreation Areas
-  way[leisure="park"]({{bbox}});
-  relation[leisure="park"]({{bbox}});
-  way[landuse~"recreation_ground|grass"]({{bbox}});
-  relation[landuse~"recreation_ground|grass"]({{bbox}});
-  node[leisure="park"]({{bbox}});
+  way[leisure="park"]({bbox});
+  relation[leisure="park"]({bbox});
+  way[landuse~"recreation_ground|grass"]({bbox});
+  relation[landuse~"recreation_ground|grass"]({bbox});
+  node[leisure="park"]({bbox});
 
   // Roads
-  way[highway]({{bbox}});
-  relation[highway]({{bbox}});
+  way[highway]({bbox});
+  relation[highway]({bbox});
 
   // Fields (Comprehensive)
-  way[landuse~"farmland|meadow|greenfield|grassland|pasture|allotments|village_green"]({{bbox}});
-  relation[landuse~"farmland|meadow|greenfield|grassland|pasture|allotments|village_green"]({{bbox}});
-  way[natural~"grass|scrub|heath"]({{bbox}});
-  relation[natural~"grass|scrub|heath"]({{bbox}});
-  way[area="yes"][!landuse][!natural][!highway][!building][!waterway][!leisure]({{bbox}});
-  relation[area="yes"][!landuse][!natural][!highway][!building][!waterway][!leisure]({{bbox}});
+  way[landuse~"farmland|meadow|greenfield|grassland|pasture|allotments|village_green"]({bbox});
+  relation[landuse~"farmland|meadow|greenfield|grassland|pasture|allotments|village_green"]({bbox});
+  way[natural~"grass|scrub|heath"]({bbox});
+  relation[natural~"grass|scrub|heath"]({bbox});
+  way[area="yes"][!landuse][!natural][!highway][!building][!waterway][!leisure]({bbox});
+  relation[area="yes"][!landuse][!natural][!highway][!building][!waterway][!leisure]({bbox});
 );
 out geom;
 """
 
-plot_overpass_features(overpass_query)
+# Save Overpass Features as GeoJSON
+save_overpass_features_as_geojson(overpass_query)

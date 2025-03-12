@@ -12,6 +12,7 @@ from sklearn.cluster import KMeans, DBSCAN
 
 from openai import OpenAI
 from typing import Dict, List, Tuple, Any
+import geojson
 import json
 
 # CONSTANTS
@@ -21,11 +22,19 @@ with open("mykeys/openai_api_key.txt", "r") as f:
 
 # POSSIBLE BEHAVIORS AND PARAMS
 BEHAVIORS = {
+    "form_and_move_around_shape": {
+        "states": ["form", "rotate", "move"],
+        "params": {
+            "formation_shape": ["circle", "square", "triangle", "hexagon"],
+            "formation_radius": [0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0],
+            "name": ["building_1", "building_2", "river_geeslå"]
+        }
+    },
     "form_and_follow_trajectory": {
         "states": ["form", "rotate", "move"],
         "params": {
             "formation_shape": ["circle", "square", "triangle", "hexagon"],
-            "formation_radius": [0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
+            "formation_radius": [0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0],
             "trajectory": [[0.0, 0.0], [1.0, 1.0], [2.0, 2.0], [3.0, 3.0]]
         }
     },
@@ -34,6 +43,75 @@ BEHAVIORS = {
         "params": {}
     }
 }
+
+# PROMPTS
+# Load system prompt
+with open("prompts/swarm_agent.txt", "r") as f:
+    SYSTEM_PROMPT = f.read()
+
+# FEATURES
+# Load features_mapped_to_names.json
+with open("data/features_mapped_to_names.json", "r") as f:
+    features_mapped_to_names = json.load(f)
+
+# Load features.geojson
+with open("data/features.geojson", "r") as f:
+    features_geojson = geojson.load(f)
+
+# Create list of unique_names that correspond to Polygon features
+polygon_feature_names = [feature["properties"]["unique_name"] for feature in features_geojson["features"] if feature["geometry"]["type"] == "Polygon"]
+# Sort them alphabetically
+polygon_feature_names.sort()
+# Create a list of unique_names that correspond to LineString features
+linestring_feature_names = [feature["properties"]["unique_name"] for feature in features_geojson["features"] if feature["geometry"]["type"] == "LineString"]
+# Sort them alphabetically
+linestring_feature_names.sort()
+
+# ARENA MAPPING FUNCTIONS
+bbox = [55.39627171359563, 10.54412841796875, 55.41186640197955, 10.56884765625]
+arena_width = 20
+arena_height = 20
+def latLonToArena(lat, lon):
+    west = bbox[1] # min lon
+    east = bbox[3] # max lon
+    south = bbox[0] # min lat
+    north = bbox[2] # max lat
+
+    x = ((lon - west) / (east - west)) * arena_width
+    y = ((north - lat) / (north - south)) * arena_height
+    return x, y
+
+# Given a bounding box and the arena size, map the coordinates of all features to the arena
+# This is: long must be between [0, arena_width] and lat must be between [0, arena_height]
+def map_features_to_arena(features_geojson):
+    features = features_geojson["features"]
+    for feature in features:
+        if "geometry" in feature:
+            if feature["geometry"]["type"] == "Polygon":
+                for i, part in enumerate(feature["geometry"]["coordinates"]):
+                    for j, coord in enumerate(part):
+                        x, y = latLonToArena(coord[1], coord[0])
+                        feature["geometry"]["coordinates"][i][j] = [x, y]
+            elif feature["geometry"]["type"] == "LineString":
+                for i, coord in enumerate(feature["geometry"]["coordinates"]):
+                    x, y = latLonToArena(coord[1], coord[0])
+                    feature["geometry"]["coordinates"][i] = [x, y]
+    return features_geojson
+
+# Remove all coordinates of LineString outside of the bounding box
+def remove_outside_coordinates(features_geojson):
+    features = features_geojson["features"]
+    for feature in features:
+        if "geometry" in feature:
+            if feature["geometry"]["type"] == "LineString":
+                feature["geometry"]["coordinates"] = [coord for coord in feature["geometry"]["coordinates"] if coord[0] >= 0 and coord[0] <= arena_width and coord[1] >= 0 and coord[1] <= arena_height]
+    return features_geojson
+
+# Map features to arena
+features_geojson = map_features_to_arena(features_geojson)
+
+# Remove outside coordinates
+features_geojson = remove_outside_coordinates(features_geojson)
 
 # CLIENT
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -197,7 +275,6 @@ class Group:
             # Initialize behavior state
             behavior_dict["state"] = 0
             self.bhvr = behavior_dict
-
         elif behavior_name == "random_walk":
             # Initialize behavior state
             behavior_dict["state"] = 0
@@ -395,62 +472,13 @@ class SwarmAgent:
         self.tools = [
             self.gen_group_by_ids,
             self.gen_groups_by_clustering,
-            self.assign_random_walk_behavior_to_group,
-            self.assign_form_and_follow_trajectory_behavior_to_group
+            self.random_walk,
+            self.form_and_follow_trajectory,
+            self.form_and_move_around_shape,
+            self.form_and_move_to_shape
         ]
         self.memory = []
-        self.system_prompt = """Your role is to manage drone groups and assign them specific behaviors using the provided tools. Follow these instructions carefully.
-
-        # Context:
-        Available Robot IDs [robot_idxs]: {robot_idxs}
-        Current Groups [{{group_idx: [robot_idxs]}}, ...]: {groups_str}
-
-        # Important Coordinates:
-        Field: (4.5, 2.5)
-        Forest: (13.5, 3.5)
-        Town: (4.0, 10.0)
-        Farm: (17.0, 10.0)
-        River: from (10.0, 0) to (10.0, 15.0)
-        Road: from (0.0, 10.0) to (20.0, 10.0)
-        Bridge: (10.0, 10.0)
-        Lake: (10.0, 17.5)
-
-        # Available Tools:
-        1. Create a Group by IDs
-        Function: gen_group_by_ids(robot_idxs: list[int])
-        Description: Creates a robot group from a specific list of robot IDs.
-        Example: To form four groups of 5 robots each from a swarm of 20:
-        gen_group_by_ids([0,1,2,3,4])
-        gen_group_by_ids([5,6,7,8,9])
-        gen_group_by_ids([10,11,12,13,14])
-        gen_group_by_ids([15,16,17,18,19])
-
-        2. Cluster Drones by Proximity
-        Function: gen_groups_by_clustering(num_groups: int)
-        Description: Clusters drones into the specified number of groups based on proximity.
-        Example: To cluster 20 robots into 3 groups:
-        gen_groups_by_clustering(3)
-
-        3. Assign "Random Walk" Behavior
-        Function: assign_random_walk_behavior_to_group(group_idx: int)
-        Description: Assigns a random movement behavior to the drones in the specified group.
-        Example: To make drones in group 1 move randomly:
-        assign_random_walk_behavior_to_group(1)
-        
-        4. Assign "Form and Follow Trajectory" Behavior
-        Function: assign_form_and_follow_trajectory_behavior_to_group(group_idx: int, formation_shape: str, formation_radius: float, trajectory: list)
-        Description: Directs a group to form a specified formation and follow a trajectory along given waypoints. If you are just asked to move a group to a destination, call the function with one waypoint in the trajectory.
-        Example 1: To have group 2 move in a square formation (radius 1.0) to destination (17, 3):
-        assign_form_and_follow_trajectory_behavior_to_group(2, "square", 1.0, [[17, 3]])
-        Example 2: To have group 3 move in a square formation (radius 1.0) along the trajectory [(0, 0), (1, 1), (2, 2), (3, 3)]:
-        assign_form_and_follow_trajectory_behavior_to_group(3, "square", 1.0, [[0, 0], [1, 1], [2, 2], [3, 3]])
-        
-        # Guidelines:
-        Validate all parameters before executing any function.
-        Provide clear responses that include outputs from the tools. 
-        Do not finish messages with "if there is anything else I can help you with" or "what else can I do for you", be concise and to the point. 
-        Execute all required function calls in the correct order.
-        Do not combine calls to grouping and movement functions, call grouping functions first and then ask the user for permission to move the group."""
+        self.system_prompt = SYSTEM_PROMPT
         
     def _format_memory(self):
         """Convert memory entries to proper message format"""
@@ -508,7 +536,7 @@ class SwarmAgent:
                 },
                 "required": ["num_groups"]
             }
-        elif func.__name__ == "assign_random_walk_behavior_to_group":
+        elif func.__name__ == "random_walk":
             return {
                 "type": "object",
                 "properties": {
@@ -516,7 +544,7 @@ class SwarmAgent:
                 },
                 "required": ["group_idx"]
             }
-        elif func.__name__ == "assign_form_and_follow_trajectory_behavior_to_group":
+        elif func.__name__ == "form_and_follow_trajectory":
             return {
                 "type": "object",
                 "properties": {
@@ -527,8 +555,8 @@ class SwarmAgent:
                     },
                     "formation_radius": {
                         "type": "number",
-                        "minimum": 0.5,
-                        "maximum": 2.0
+                        "minimum": 0.125,
+                        "maximum": 1.0
                     },
                     "trajectory": {
                         "type": "array",
@@ -544,6 +572,46 @@ class SwarmAgent:
                 },
                 "required": ["group_idx", "formation_shape", "formation_radius", "trajectory"]
             }
+        elif func.__name__ == "form_and_move_around_shape":
+            return {
+                "type": "object",
+                "properties": {
+                    "group_idx": {"type": "integer"},
+                    "formation_shape": {
+                        "type": "string", 
+                        "enum": ["circle", "square", "triangle", "hexagon"]
+                    },
+                    "formation_radius": {
+                        "type": "number",
+                        "minimum": 0.125,
+                        "maximum": 1.0
+                    },
+                    "name": {
+                        "type": "string",
+                    }
+                },
+                "required": ["group_idx", "formation_shape", "formation_radius", "name"]
+            }
+        elif func.__name__ == "form_and_move_to_shape":
+            return {
+                "type": "object",
+                "properties": {
+                    "group_idx": {"type": "integer"},
+                    "formation_shape": {
+                        "type": "string", 
+                        "enum": ["circle", "square", "triangle", "hexagon"]
+                    },
+                    "formation_radius": {
+                        "type": "number",
+                        "minimum": 0.125,
+                        "maximum": 1.0
+                    },
+                    "name": {
+                        "type": "string",
+                    }
+                },
+                "required": ["group_idx", "formation_shape", "formation_radius", "name"]
+            }
         
     def send_message(self, user_input: str):
         # Build current context strings
@@ -555,7 +623,13 @@ class SwarmAgent:
             groups_str += f"[{group.idx}: [{group_robot_idxs}], "
         
         # Build message history with correct structure
-        formatted_system_prompt = self.system_prompt.format(robot_idxs=robot_idxs, groups_str=groups_str)
+        formatted_system_prompt = self.system_prompt.format(
+            linestring_feature_names=linestring_feature_names,
+            polygon_feature_names=polygon_feature_names,
+            robot_idxs=robot_idxs, 
+            groups_str=groups_str
+        )
+
         # self.app.logger.info(f"Formatted system prompt: {formatted_system_prompt}")
         messages = [
             {"role": "system", "content": formatted_system_prompt},
@@ -614,7 +688,7 @@ class SwarmAgent:
                 self.memory.extend(tool_responses)
                 
                 # Get final response with full context
-                formatted_system_prompt = self.system_prompt.format(robot_idxs=robot_idxs, groups_str=groups_str)
+                # formatted_system_prompt = self.system_prompt.format(robot_idxs=robot_idxs, groups_str=groups_str)
                 final_messages = [
                     {"role": "system", "content": formatted_system_prompt},
                     *self._format_memory()
@@ -649,19 +723,19 @@ class SwarmAgent:
         self.swarm.gen_groups_by_clustering(num_groups)
         return f"Drones grouped successfully in {num_groups} groups"
 
-    def assign_random_walk_behavior_to_group(self, group_idx: int):
+    def random_walk(self, group_idx: int):
         self.swarm.assign_random_walk_behavior_to_group(group_idx)
         return f"random_walk behavior assigned to group {group_idx}"
     
-    def assign_form_and_follow_trajectory_behavior_to_group(self, group_idx: int,
-                                                            formation_shape: str,
-                                                            formation_radius: float,
-                                                            trajectory: List[Tuple[float, float]]): 
+    def form_and_follow_trajectory(self, group_idx: int,
+                                    formation_shape: str,
+                                    formation_radius: float,
+                                    trajectory: List[Tuple[float, float]]): 
         # Validation logic
-        if formation_radius < 0.5 or formation_radius > 2.0:
-            return "Invalid radius value"
+        if formation_radius < 0.125 or formation_radius > 1.0:
+            return "Invalid radius value: must be between 0.125 and 1.0"
         if formation_shape not in ["circle", "square", "triangle", "hexagon"]:
-            return "Invalid formation shape"
+            return "Invalid formation shape: must be 'circle', 'square', 'triangle', or 'hexagon'"
         if len(trajectory) < 1 or any(len(pos) != 2 for pos in trajectory):
             return "Invalid trajectory"
         
@@ -670,6 +744,73 @@ class SwarmAgent:
         )
         return f"form_and_follow_trajectory behavior assigned to group {group_idx} with formation shape {formation_shape}, radius {formation_radius}, and trajectory {trajectory}"
 
+    def form_and_move_around_shape(self, group_idx: int,
+                                    formation_shape: str,
+                                    formation_radius: float,
+                                    name: str):
+        # Validation logic
+        if formation_radius < 0.125 or formation_radius > 1.0:
+            return "Invalid radius value: must be between 0.125 and 1.0"
+        if formation_shape not in ["circle", "square", "triangle", "hexagon"]:
+            return "Invalid formation shape: must be 'circle', 'square', 'triangle', or 'hexagon'"
+        if name not in polygon_feature_names + linestring_feature_names:
+            return "Invalid feature name: must be one of the available features"
+        
+        # Get the GeoJSON feature with unique_name = name
+        feature = next(f for f in features_geojson["features"] if f["properties"]["unique_name"] == name)
+        # Get the coordinates of the feature depending on its geometry type
+        if feature["geometry"]["type"] == "Polygon":
+            coords = feature["geometry"]["coordinates"][0]
+        elif feature["geometry"]["type"] == "LineString":
+            coords = feature["geometry"]["coordinates"]
+        else:
+            return "Invalid feature type"
+        
+        # self.app.logger.info(f"Feature coordinates: {coords}")
+
+        self.swarm.assign_form_and_follow_trajectory_behavior_to_group(
+            group_idx, formation_shape, formation_radius, coords
+        )
+        return f"form_and_move_around_shape behavior assigned to group {group_idx} with formation shape {formation_shape}, radius {formation_radius}, and feature name {name}"
+    
+    def form_and_move_to_shape(self, group_idx: int,
+                                formation_shape: str,
+                                formation_radius: float,
+                                name: str):
+        # Validation logic
+        if formation_radius < 0.125 or formation_radius > 1.0:
+            return "Invalid radius value: must be between 0.125 and 1.0"
+        if formation_shape not in ["circle", "square", "triangle", "hexagon"]:
+            return "Invalid formation shape: must be 'circle', 'square', 'triangle', or 'hexagon'"
+        if name not in polygon_feature_names + linestring_feature_names:
+            return "Invalid feature name: must be one of the available features"
+        
+        # Get the GeoJSON feature with unique_name = name
+        feature = next(f for f in features_geojson["features"] if f["properties"]["unique_name"] == name)
+        # Get the coordinates of the feature depending on its geometry type
+        if feature["geometry"]["type"] == "Polygon":
+            coords = feature["geometry"]["coordinates"][0]
+        elif feature["geometry"]["type"] == "LineString":
+            coords = feature["geometry"]["coordinates"]
+        else:
+            return "Invalid feature type"
+        
+        # If LineString, get the coordinate in the middle
+        if feature["geometry"]["type"] == "LineString":
+            center = coords[len(coords) // 2]
+            coords = [center]
+        # If Polygon, get the centroid
+        else:
+            x = np.mean([coord[0] for coord in coords])
+            y = np.mean([coord[1] for coord in coords])
+            coords = [[x, y]]
+        
+        # self.app.logger.info(f"Feature coordinates: {coords}")
+
+        self.swarm.assign_form_and_follow_trajectory_behavior_to_group(
+            group_idx, formation_shape, formation_radius, coords
+        )
+        return f"form_and_move_to_shape behavior assigned to group {group_idx} with formation shape {formation_shape}, radius {formation_radius}, and feature name {name}"
 
 # AUXILIARY FUNCTIONS
 

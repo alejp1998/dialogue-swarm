@@ -27,13 +27,10 @@ log.addFilter(NoSuccessFilter())
 
 # CONFIGURATION FILES (within /data folder)
 SIM_CONFIG_FILE = os.path.join(app.root_path, "data", "sim_config.json")
-# FEATURES_FILE = os.path.join(app.root_path, "data", "features.json")
 
 # Load config and features from JSON files
 with open(SIM_CONFIG_FILE, "r") as file:
     SIM_CONFIG = json.load(file)
-# with open(FEATURES_FILE, "r") as file:
-#     FEATURES = json.load(file)
 
 # Assign values to Python variables
 ENV = SIM_CONFIG["env"]
@@ -163,9 +160,13 @@ def chat():
 @app.route('/')
 def index():
     """Serve the index.html file"""
-    return send_from_directory('.', 'index.html')
+    return send_from_directory('./public', 'index.html')
 
 @app.route('/<path:path>')
 def static_file(path):
     """Serve static files from the 'static' directory"""
     return send_from_directory('./public', path)
+
+@app.route('/data/<path:path>')
+def send_data(path):
+    return send_from_directory('data', path)
