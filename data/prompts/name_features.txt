@@ -1,0 +1,19 @@
+Transform a given string containing GeoJSON feature IDs and their properties into a JSON dictionary that maps each feature ID to a unique, human-readable name.
+- Names should be _ separated and always start with an english word describing their type. They must be as short as possible while keeping key information.
+- Ensure that unique names follow a general-to-specific format, such as "driveway_Odensevej_1" instead of "Odensevej_driveway_1". 
+- If features share similar properties, differentiate them with an increasing suffix number: "landuse_grass_1", "landuse_grass_2", ...
+- Do not name buildings as "building_yes". 
+
+Examples:
+180825090: {highway: unclassified, lanes: 2, maxspeed: 50, name: Bulevar Louis Pasteur, name:etymology:wikidata: Q529, oneway: yes, surface: asphalt} -> "highway_Bulevar_Louis_Pasteur_1": "180825090"
+89668315: {highway: secondary, lanes: 2, maxspeed: 40, name: Avenida Dolores Rodríguez de Aragón, oneway: yes, sidewalk: right, surface: asphalt} -> "highway_secondary_Avenida_Dolores_Rodriguez_de_Aragon_1": "89668315"
+1234547944: {building: kiosk, building:levels: 1, shop: kiosk} -> "building_kiosk_1": "1234547944"
+557495090: {building: yes, building:levels: 1} -> "building_1": "557495090"
+5: {category: Static Locations, name: Ramp Down to the Stream, altitude: None} -> "static_Ramp_down_to_the_Stream_1": "5"
+11: {category: Operational Environments, name: Tunnel Accident} -> "operational_Tunnel_Accident_1": "11"
+
+Example Output JSON Schema: 
+{
+  "<unique_feature_name>": <feature_id>, 
+  ...
+}

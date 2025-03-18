@@ -22,14 +22,6 @@ with open("mykeys/openai_api_key.txt", "r") as f:
 
 # POSSIBLE BEHAVIORS AND PARAMS
 BEHAVIORS = {
-    "form_and_move_around_shape": {
-        "states": ["form", "rotate", "move"],
-        "params": {
-            "formation_shape": ["circle", "square", "triangle", "hexagon"],
-            "formation_radius": [0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0],
-            "name": ["building_1", "building_2", "river_geeslå"]
-        }
-    },
     "form_and_follow_trajectory": {
         "states": ["form", "rotate", "move"],
         "params": {
@@ -46,72 +38,8 @@ BEHAVIORS = {
 
 # PROMPTS
 # Load system prompt
-with open("prompts/swarm_agent.txt", "r") as f:
+with open("data/prompts/swarm_agent.txt", "r") as f:
     SYSTEM_PROMPT = f.read()
-
-# FEATURES
-# Load features_mapped_to_names.json
-with open("data/features_mapped_to_names.json", "r") as f:
-    features_mapped_to_names = json.load(f)
-
-# Load features.geojson
-with open("data/features.geojson", "r") as f:
-    features_geojson = geojson.load(f)
-
-# Create list of unique_names that correspond to Polygon features
-polygon_feature_names = [feature["properties"]["unique_name"] for feature in features_geojson["features"] if feature["geometry"]["type"] == "Polygon"]
-# Sort them alphabetically
-polygon_feature_names.sort()
-# Create a list of unique_names that correspond to LineString features
-linestring_feature_names = [feature["properties"]["unique_name"] for feature in features_geojson["features"] if feature["geometry"]["type"] == "LineString"]
-# Sort them alphabetically
-linestring_feature_names.sort()
-
-# ARENA MAPPING FUNCTIONS
-bbox = [55.39627171359563, 10.54412841796875, 55.41186640197955, 10.56884765625]
-arena_width = 20
-arena_height = 20
-def latLonToArena(lat, lon):
-    west = bbox[1] # min lon
-    east = bbox[3] # max lon
-    south = bbox[0] # min lat
-    north = bbox[2] # max lat
-
-    x = ((lon - west) / (east - west)) * arena_width
-    y = ((north - lat) / (north - south)) * arena_height
-    return x, y
-
-# Given a bounding box and the arena size, map the coordinates of all features to the arena
-# This is: long must be between [0, arena_width] and lat must be between [0, arena_height]
-def map_features_to_arena(features_geojson):
-    features = features_geojson["features"]
-    for feature in features:
-        if "geometry" in feature:
-            if feature["geometry"]["type"] == "Polygon":
-                for i, part in enumerate(feature["geometry"]["coordinates"]):
-                    for j, coord in enumerate(part):
-                        x, y = latLonToArena(coord[1], coord[0])
-                        feature["geometry"]["coordinates"][i][j] = [x, y]
-            elif feature["geometry"]["type"] == "LineString":
-                for i, coord in enumerate(feature["geometry"]["coordinates"]):
-                    x, y = latLonToArena(coord[1], coord[0])
-                    feature["geometry"]["coordinates"][i] = [x, y]
-    return features_geojson
-
-# Remove all coordinates of LineString outside of the bounding box
-def remove_outside_coordinates(features_geojson):
-    features = features_geojson["features"]
-    for feature in features:
-        if "geometry" in feature:
-            if feature["geometry"]["type"] == "LineString":
-                feature["geometry"]["coordinates"] = [coord for coord in feature["geometry"]["coordinates"] if coord[0] >= 0 and coord[0] <= arena_width and coord[1] >= 0 and coord[1] <= arena_height]
-    return features_geojson
-
-# Map features to arena
-features_geojson = map_features_to_arena(features_geojson)
-
-# Remove outside coordinates
-features_geojson = remove_outside_coordinates(features_geojson)
 
 # CLIENT
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -218,7 +146,7 @@ class Robot:
 
     def _update_battery_level(self):
         """Update robot battery level"""
-        self.battery_level = self.battery_level - 1/10000;
+        self.battery_level = self.battery_level - 1/25000
         if self.battery_level <= 0:
             self.battery_level = 0
 
@@ -466,9 +394,11 @@ class Swarm:
             group.step()
 
 class SwarmAgent:
-    def __init__(self, app, swarm: Swarm):
+    def __init__(self, app, swarm: Swarm, features_geojson):
         self.app = app
         self.swarm = swarm
+        self.features_geojson = features_geojson
+        self._set_feature_name_lists()
         self.tools = [
             self.gen_group_by_ids,
             self.gen_groups_by_clustering,
@@ -613,6 +543,38 @@ class SwarmAgent:
                 "required": ["group_idx", "formation_shape", "formation_radius", "name"]
             }
         
+    def _set_feature_name_lists(self):
+        # Create list of unique_names that correspond to Polygon features
+        polygon_names = []
+        linestring_names = []
+        point_names = []
+
+        for feature in self.features_geojson["features"]:
+            if feature["geometry"]["type"] == "Polygon":
+                try :
+                    polygon_names.append(feature["properties"]["unique_name"])
+                except KeyError:
+                    print(feature)
+            elif feature["geometry"]["type"] == "LineString":
+                try :
+                    linestring_names.append(feature["properties"]["unique_name"])
+                except KeyError:
+                    print(feature)
+            elif feature["geometry"]["type"] == "Point":
+                try :
+                    point_names.append(feature["properties"]["unique_name"])
+                except KeyError:
+                    print(feature)
+                
+        # Sort them alphabetically
+        polygon_names.sort()
+        linestring_names.sort()
+        point_names.sort()
+
+        self.point_names = point_names
+        self.linestring_names = linestring_names
+        self.polygon_names = polygon_names
+        
     def send_message(self, user_input: str):
         # Build current context strings
         robot_idxs = " ,".join(map(str, [robot.idx for robot in self.swarm.robots]))
@@ -624,8 +586,9 @@ class SwarmAgent:
         
         # Build message history with correct structure
         formatted_system_prompt = self.system_prompt.format(
-            linestring_feature_names=linestring_feature_names,
-            polygon_feature_names=polygon_feature_names,
+            point_names=self.point_names,
+            linestring_names=self.linestring_names,
+            polygon_names=self.polygon_names,
             robot_idxs=robot_idxs, 
             groups_str=groups_str
         )
@@ -753,11 +716,11 @@ class SwarmAgent:
             return "Invalid radius value: must be between 0.125 and 1.0"
         if formation_shape not in ["circle", "square", "triangle", "hexagon"]:
             return "Invalid formation shape: must be 'circle', 'square', 'triangle', or 'hexagon'"
-        if name not in polygon_feature_names + linestring_feature_names:
+        if name not in self.polygon_names + self.linestring_names + self.point_names:
             return "Invalid feature name: must be one of the available features"
         
         # Get the GeoJSON feature with unique_name = name
-        feature = next(f for f in features_geojson["features"] if f["properties"]["unique_name"] == name)
+        feature = next(f for f in self.features_geojson["features"] if f["properties"]["unique_name"] == name)
         # Get the coordinates of the feature depending on its geometry type
         if feature["geometry"]["type"] == "Polygon":
             coords = feature["geometry"]["coordinates"][0]
@@ -782,28 +745,25 @@ class SwarmAgent:
             return "Invalid radius value: must be between 0.125 and 1.0"
         if formation_shape not in ["circle", "square", "triangle", "hexagon"]:
             return "Invalid formation shape: must be 'circle', 'square', 'triangle', or 'hexagon'"
-        if name not in polygon_feature_names + linestring_feature_names:
+        if name not in self.polygon_names + self.linestring_names + self.point_names:
             return "Invalid feature name: must be one of the available features"
         
         # Get the GeoJSON feature with unique_name = name
-        feature = next(f for f in features_geojson["features"] if f["properties"]["unique_name"] == name)
+        feature = next(f for f in self.features_geojson["features"] if f["properties"]["unique_name"] == name)
         # Get the coordinates of the feature depending on its geometry type
         if feature["geometry"]["type"] == "Polygon":
             coords = feature["geometry"]["coordinates"][0]
-        elif feature["geometry"]["type"] == "LineString":
-            coords = feature["geometry"]["coordinates"]
-        else:
-            return "Invalid feature type"
-        
-        # If LineString, get the coordinate in the middle
-        if feature["geometry"]["type"] == "LineString":
-            center = coords[len(coords) // 2]
-            coords = [center]
-        # If Polygon, get the centroid
-        else:
             x = np.mean([coord[0] for coord in coords])
             y = np.mean([coord[1] for coord in coords])
             coords = [[x, y]]
+        elif feature["geometry"]["type"] == "LineString":
+            coords = feature["geometry"]["coordinates"]
+            center = coords[len(coords) // 2]
+            coords = [center]
+        elif feature["geometry"]["type"] == "Point":
+            coords = [feature["geometry"]["coordinates"]]
+        else:
+            return "Invalid feature type"
         
         # self.app.logger.info(f"Feature coordinates: {coords}")
 

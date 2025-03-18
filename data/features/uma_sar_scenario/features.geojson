@@ -1,0 +1,391 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Static Locations",
+        "name": "Forward Control Center",
+        "altitude": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.48936016,
+          36.71698075
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Static Locations",
+        "name": "Medical Tent",
+        "altitude": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.488774091,
+          36.71622231
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Static Locations",
+        "name": "Tunnel South Scenario",
+        "altitude": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.48824217,
+          36.71706685
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Static Locations",
+        "name": "Tunnel North Scenario",
+        "altitude": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.48854034,
+          36.71743269
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Static Locations",
+        "name": "Ramp Down to the Stream",
+        "altitude": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.48779425,
+          36.71706344
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Static Locations",
+        "name": "Base Station",
+        "altitude": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.48835542,
+          36.71481194
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Stream"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.486674743233518,
+              36.71633791704991
+            ],
+            [
+              -4.487579328088151,
+              36.71677211240119
+            ],
+            [
+              -4.487822956259148,
+              36.71665233153578
+            ],
+            [
+              -4.487603544666983,
+              36.71648030916452
+            ],
+            [
+              -4.487212637954313,
+              36.71623288350985
+            ],
+            [
+              -4.486808031729199,
+              36.71615681430162
+            ],
+            [
+              -4.485772955907116,
+              36.71514417183092
+            ],
+            [
+              -4.48563224327477,
+              36.71523871576353
+            ],
+            [
+              -4.486674743233518,
+              36.71633791704991
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Flood"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.484829212575513,
+              36.71474515566967
+            ],
+            [
+              -4.484779352954421,
+              36.71492925406859
+            ],
+            [
+              -4.485203829603941,
+              36.71503110060748
+            ],
+            [
+              -4.485282429162033,
+              36.71483953490688
+            ],
+            [
+              -4.484829212575513,
+              36.71474515566967
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Fire"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.487848021405036,
+              36.71586547674929
+            ],
+            [
+              -4.488093070436223,
+              36.71570969284928
+            ],
+            [
+              -4.487982297403107,
+              36.71554186606874
+            ],
+            [
+              -4.487738994337982,
+              36.71553418807757
+            ],
+            [
+              -4.487678056539125,
+              36.71578021898811
+            ],
+            [
+              -4.487848021405036,
+              36.71586547674929
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Forensic Area"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.488804730222345,
+              36.71742151767258
+            ],
+            [
+              -4.489061732260755,
+              36.71743130463144
+            ],
+            [
+              -4.489072544301518,
+              36.71724931033286
+            ],
+            [
+              -4.48892703832541,
+              36.71714056328588
+            ],
+            [
+              -4.488798045086809,
+              36.71728455744532
+            ],
+            [
+              -4.488804730222345,
+              36.71742151767258
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Tunnel Accident"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.488279037244665,
+              36.71725044304421
+            ],
+            [
+              -4.488411328718701,
+              36.71758040304144
+            ],
+            [
+              -4.488613385869482,
+              36.71751023601824
+            ],
+            [
+              -4.488426451808412,
+              36.71718987055259
+            ],
+            [
+              -4.488279037244665,
+              36.71725044304421
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Gas Leakage"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.487856984386464,
+              36.7150331591818
+            ],
+            [
+              -4.487876174219966,
+              36.71466909516985
+            ],
+            [
+              -4.486609380533256,
+              36.71460378563209
+            ],
+            [
+              -4.487053245962628,
+              36.71505856182208
+            ],
+            [
+              -4.487856984386464,
+              36.7150331591818
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Infrastructure Collapse"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.490237895076906,
+              36.7155291153807
+            ],
+            [
+              -4.490153296947224,
+              36.7151991738615
+            ],
+            [
+              -4.489892901655185,
+              36.71535998188331
+            ],
+            [
+              -4.49000904424596,
+              36.71555441220752
+            ],
+            [
+              -4.490237895076906,
+              36.7155291153807
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Command, Communication, and Control Area"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.489649318647352,
+              36.71685294864699
+            ],
+            [
+              -4.489235324515516,
+              36.71685320098904
+            ],
+            [
+              -4.489231434443042,
+              36.71757653698525
+            ],
+            [
+              -4.489659379736474,
+              36.71760226270865
+            ],
+            [
+              -4.489649318647352,
+              36.71685294864699
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

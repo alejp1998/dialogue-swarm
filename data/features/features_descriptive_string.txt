@@ -1,0 +1,92 @@
+1099706537: {natural: scrub}
+180825090: {highway: unclassified, lanes: 2, maxspeed: 50, name: Bulevar Louis Pasteur, name:etymology:wikidata: Q529, oneway: yes, surface: asphalt}
+89668315: {highway: secondary, lanes: 2, maxspeed: 40, name: Avenida Dolores Rodríguez de Aragón, oneway: yes, sidewalk: right, surface: asphalt}
+709902072: {highway: secondary, lanes: 2, maxspeed: 40, name: Avenida Dolores Rodríguez de Aragón, oneway: yes, sidewalk: right, surface: asphalt}
+484797664: {intermittent: yes, layer: -1, name: Arroyo de Las Cañas, tunnel: yes, waterway: stream}
+504221200: {highway: tertiary, lanes: 2, maxspeed: 50, name: Bulevar Louis Pasteur, name:etymology:wikidata: Q529, oneway: yes, surface: asphalt}
+1115813320: {natural: heath}
+709902074: {highway: tertiary, lanes: 2, maxspeed: 40, name: Avenida Dolores Rodríguez de Aragón, oneway: yes, sidewalk: right, surface: asphalt}
+1214728099: {landuse: grass}
+1214731372: {highway: footway}
+1214731371: {footway: crossing, highway: footway}
+1214731373: {footway: crossing, highway: footway}
+1115813324: {natural: heath}
+1214728084: {landuse: grass}
+589058523: {highway: cycleway, surface: paved}
+1214731364: {highway: footway}
+1214731363: {highway: footway}
+709902075: {highway: unclassified, lanes: 1, maxspeed: 30, noname: yes, oneway: yes, surface: asphalt}
+1214731368: {footway: sidewalk, highway: footway}
+1214728085: {landuse: grass}
+709902076: {highway: secondary, lanes: 4, lanes:backward: 2, lanes:forward: 2, maxspeed: 40, name: Calle Rafael Puertas Tricas, sidewalk: both, surface: asphalt}
+504221199: {highway: tertiary, lanes: 2, maxspeed: 50, name: Bulevar Louis Pasteur, name:etymology:wikidata: Q529, oneway: yes, surface: asphalt}
+1214731365: {highway: footway}
+1214728086: {landuse: grass}
+1214731375: {highway: footway}
+1214731367: {footway: crossing, highway: footway}
+1115813325: {natural: heath}
+557495090: {building: yes, building:levels: 1}
+557495087: {highway: service}
+589058522: {highway: cycleway, surface: paved}
+1214728087: {landuse: grass}
+1214731350: {highway: footway}
+1214733613: {building: roof, building:levels: 1, layer: 1}
+89668359: {highway: secondary, lanes: 4, lanes:backward: 2, lanes:forward: 2, maxspeed: 40, name: Calle Rafael Puertas Tricas, sidewalk: both, surface: asphalt}
+1214733612: {building: roof, building:levels: 1, layer: 1}
+1214728101: {landuse: grass}
+1214731369: {footway: crossing, highway: footway}
+1214731377: {highway: footway}
+1214728089: {landuse: grass}
+589193712: {highway: unclassified, junction: roundabout, lanes: 2, noname: yes, surface: asphalt}
+1214728088: {landuse: grass}
+1234547944: {building: kiosk, building:levels: 1, shop: kiosk}
+1214731379: {footway: sidewalk, highway: footway}
+1214731380: {footway: crossing, highway: footway}
+554233552: {landuse: grass}
+234917967: {highway: unclassified, lanes: 2, maxspeed: 30, name: Calle Doctor Ortiz Ramos, name:etymology: Pedro Ortiz Ramos, name:etymology:wikidata: Q131607567, oneway: no, surface: asphalt}
+1292067509: {building: roof, building:levels: 1}
+357765455: {highway: unclassified, junction: roundabout, lanes: 2, noname: yes, surface: asphalt}
+544106274: {highway: cycleway, surface: paved}
+902814833: {highway: track}
+1115813328: {natural: heath}
+183899701: {building: yes}
+902814830: {natural: scrub}
+484797665: {intermittent: yes, name: Arroyo de Las Cañas, waterway: stream}
+89668404: {highway: unclassified, lanes: 4, lanes:backward: 2, lanes:forward: 2, maxspeed: 40, name: Calle Rafael Puertas Tricas, surface: asphalt}
+183899702: {building: yes, building:levels: 2, name: Talleres de la Escuela de Ingenierías Industriales, operator: Universidad de Málaga, operator:type: university}
+1115813326: {natural: heath}
+557505341: {highway: service}
+902814815: {building: service, building:levels: 1}
+589213497: {building: kiosk}
+89668304: {highway: unclassified, lanes: 2, maxspeed: 40, name: Calle Arquitecto Francisco Peñalosa, oneway: yes, surface: asphalt}
+554235718: {landuse: grass}
+89668392: {highway: unclassified, junction: roundabout, lanes: 3, noname: yes, surface: asphalt}
+589213498: {landuse: grass}
+89668391: {highway: unclassified, lanes: 2, maxspeed: 40, name: Calle Arquitecto Francisco Peñalosa, oneway: yes, surface: asphalt}
+902693335: {highway: track}
+902814826: {highway: track}
+902814825: {highway: track}
+902693348: {natural: heath}
+902814818: {natural: heath}
+405392431: {highway: track}
+902693334: {highway: path}
+902814829: {natural: heath}
+902814827: {highway: track}
+599979440: {highway: track}
+902814824: {highway: track}
+45406857: {highway: motorway_link, lanes: 2, maxspeed: 80, oneway: yes}
+902693346: {natural: scrub}
+1: {category: Static Locations, name: Forward Control Center, altitude: None}
+2: {category: Static Locations, name: Medical Tent, altitude: None}
+3: {category: Static Locations, name: Tunnel South Scenario, altitude: None}
+4: {category: Static Locations, name: Tunnel North Scenario, altitude: None}
+5: {category: Static Locations, name: Ramp Down to the Stream, altitude: None}
+6: {category: Static Locations, name: Base Station, altitude: None}
+7: {category: Operational Environments, name: Stream}
+8: {category: Operational Environments, name: Flood}
+9: {category: Operational Environments, name: Fire}
+10: {category: Operational Environments, name: Forensic Area}
+11: {category: Operational Environments, name: Tunnel Accident}
+12: {category: Operational Environments, name: Gas Leakage}
+13: {category: Operational Environments, name: Infrastructure Collapse}
+14: {category: Operational Environments, name: Command, Communication, and Control Area}

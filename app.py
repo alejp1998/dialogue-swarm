@@ -10,6 +10,7 @@ import numpy as np
 
 # Import Swarm and Robot classes
 from src.swarm import SwarmAgent, Swarm, Robot
+from src.overpass import compute_square_bbox, get_geojson_features, map_features_to_arena
 
 # Create the Flask application
 app = Flask(__name__)
@@ -25,16 +26,48 @@ class NoSuccessFilter(logging.Filter):
 
 log.addFilter(NoSuccessFilter())
 
-# CONFIGURATION FILES (within /data folder)
-SIM_CONFIG_FILE = os.path.join(app.root_path, "data", "sim_config.json")
+# CONFIGURATION FILES (within /data/config folder)
+SIM_CONFIGS_FILE = os.path.join(app.root_path, "data", "config", "sim_configs.json")
+SIM_CONFIG_FILE = os.path.join(app.root_path, "data", "config", "simulation.json")
+VIS_CONFIG_FILE = os.path.join(app.root_path, "data", "config", "visualization.json")
 
-# Load config and features from JSON files
-with open(SIM_CONFIG_FILE, "r") as file:
-    SIM_CONFIG = json.load(file)
+# Load simulation configurations
+with open(SIM_CONFIGS_FILE, "r") as file:
+    SIM_CONFIGS = json.load(file)
+
+# Select the simulation configuration
+SIM_CONFIG_NAMES = ["uma_sar_scenario", "geelsa_greenhouses"]
+REGENERATE_FEATURES = False
+SIM_CONFIG_NAME = SIM_CONFIG_NAMES[0]
+SIM_CONFIG = SIM_CONFIGS[SIM_CONFIG_NAME]
+
+# Save configuration to JSON file
+with open(SIM_CONFIG_FILE, "w") as file:
+    json.dump(SIM_CONFIG, file, indent=2)
 
 # Assign values to Python variables
 ENV = SIM_CONFIG["env"]
 SETTINGS = SIM_CONFIG["settings"]
+
+# Compute the bounding box
+bbox, tiles_adapted_bbox = compute_square_bbox(ENV["center"], ENV["side_length_meters"], ENV["zoom"])
+
+features_processed_geojson_file = os.path.join(app.root_path, "data", "features", SIM_CONFIG_NAME, "features_processed.geojson")
+if REGENERATE_FEATURES or not os.path.exists(features_processed_geojson_file):
+    # Get Overpass features as GeoJSON
+    features_geojson = get_geojson_features(tiles_adapted_bbox, SIM_CONFIG_NAME)
+    # Create dir if it doesn't exist
+    os.makedirs(os.path.dirname(features_processed_geojson_file), exist_ok=True)
+    # Save features to the GeoJSON file
+    with open(features_processed_geojson_file, "w") as file:
+        json.dump(features_geojson, file, indent=2)
+else: 
+    # Load features from the existing GeoJSON file
+    with open(features_processed_geojson_file, "r") as file:
+        features_geojson = json.load(file)
+
+# Map features to arena and remove outer linestring coords
+features_geojson = map_features_to_arena(features_geojson, tiles_adapted_bbox, ENV["arena_width"], ENV["arena_height"])
 
 # Simulation functions
 def initialize_robot_positions(n, x_min=0, y_min=0, x_max=ENV["arena_width"], y_max=ENV["arena_height"], distance_from_edge=ENV["formation_radius"]):
@@ -49,9 +82,9 @@ def initialize_destinations(n, distance_from_edge=ENV["formation_radius"], arena
     return x, y
 
 # Initialize the swarm
-def initialize_swarm(n=SETTINGS["number_of_robots"], x_i=SETTINGS["field_start_x"], y_i=SETTINGS["field_start_y"],
-                     x_width=SETTINGS["field_width"], y_height=SETTINGS["field_height"], max_speed=SETTINGS["max_speed"]):
-    x, y = initialize_robot_positions(n, x_i, y_i, x_i + x_width, y_i + y_height)
+def initialize_swarm(n=SETTINGS["number_of_robots"], x_i=SETTINGS["start_bbox"][0], y_i=SETTINGS["start_bbox"][1],
+                     x_f=SETTINGS["start_bbox"][2], y_f=SETTINGS["start_bbox"][3], max_speed=SETTINGS["max_speed"]):
+    x, y = initialize_robot_positions(n, x_i, y_i, x_f, y_f)
     robots = [Robot(idx, x, y, max_speed=max_speed) for idx, (x, y) in enumerate(zip(x, y))]
     swarm = Swarm(robots)
     
@@ -75,7 +108,7 @@ initial_messages = [
 ]
 
 # Agent Initialization
-agent = SwarmAgent(app, swarm)
+agent = SwarmAgent(app, swarm, features_geojson)
 
 # Agent variables initialization
 agent_state = {
@@ -127,7 +160,6 @@ def get_state():
             "running": simulation_state["running"],
             "current_step": simulation_state["current_step"],
             "groups": groups,
-            "arena": {"width": ENV["arena_width"], "height": ENV["arena_height"]}
         })
 
 @app.route('/control', methods=['POST'])

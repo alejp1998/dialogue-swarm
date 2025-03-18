@@ -19,6 +19,13 @@ const COLORS = [
   '#EAB308'  // Gold yellow (less harsh than plain yellow)
 ];
 
+function hexToRgba(hex, opacity) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+}
+
 // -------------------- Helper Functions for Shapes --------------------
 
 // Compute vertices for an equilateral triangle (centered at 0,0)
@@ -52,6 +59,9 @@ const resetButton = document.getElementById('resetViewButton');
 // Show names and show shapes options
 let showNames = true;
 let showShapes = false;
+let showOverpass = true;
+let showHardcoded = true;
+let useSatellite = false;
 
 // Canvas interaction variables
 let zoomLevel = 1;
@@ -85,112 +95,86 @@ function setCanvasSize() {
   canvas.style.top = `${(containerHeight - canvasDisplayHeight) / 2}px`;
 
   // Keep your original render resolution (consider adding devicePixelRatio scaling)
-  canvas.width = arena.width * PPC;
-  canvas.height = arena.height * PPC;
+  canvas.width = ENV['arena_width'] * PPC;
+  canvas.height = ENV['arena_height'] * PPC;
 }
 
 // -------------------- OSM Background --------------------
-// const bbox = [55.328827, 10.528357, 55.343826, 10.558462]; // Davinde Sjø
-const orig_bbox = [55.39671, 10.544325, 55.411684, 10.567929]; // Rivers, lakes, roads and buildings
-const extraTiles = 3;
-let zoom = 17;
-let topLeft = latLonToTile(orig_bbox[2], orig_bbox[1], zoom);
-let bottomRight = latLonToTile(orig_bbox[0], orig_bbox[3], zoom);
-let topLeftLatLon = tileToLatLon(topLeft.x, topLeft.y, zoom);
-let bottomRightLatLon = tileToLatLon(bottomRight.x + 1, bottomRight.y + 1, zoom);
-const bbox = [bottomRightLatLon.lat, topLeftLatLon.lon, topLeftLatLon.lat, bottomRightLatLon.lon];
-console.log(bbox);
-let tilesX = bottomRight.x - topLeft.x + 1;
-let tilesY = bottomRight.y - topLeft.y + 1;
-let images = [];
-
-function latLonToTile(lat, lon, zoom) {
-  const sin = Math.sin(lat * Math.PI / 180);
-  const z2 = Math.pow(2, zoom);
-  const x = Math.floor(z2 * (lon / 360 + 0.5));
-  const y = Math.floor(z2 * (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI)));
-  return { x, y };
+function drawBbox(target_bbox) {
+  const topLeftCanvas = lonLatToCanvas(target_bbox[0], target_bbox[3]);
+  const bottomRightCanvas = lonLatToCanvas(target_bbox[2], target_bbox[1]);
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(topLeftCanvas.x, topLeftCanvas.y, bottomRightCanvas.x - topLeftCanvas.x, bottomRightCanvas.y - topLeftCanvas.y);
+  ctx.fillStyle = 'rgba(255, 0, 0, 0.0)';
+  ctx.fillRect(topLeftCanvas.x, topLeftCanvas.y, bottomRightCanvas.x - topLeftCanvas.x, bottomRightCanvas.y - topLeftCanvas.y);
+  ctx.fillStyle = 'rgba(255, 0, 0, 0)';
+  ctx.font = '12px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(`(${target_bbox[0]}, ${target_bbox[3]})`, topLeftCanvas.x + 5, topLeftCanvas.y + 5);
+  ctx.fillText(`(${target_bbox[2]}, ${target_bbox[1]})`, bottomRightCanvas.x - 5, bottomRightCanvas.y - 5);
 }
 
-function tileToLatLon(x, y, zoom) {
-  const n = Math.pow(2, zoom);
-  const lon_deg = (x / n) * 360 - 180;  // Longitude calculation
-  
-  // Latitude calculation using inverse Gudermannian function
-  const lat_rad = Math.atan(Math.sinh(Math.PI * (1 - 2 * y / n)));
-  const lat_deg = lat_rad * (180 / Math.PI);
+function drawTile(x, y) {
+  const tileWidth = canvas.width / tilesX;
+  const tileHeight = canvas.height / tilesY;
+  const tileX = (x - topLeft[0]) * tileWidth;
+  const tileY = (y - topLeft[1]) * tileHeight;
+  if (useSatellite) {
+    ctx.drawImage(satImages[`${x}`][`${y}`], tileX, tileY, tileWidth, tileHeight);
+  } else {
+    ctx.drawImage(images[`${x}`][`${y}`], tileX, tileY, tileWidth, tileHeight);
+  }
 
-  return { lat: lat_deg, lon: lon_deg };
-}
-
-function getTileURL(x, y, zoom) {
-    return `https://tile.openstreetmap.org/${zoom}/${x}/${y}.png`;
-}
-
-function loadTiles() {
-    images = [];
-    let loadedCount = 0;
-    
-    for (let x = topLeft.x - extraTiles; x <= bottomRight.x + extraTiles; x++) {
-        images[x - topLeft.x] = [];
-        for (let y = topLeft.y - extraTiles; y <= bottomRight.y + extraTiles; y++) {
-            let img = new Image();
-            img.src = getTileURL(x, y, zoom);
-            img.onload = () => {
-                loadedCount++;
-                if (loadedCount === tilesX * tilesY) {
-                    drawCanvas(topLeft, tilesX, tilesY);
-                }
-            };
-            images[x - topLeft.x][y - topLeft.y] = img;
-        }
-    }
+  // Draw tile borders and coordinates (optional)
+  // ctx.strokeStyle = "black";
+  // ctx.strokeRect(tileX, tileY, tileWidth, tileHeight);
+  // ctx.fillStyle = 'black';
+  // ctx.font = '12px Arial';
+  // ctx.textAlign = 'center';
+  // ctx.textBaseline = 'middle';
+  // ctx.fillText(`(${x},${y})`, tileX + tileWidth / 2, tileY + tileHeight / 2);
 }
 
 function drawCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    let tileWidth = canvas.width / tilesX;
-    let tileHeight = canvas.height / tilesY;
-    
-    ctx.strokeStyle = "black";
-    for (let x = 0 - extraTiles; x < tilesX + extraTiles; x++) {
-        for (let y = 0 - extraTiles; y < tilesY + extraTiles; y++) {
-            ctx.drawImage(images[x][y], x * tileWidth, y * tileHeight, tileWidth, tileHeight);
-            // ctx.strokeRect(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+
+    // Draw the OSM tiles
+    for (let x = topLeft[0] - extraTiles; x <= bottomRight[0] + extraTiles; x++) {
+        for (let y = topLeft[1] - extraTiles; y <= bottomRight[1] + extraTiles; y++) {
+            drawTile(x, y);
         }
     }
 
-    if (geoJSON) {
-        drawGeoJSON();
-    } else {
-        loadAndProcessGeoJSON();
-    }
+    // Draw the GeoJSON shapes
+    drawGeoJSON();
 
-    // Draw a dashed bounding box from 0 to tiles X and Y
-    drawDashedLine(ctx, [0, 0], [tilesX * tileWidth, 0], 10);
-    drawDashedLine(ctx, [0, 0], [0, tilesY * tileHeight], 10);
-    drawDashedLine(ctx, [tilesX * tileWidth, 0], [tilesX * tileWidth, tilesY * tileHeight], 10);
-    drawDashedLine(ctx, [0, tilesY * tileHeight], [tilesX * tileWidth, tilesY * tileHeight], 10);
+    // Draw the given bbox
+    drawBbox(bbox);
+    // Draw the original bbox
+    // drawBbox(orig_bbox);
+    // Draw the original center
+    // center_canvas_coords = lonLatToCanvas(center[0], center[1])
+    // ctx.beginPath();
+    // ctx.arc(center_canvas_coords.x, center_canvas_coords.y, 20, 0, 2 * Math.PI); // Radius of 5 pixels
+    // ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+    // ctx.fill();
+    // ctx.closePath();
+
 }
-
-loadTiles();
 
 // -------------------- GeoJSON Drawing Functions --------------------
 
-function removeCoordsOutsideBbox(coords) {
-  return coords.filter(coord => {
-    return coord[1] >= bbox[0] && coord[1] <= bbox[2] && coord[0] >= bbox[1] && coord[0] <= bbox[3];
-  });
-}
+function lonLatToCanvas(lon, lat) {
+  const min_lon = bbox[0];
+  const min_lat = bbox[1];
+  const max_lon = bbox[2];
+  const max_lat = bbox[3];
 
-function latLonToCanvas(lat, lon) {
-  const west = bbox[1];
-  const east = bbox[3];
-  const south = bbox[0];
-  const north = bbox[2];
-  
-  const x = ((lon - west) / (east - west)) * canvas.width;
-  const y = ((north - lat) / (north - south)) * canvas.height;
+  const x = ((lon - min_lon) / (max_lon - min_lon)) * ENV['arena_width'] * PPC;
+  const y = ((max_lat - lat) / (max_lat - min_lat)) * ENV['arena_height'] * PPC;
+
   return { x, y };
 }
 
@@ -200,81 +184,87 @@ function calculateCentroid(coords) {
       sumLon += coord[0];
       sumLat += coord[1];
   });
-  return {
-      lon: sumLon / coords.length,
-      lat: sumLat / coords.length
-  };
+  return [sumLon / coords.length, sumLat / coords.length]
 }
 
-function drawPolygon(points, name) {
+function drawPolygon(feature) {
   try {
-    // Get the first word in the name as the feature type
-    featureType = name.split('_')[0];
+    const featureColor = hexToRgba(feature.properties.color, 0.8) || 'rgba(0, 0, 0, 0.8)';
+    const points = feature.geometry.points;
 
-    if (showShapes) {
-      // Path
-      ctx.beginPath();
-      ctx.moveTo(points[0].x, points[0].y);
-      points.slice(1).forEach(point => ctx.lineTo(point.x, point.y));
-      ctx.closePath();
-      
-      // Style
-      ctx.fillStyle = colorMap[featureType];
-      ctx.strokeStyle = 'black';
-      ctx.lineWidth = 1;
-      
-      // Draw
-      ctx.fill();
-      ctx.stroke();
-    }
+    // Path
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    points.slice(1).forEach(point => ctx.lineTo(point.x, point.y));
+    ctx.closePath();
     
-    // if (showNames) {
-    //   // Text
-    //   ctx.fillStyle = 'black';
-    //   ctx.font = '12px Arial';
-    //   ctx.textAlign = 'center';
-    //   ctx.textBaseline = 'middle';
-    //   ctx.fillText(name, centroid.x, centroid.y);
-    // }
-
+    // Style
+    ctx.fillStyle = featureColor || 'rgba(0, 0, 0, 0.5)';
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 1;
+    
+    // Draw
+    ctx.fill();
+    ctx.stroke();
+    
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 
-function drawLineString(points, name) {
+function drawLineString(feature) {
   try {
-    // Get the first word in the name as the feature type
-    featureType = name.split('_')[0];
+    const featureColor = hexToRgba(feature.properties.color, 0.8) || 'rgba(0, 0, 0, 0.8)';
+    const points = feature.geometry.points;
 
-    if (showShapes) {
-      // Path
-      ctx.beginPath();
-      ctx.moveTo(points[0].x, points[0].y);
-      points.slice(1).forEach(point => ctx.lineTo(point.x, point.y));
-      
-      // Style
-      ctx.strokeStyle = colorMap[featureType];
-      ctx.lineWidth = 2;
-      
-      // Draw
-      ctx.stroke();
-    }
-
-    // if (showNames) {
-    //   // Choose text coords as median point
-    //   const textX = points[Math.floor(points.length / 2)].x;
-    //   const textY = points[Math.floor(points.length / 2)].y;
-      
-    //   // Text
-    //   ctx.fillStyle = 'black';
-    //   ctx.font = '12px Arial';
-    //   ctx.textAlign = 'center';
-    //   ctx.textBaseline = 'middle';
-    //   ctx.fillText(name, textX, textY);
-    // }
+    // Path
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    points.slice(1).forEach(point => ctx.lineTo(point.x, point.y));
+    
+    // Style
+    ctx.strokeStyle = featureColor || 'rgba(0, 0, 0, 0.5)';
+    ctx.lineWidth = 2;
+    
+    // Draw
+    ctx.stroke();
   } catch (error) {
-    console.log(error);
+    // console.log(error);
+  }
+}
+
+function drawPoint(feature) {
+  try {
+    const point = feature.geometry.points[0];
+    
+    // Define marker properties
+    const radius = 15; // Larger, more visible size
+    const borderColor = "black";
+    const borderWidth = 1;
+    const fillColor = feature.properties.color || "rgba(0, 0, 255, 0.7)";
+
+    // Draw shadow for better visibility
+    ctx.shadowColor = "rgba(0,0,0,0.3)";
+    ctx.shadowBlur = 5;
+
+    // Draw circular marker
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, radius, 0, 2 * Math.PI);
+    ctx.fillStyle = fillColor;
+    ctx.fill();
+
+    // Draw border
+    ctx.strokeStyle = borderColor;
+    ctx.lineWidth = borderWidth;
+    ctx.stroke();
+
+    // Optional: Add a small white center dot
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, radius * 0.1, 0, 2 * Math.PI);
+    ctx.fillStyle = "white";
+    ctx.fill();
+  } catch (error) {
+    console.error("Error drawing point:", error);
   }
 }
 
@@ -292,26 +282,65 @@ function drawGeoJSON() {
       
       if (feature.geometry.type === 'Polygon') {
           geoCoords = coords[0];
+          if (!feature.geometry.points) {
+            feature.geometry.points = geoCoords.map(coord => {
+                const [lon, lat] = coord;
+                return lonLatToCanvas(lon, lat);
+            });
+          }
       } else if (feature.geometry.type === 'LineString') {
-          geoCoords = removeCoordsOutsideBbox(coords);
+          geoCoords = coords;
+          if (!feature.geometry.centroid) {
+            feature.geometry.centroid = calculateCentroid(geoCoords);
+          }
+          if (!feature.geometry.points) {
+            feature.geometry.points = geoCoords.map(coord => {
+                const [lon, lat] = coord;
+                return lonLatToCanvas(lon, lat);
+            });
+          }
+      } else if (feature.geometry.type === 'Point') {
+          geoCoords = [coords];
+          if (!feature.geometry.points) {
+            feature.geometry.points = geoCoords.map(coord => {
+                const [lon, lat] = coord;
+                return lonLatToCanvas(lon, lat);
+            });
+          }
       }
       
-      points = geoCoords.map(coord => {
-          const [lon, lat] = coord;
-          return latLonToCanvas(lat, lon);
-      });
-      
       // Draw feature
-      if (feature.geometry.type === 'Polygon') {
-          const centroidGeo = calculateCentroid(geoCoords);
-          const centroidCanvas = latLonToCanvas(centroidGeo.lat, centroidGeo.lon);
-          drawPolygon(points, uniqueName);
-          namesToDraw.push(uniqueName, centroidCanvas);
-      } else if (feature.geometry.type === 'LineString') {
-          const textX = points[Math.floor(points.length / 2)].x;
-          const textY = points[Math.floor(points.length / 2)].y;
-          drawLineString(points, uniqueName);
-          namesToDraw.push(uniqueName, { x: textX, y: textY });
+      try {
+        const showFeature = (showHardcoded && feature.id < 1000) || (showOverpass && feature.id > 1000);
+        const points = feature.geometry.points;
+        if (showFeature) {
+          if (feature.geometry.type === 'Polygon') {
+            const centroidGeo = calculateCentroid(geoCoords);
+            const centroidCanvas = lonLatToCanvas(centroidGeo[0], centroidGeo[1]);
+            namesToDraw.push(uniqueName, centroidCanvas);
+            if (showShapes) {
+              drawPolygon(feature);
+            }
+          } else if (feature.geometry.type === 'LineString') {
+            const textX = points[Math.floor(points.length / 2)].x;
+            const textY = points[Math.floor(points.length / 2)].y;
+            
+            namesToDraw.push(uniqueName, { x: textX, y: textY });
+            if (showShapes) {
+              drawLineString(feature);
+            }
+          } else if (feature.geometry.type === 'Point') {
+            const textX = points[0].x;
+            const textY = points[0].y;
+            namesToDraw.push(uniqueName, { x: textX, y: textY });
+            if (showShapes) {
+              drawPoint(feature);
+            }
+          }
+        }
+      } catch (error) {
+        console.log(feature);
+        console.log(error);
       }
   });
 
@@ -321,7 +350,11 @@ function drawGeoJSON() {
       if (idx % 2 === 0) {
         const textX = namesToDraw[idx + 1].x;
         const textY = namesToDraw[idx + 1].y;
-        ctx.fillStyle = 'black';
+        if (useSatellite) {
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        } else {
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        }
         ctx.font = '12px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -349,16 +382,16 @@ function drawGrid() {
   ctx.save();
   ctx.strokeStyle = 'rgba(200,200,200,1)';
   ctx.lineWidth = 1;
-  for (let i = 0; i <= arena.width; i++) {
+  for (let i = 0; i <= ENV['arena_width']; i++) {
     ctx.beginPath();
     ctx.moveTo(i * PPC, 0);
-    ctx.lineTo(i * PPC, arena.height * PPC);
+    ctx.lineTo(i * PPC, ENV['arena_height'] * PPC);
     ctx.stroke();
   }
-  for (let j = 0; j <= arena.height; j++) {
+  for (let j = 0; j <= ENV['arena_height']; j++) {
     ctx.beginPath();
     ctx.moveTo(0, j * PPC);
-    ctx.lineTo(arena.width * PPC, j * PPC);
+    ctx.lineTo(ENV['arena_width'] * PPC, j * PPC);
     ctx.stroke();
   }
   ctx.restore();
@@ -405,64 +438,6 @@ function drawFormation(group) {
 // Draw centered text
 function drawCenteredText(text, x, y) {
   ctx.fillText(text, x * PPC, y * PPC);
-}
-
-// Draw map elements (river, lake, road, bridge, forest, field, town, farm) and labels
-function drawMap() {
-  ctx.save();
-  
-  // Configurable positions
-  const riverPos = { x: 9.5, y: 0, width: 1, height: 15.5 };      // Vertical river
-  const lakePos = { x: 6, y: 15.0, width: 8.0, height: 5.0 };     // Bottom lake
-  const roadPos = { x: 0, y: 9.5, width: 20, height: 1 };         // Full-width road
-  const bridgePos = { x: 8.5, y: 9, width: 3, height: 2 };     // Centered bridge
-  const forestPos = { x: 11, y: 1, width: 5, height: 5 };    // Right-side forest
-  const fieldPos = { x: 1.0, y: 0, width: 7.0, height: 5.0 };    // Left field
-  const townPos = { x: 1.5, y: 6.5, width: 5, height: 7 };         // Central town
-  const farmPos = { x: 15.0, y: 7.5, width: 4, height: 5 };      // Right farm
-
-
-  // Drawing elements
-  ctx.fillStyle = 'rgb(135,206,235)'; // light blue
-  ctx.fillRect(riverPos.x * PPC, riverPos.y * PPC, riverPos.width * PPC, riverPos.height * PPC);
-
-  ctx.fillStyle = 'rgb(103, 103, 255)'; // darker blue
-  ctx.fillRect(lakePos.x * PPC, lakePos.y * PPC, lakePos.width * PPC, lakePos.height * PPC);
-
-  ctx.fillStyle = 'rgb(100,100,100)'; // gray
-  ctx.fillRect(roadPos.x * PPC, roadPos.y * PPC, roadPos.width * PPC, roadPos.height * PPC);
-
-  ctx.fillStyle = 'rgb(100,100,100)'; // same as road
-  ctx.fillRect(bridgePos.x * PPC, bridgePos.y * PPC, bridgePos.width * PPC, bridgePos.height * PPC);
-
-  ctx.fillStyle = 'rgb(34,139,34)'; // forest green
-  ctx.fillRect(forestPos.x * PPC, forestPos.y * PPC, forestPos.width * PPC, forestPos.height * PPC);
-
-  ctx.fillStyle = 'rgb(144,238,144)'; // light green
-  ctx.fillRect(fieldPos.x * PPC, fieldPos.y * PPC, fieldPos.width * PPC, fieldPos.height * PPC);
-
-  ctx.fillStyle = 'rgb(211,211,211)'; // light gray
-  ctx.fillRect(townPos.x * PPC, townPos.y * PPC, townPos.width * PPC, townPos.height * PPC);
-
-  ctx.fillStyle = 'rgb(255,165,0)'; // light orange
-  ctx.fillRect(farmPos.x * PPC, farmPos.y * PPC, farmPos.width * PPC, farmPos.height * PPC);
-
-  // Labels
-  ctx.fillStyle = '#000';
-  ctx.font = '30px Arial';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-
-  drawCenteredText("River", riverPos.x + riverPos.width / 2, riverPos.y + riverPos.height / 2);
-  drawCenteredText("Lake",  lakePos.x + lakePos.width / 2, lakePos.y + lakePos.height / 2);
-  // drawCenteredText("Road",  roadPos.x + roadPos.width / 2, roadPos.y + roadPos.height / 2);
-  drawCenteredText("Bridge",  bridgePos.x + bridgePos.width / 2, bridgePos.y + bridgePos.height / 2);
-  drawCenteredText("Forest",  forestPos.x + forestPos.width / 2, forestPos.y + forestPos.height / 2);
-  drawCenteredText("Field",  fieldPos.x + fieldPos.width / 2, fieldPos.y + fieldPos.height / 2);
-  drawCenteredText("Town",  townPos.x + townPos.width / 2, townPos.y + townPos.height / 2);
-  drawCenteredText("Farm",  farmPos.x + farmPos.width / 2, farmPos.y + farmPos.height / 2);
-
-  ctx.restore();
 }
 
 // Draw a destination marker (a cross) for the group
@@ -640,8 +615,7 @@ function updateDisplay() {
   ctx.translate(panOffsetX, panOffsetY); // Apply pan
   ctx.scale(zoomLevel, zoomLevel); // Apply zoom
 
-  drawCanvas(topLeft, tilesX, tilesY);
-  // drawMap();
+  drawCanvas();
   // drawGrid();
   groups.forEach(group => {
     drawDestination(group);
@@ -664,50 +638,60 @@ function resetView() {
   updateDisplay();
 }
 
-// Event listeners for zoom and pan
-canvasContainer.addEventListener('wheel', (e) => {
-  e.preventDefault();
+// -------------------- Event Listeners --------------------
 
-  const rect = canvas.getBoundingClientRect();
-  const mouseX = e.clientX - rect.left;
-  const mouseY = e.clientY - rect.top;
+function addCanvasEventListeners() {
+  const canvasContainer = document.getElementById('canvasContainer');
+  const resetButton = document.getElementById('resetViewButton');
 
-  const preZoomMouseX = (mouseX - panOffsetX) / zoomLevel;
-  const preZoomMouseY = (mouseY - panOffsetY) / zoomLevel;
+  // Event listeners for zoom and pan
+  canvasContainer.addEventListener('wheel', (e) => {
+    e.preventDefault();
 
-  const zoomChange = e.deltaY > 0 ? -zoomSensitivity : zoomSensitivity;
-  const newZoomLevel = Math.max(1.0, zoomLevel + zoomChange);
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
 
-  panOffsetX = mouseX - preZoomMouseX * newZoomLevel;
-  panOffsetY = mouseY - preZoomMouseY * newZoomLevel;
+    const preZoomMouseX = (mouseX - panOffsetX) / zoomLevel;
+    const preZoomMouseY = (mouseY - panOffsetY) / zoomLevel;
 
-  zoomLevel = newZoomLevel;
-  updateDisplay();
-});
+    const zoomChange = e.deltaY > 0 ? -zoomSensitivity : zoomSensitivity;
+    const newZoomLevel = Math.max(0.5, zoomLevel + zoomChange);
 
-canvasContainer.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  dragStartX = e.clientX - panOffsetX;
-  dragStartY = e.clientY - panOffsetY;
-});
+    panOffsetX = mouseX - preZoomMouseX * newZoomLevel;
+    panOffsetY = mouseY - preZoomMouseY * newZoomLevel;
 
-canvasContainer.addEventListener('mousemove', (e) => {
-  if (!isDragging) return;
-  panOffsetX = e.clientX - dragStartX;
-  panOffsetY = e.clientY - dragStartY;
-  
-  updateDisplay();
-});
+    zoomLevel = newZoomLevel;
+    updateDisplay();
+  });
 
-canvasContainer.addEventListener('mouseup', () => {
-  isDragging = false;
-});
+  canvasContainer.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    dragStartX = e.clientX - panOffsetX;
+    dragStartY = e.clientY - panOffsetY;
+  });
 
-canvasContainer.addEventListener('mouseleave', () => {
+  canvasContainer.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    panOffsetX = e.clientX - dragStartX;
+    panOffsetY = e.clientY - dragStartY;
+    
+    updateDisplay();
+  });
+
+  canvasContainer.addEventListener('mouseup', () => {
     isDragging = false;
-});
+  });
 
-// Reset view button event listener
-resetButton.addEventListener('click', () => {
-  resetView();
-});
+  canvasContainer.addEventListener('mouseleave', () => {
+      isDragging = false;
+  });
+
+  // Reset view button event listener
+  resetButton.addEventListener('click', () => {
+    resetView();
+  });
+}
+
+// -------------------- Initialization --------------------
+addCanvasEventListeners();

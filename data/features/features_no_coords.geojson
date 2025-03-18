@@ -1,0 +1,1251 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": 1099706537,
+      "properties": {
+        "natural": "scrub"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        -4.492561528765231,
+        36.7183334867101
+      ]
+    },
+    {
+      "id": 180825090,
+      "properties": {
+        "highway": "unclassified",
+        "lanes": "2",
+        "maxspeed": "50",
+        "name": "Bulevar Louis Pasteur",
+        "name:etymology:wikidata": "Q529",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 18,
+      "geometry_centroid": [
+        -4.4926313230855115,
+        36.718146418325844
+      ]
+    },
+    {
+      "id": 89668315,
+      "properties": {
+        "highway": "secondary",
+        "lanes": "2",
+        "maxspeed": "40",
+        "name": "Avenida Dolores Rodríguez de Aragón",
+        "oneway": "yes",
+        "sidewalk": "right",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 16,
+      "geometry_centroid": [
+        -4.489559191953569,
+        36.71810675930766
+      ]
+    },
+    {
+      "id": 709902072,
+      "properties": {
+        "highway": "secondary",
+        "lanes": "2",
+        "maxspeed": "40",
+        "name": "Avenida Dolores Rodríguez de Aragón",
+        "oneway": "yes",
+        "sidewalk": "right",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 16,
+      "geometry_centroid": [
+        -4.4893696082641075,
+        36.71804803850292
+      ]
+    },
+    {
+      "id": 484797664,
+      "properties": {
+        "intermittent": "yes",
+        "layer": "-1",
+        "name": "Arroyo de Las Cañas",
+        "tunnel": "yes",
+        "waterway": "stream"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        -4.488856999999999,
+        36.717991
+      ]
+    },
+    {
+      "id": 504221200,
+      "properties": {
+        "highway": "tertiary",
+        "lanes": "2",
+        "maxspeed": "50",
+        "name": "Bulevar Louis Pasteur",
+        "name:etymology:wikidata": "Q529",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 14,
+      "geometry_centroid": [
+        -4.485779949829584,
+        36.717851574490595
+      ]
+    },
+    {
+      "id": 1115813320,
+      "properties": {
+        "natural": "heath"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        -4.485959867976802,
+        36.71773953521133
+      ]
+    },
+    {
+      "id": 709902074,
+      "properties": {
+        "highway": "tertiary",
+        "lanes": "2",
+        "maxspeed": "40",
+        "name": "Avenida Dolores Rodríguez de Aragón",
+        "oneway": "yes",
+        "sidewalk": "right",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        -4.4898115,
+        36.717721999999995
+      ]
+    },
+    {
+      "id": 1214728099,
+      "properties": {
+        "landuse": "grass"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 15,
+      "geometry_centroid": [
+        -4.490639274223203,
+        36.71768329950006
+      ]
+    },
+    {
+      "id": 1214731372,
+      "properties": {
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        -4.4900135,
+        36.7176465
+      ]
+    },
+    {
+      "id": 1214731371,
+      "properties": {
+        "footway": "crossing",
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        -4.490181457050902,
+        36.71763941744727
+      ]
+    },
+    {
+      "id": 1214731373,
+      "properties": {
+        "footway": "crossing",
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        -4.4898545,
+        36.717622
+      ]
+    },
+    {
+      "id": 1115813324,
+      "properties": {
+        "natural": "heath"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 10,
+      "geometry_centroid": [
+        -4.486906314164277,
+        36.7175376959283
+      ]
+    },
+    {
+      "id": 1214728084,
+      "properties": {
+        "landuse": "grass"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 12,
+      "geometry_centroid": [
+        -4.490230381040541,
+        36.71746841314186
+      ]
+    },
+    {
+      "id": 589058523,
+      "properties": {
+        "highway": "cycleway",
+        "surface": "paved"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 24,
+      "geometry_centroid": [
+        -4.49002461315447,
+        36.71745859913758
+      ]
+    },
+    {
+      "id": 1214731364,
+      "properties": {
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 18,
+      "geometry_centroid": [
+        -4.490251837418045,
+        36.7174160580578
+      ]
+    },
+    {
+      "id": 1214731363,
+      "properties": {
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        -4.490583,
+        36.717416
+      ]
+    },
+    {
+      "id": 709902075,
+      "properties": {
+        "highway": "unclassified",
+        "lanes": "1",
+        "maxspeed": "30",
+        "noname": "yes",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 14,
+      "geometry_centroid": [
+        -4.49003677305654,
+        36.717388402399735
+      ]
+    },
+    {
+      "id": 1214731368,
+      "properties": {
+        "footway": "sidewalk",
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 24,
+      "geometry_centroid": [
+        -4.490245361542073,
+        36.717367401841805
+      ]
+    },
+    {
+      "id": 1214728085,
+      "properties": {
+        "landuse": "grass"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 13,
+      "geometry_centroid": [
+        -4.490158899677561,
+        36.71731873244908
+      ]
+    },
+    {
+      "id": 709902076,
+      "properties": {
+        "highway": "secondary",
+        "lanes": "4",
+        "lanes:backward": "2",
+        "lanes:forward": "2",
+        "maxspeed": "40",
+        "name": "Calle Rafael Puertas Tricas",
+        "sidewalk": "both",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        -4.489811452218242,
+        36.717314687359696
+      ]
+    },
+    {
+      "id": 504221199,
+      "properties": {
+        "highway": "tertiary",
+        "lanes": "2",
+        "maxspeed": "50",
+        "name": "Bulevar Louis Pasteur",
+        "name:etymology:wikidata": "Q529",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 12,
+      "geometry_centroid": [
+        -4.486519312578524,
+        36.717300648855385
+      ]
+    },
+    {
+      "id": 1214731365,
+      "properties": {
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        -4.490102413651592,
+        36.717252799839976
+      ]
+    },
+    {
+      "id": 1214728086,
+      "properties": {
+        "landuse": "grass"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 15,
+      "geometry_centroid": [
+        -4.490079638039636,
+        36.71706796896859
+      ]
+    },
+    {
+      "id": 1214731375,
+      "properties": {
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 108,
+      "geometry_centroid": [
+        -4.491960100931583,
+        36.717038121401636
+      ]
+    },
+    {
+      "id": 1214731367,
+      "properties": {
+        "footway": "crossing",
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        -4.48987,
+        36.716939999999994
+      ]
+    },
+    {
+      "id": 1115813325,
+      "properties": {
+        "natural": "heath"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 51,
+      "geometry_centroid": [
+        -4.486211919441396,
+        36.716902726781534
+      ]
+    },
+    {
+      "id": 557495090,
+      "properties": {
+        "building": "yes",
+        "building:levels": "1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 12,
+      "geometry_centroid": [
+        -4.486069140867639,
+        36.71685388678109
+      ]
+    },
+    {
+      "id": 557495087,
+      "properties": {
+        "highway": "service"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 18,
+      "geometry_centroid": [
+        -4.484627518464127,
+        36.71676149354372
+      ]
+    },
+    {
+      "id": 589058522,
+      "properties": {
+        "highway": "cycleway",
+        "surface": "paved"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 126,
+      "geometry_centroid": [
+        -4.482787702827759,
+        36.71674086504038
+      ]
+    },
+    {
+      "id": 1214728087,
+      "properties": {
+        "landuse": "grass"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        -4.490006167481497,
+        36.71670622805736
+      ]
+    },
+    {
+      "id": 1214731350,
+      "properties": {
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 18,
+      "geometry_centroid": [
+        -4.490045093043662,
+        36.71670008671845
+      ]
+    },
+    {
+      "id": 1214733613,
+      "properties": {
+        "building": "roof",
+        "building:levels": "1",
+        "layer": "1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        -4.490443559946431,
+        36.716667524358385
+      ]
+    },
+    {
+      "id": 89668359,
+      "properties": {
+        "highway": "secondary",
+        "lanes": "4",
+        "lanes:backward": "2",
+        "lanes:forward": "2",
+        "maxspeed": "40",
+        "name": "Calle Rafael Puertas Tricas",
+        "sidewalk": "both",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        -4.489801385096524,
+        36.71663749838202
+      ]
+    },
+    {
+      "id": 1214733612,
+      "properties": {
+        "building": "roof",
+        "building:levels": "1",
+        "layer": "1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        -4.490574810386472,
+        36.71655327764969
+      ]
+    },
+    {
+      "id": 1214728101,
+      "properties": {
+        "landuse": "grass"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 17,
+      "geometry_centroid": [
+        -4.490110210573884,
+        36.71649277504687
+      ]
+    },
+    {
+      "id": 1214731369,
+      "properties": {
+        "footway": "crossing",
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        -4.489864508937391,
+        36.716471713398384
+      ]
+    },
+    {
+      "id": 1214731377,
+      "properties": {
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        -4.490609752511261,
+        36.71628434604429
+      ]
+    },
+    {
+      "id": 1214728089,
+      "properties": {
+        "landuse": "grass"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        -4.490682516153188,
+        36.71628274689773
+      ]
+    },
+    {
+      "id": 589193712,
+      "properties": {
+        "highway": "unclassified",
+        "junction": "roundabout",
+        "lanes": "2",
+        "noname": "yes",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 10,
+      "geometry_centroid": [
+        -4.4899164084400365,
+        36.716276870097914
+      ]
+    },
+    {
+      "id": 1214728088,
+      "properties": {
+        "landuse": "grass"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 7,
+      "geometry_centroid": [
+        -4.490457127320329,
+        36.71627537608007
+      ]
+    },
+    {
+      "id": 1234547944,
+      "properties": {
+        "building": "kiosk",
+        "building:levels": "1",
+        "shop": "kiosk"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        -4.490326479377957,
+        36.716216276538205
+      ]
+    },
+    {
+      "id": 1214731379,
+      "properties": {
+        "footway": "sidewalk",
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 26,
+      "geometry_centroid": [
+        -4.491993605028452,
+        36.71621547433194
+      ]
+    },
+    {
+      "id": 1214731380,
+      "properties": {
+        "footway": "crossing",
+        "highway": "footway"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 4,
+      "geometry_centroid": [
+        -4.4901865,
+        36.7162015
+      ]
+    },
+    {
+      "id": 554233552,
+      "properties": {
+        "landuse": "grass"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 23,
+      "geometry_centroid": [
+        -4.489799560031689,
+        36.71617296868432
+      ]
+    },
+    {
+      "id": 234917967,
+      "properties": {
+        "highway": "unclassified",
+        "lanes": "2",
+        "maxspeed": "30",
+        "name": "Calle Doctor Ortiz Ramos",
+        "name:etymology": "Pedro Ortiz Ramos",
+        "name:etymology:wikidata": "Q131607567",
+        "oneway": "no",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 22,
+      "geometry_centroid": [
+        -4.492185034334419,
+        36.71614635952677
+      ]
+    },
+    {
+      "id": 1292067509,
+      "properties": {
+        "building": "roof",
+        "building:levels": "1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        -4.4859973685264665,
+        36.71613626781115
+      ]
+    },
+    {
+      "id": 357765455,
+      "properties": {
+        "highway": "unclassified",
+        "junction": "roundabout",
+        "lanes": "2",
+        "noname": "yes",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 30,
+      "geometry_centroid": [
+        -4.489746097044893,
+        36.7161348553167
+      ]
+    },
+    {
+      "id": 544106274,
+      "properties": {
+        "highway": "cycleway",
+        "surface": "paved"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 42,
+      "geometry_centroid": [
+        -4.491745877647624,
+        36.71607144657032
+      ]
+    },
+    {
+      "id": 902814833,
+      "properties": {
+        "highway": "track"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 106,
+      "geometry_centroid": [
+        -4.4865740850218305,
+        36.715972461764
+      ]
+    },
+    {
+      "id": 1115813328,
+      "properties": {
+        "natural": "heath"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 49,
+      "geometry_centroid": [
+        -4.489049319460684,
+        36.715907387796356
+      ]
+    },
+    {
+      "id": 183899701,
+      "properties": {
+        "building": "yes"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        -4.490176,
+        36.7157675
+      ]
+    },
+    {
+      "id": 902814830,
+      "properties": {
+        "natural": "scrub"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 54,
+      "geometry_centroid": [
+        -4.486080720276052,
+        36.71573481615069
+      ]
+    },
+    {
+      "id": 484797665,
+      "properties": {
+        "intermittent": "yes",
+        "name": "Arroyo de Las Cañas",
+        "waterway": "stream"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 32,
+      "geometry_centroid": [
+        -4.485918215116109,
+        36.71560482928434
+      ]
+    },
+    {
+      "id": 89668404,
+      "properties": {
+        "highway": "unclassified",
+        "lanes": "4",
+        "lanes:backward": "2",
+        "lanes:forward": "2",
+        "maxspeed": "40",
+        "name": "Calle Rafael Puertas Tricas",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 12,
+      "geometry_centroid": [
+        -4.489787845479138,
+        36.7155569874017
+      ]
+    },
+    {
+      "id": 183899702,
+      "properties": {
+        "building": "yes",
+        "building:levels": "2",
+        "name": "Talleres de la Escuela de Ingenierías Industriales",
+        "operator": "Universidad de Málaga",
+        "operator:type": "university"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 13,
+      "geometry_centroid": [
+        -4.490621465142502,
+        36.71553746321121
+      ]
+    },
+    {
+      "id": 1115813326,
+      "properties": {
+        "natural": "heath"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 66,
+      "geometry_centroid": [
+        -4.487246173658918,
+        36.71552631504413
+      ]
+    },
+    {
+      "id": 557505341,
+      "properties": {
+        "highway": "service"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 14,
+      "geometry_centroid": [
+        -4.490336578190323,
+        36.71551890437118
+      ]
+    },
+    {
+      "id": 902814815,
+      "properties": {
+        "building": "service",
+        "building:levels": "1"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        -4.4894264999999995,
+        36.7150705
+      ]
+    },
+    {
+      "id": 589213497,
+      "properties": {
+        "building": "kiosk"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        -4.490076333333334,
+        36.71505141975309
+      ]
+    },
+    {
+      "id": 89668304,
+      "properties": {
+        "highway": "unclassified",
+        "lanes": "2",
+        "maxspeed": "40",
+        "name": "Calle Arquitecto Francisco Peñalosa",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 16,
+      "geometry_centroid": [
+        -4.492123045471036,
+        36.71490905719995
+      ]
+    },
+    {
+      "id": 554235718,
+      "properties": {
+        "landuse": "grass"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 27,
+      "geometry_centroid": [
+        -4.489773542145169,
+        36.714891746313675
+      ]
+    },
+    {
+      "id": 89668392,
+      "properties": {
+        "highway": "unclassified",
+        "junction": "roundabout",
+        "lanes": "3",
+        "noname": "yes",
+        "surface": "asphalt"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 23,
+      "geometry_centroid": [
+        -4.489773601090468,
+        36.71489122105684
+      ]
+    },
+    {
+      "id": 589213498,
+      "properties": {
+        "landuse": "grass"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        -4.490981426507953,
+        36.714874194841215
+      ]
+    },
+    {
+      "id": 89668391,
+      "properties": {
+        "highway": "unclassified",
+        "lanes": "2",
+        "maxspeed": "40",
+        "name": "Calle Arquitecto Francisco Peñalosa",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 14,
+      "geometry_centroid": [
+        -4.492116386322048,
+        36.714813105189506
+      ]
+    },
+    {
+      "id": 902693335,
+      "properties": {
+        "highway": "track"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        -4.489314925054236,
+        36.71467864007879
+      ]
+    },
+    {
+      "id": 902814826,
+      "properties": {
+        "highway": "track"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 20,
+      "geometry_centroid": [
+        -4.4883315025808,
+        36.714649091294106
+      ]
+    },
+    {
+      "id": 902814825,
+      "properties": {
+        "highway": "track"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 10,
+      "geometry_centroid": [
+        -4.488734661996919,
+        36.71458206802282
+      ]
+    },
+    {
+      "id": 902693348,
+      "properties": {
+        "natural": "heath"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 12,
+      "geometry_centroid": [
+        -4.4912366847357275,
+        36.714579688426475
+      ]
+    },
+    {
+      "id": 902814818,
+      "properties": {
+        "natural": "heath"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 49,
+      "geometry_centroid": [
+        -4.484140943278947,
+        36.7145768494193
+      ]
+    },
+    {
+      "id": 405392431,
+      "properties": {
+        "highway": "track"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 26,
+      "geometry_centroid": [
+        -4.490820694906056,
+        36.71452444791369
+      ]
+    },
+    {
+      "id": 902693334,
+      "properties": {
+        "highway": "path"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        -4.489155303188626,
+        36.71443566335964
+      ]
+    },
+    {
+      "id": 902814829,
+      "properties": {
+        "natural": "heath"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 51,
+      "geometry_centroid": [
+        -4.488601081449648,
+        36.71443208755142
+      ]
+    },
+    {
+      "id": 902814827,
+      "properties": {
+        "highway": "track"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 58,
+      "geometry_centroid": [
+        -4.487297777913683,
+        36.71437385555709
+      ]
+    },
+    {
+      "id": 599979440,
+      "properties": {
+        "highway": "track"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 18,
+      "geometry_centroid": [
+        -4.49020110349843,
+        36.71433687615047
+      ]
+    },
+    {
+      "id": 902814824,
+      "properties": {
+        "highway": "track"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 12,
+      "geometry_centroid": [
+        -4.485554431767926,
+        36.7143327803612
+      ]
+    },
+    {
+      "id": 45406857,
+      "properties": {
+        "highway": "motorway_link",
+        "lanes": "2",
+        "maxspeed": "80",
+        "oneway": "yes"
+      },
+      "geometry_type": "LineString",
+      "geometry_n_coords": 8,
+      "geometry_centroid": [
+        -4.486277044243652,
+        36.714156876620436
+      ]
+    },
+    {
+      "id": 902693346,
+      "properties": {
+        "natural": "scrub"
+      },
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 81,
+      "geometry_centroid": [
+        -4.494587405602415,
+        36.71408190573942
+      ]
+    },
+    {
+      "properties": {
+        "category": "Static Locations",
+        "name": "Forward Control Center",
+        "altitude": null
+      },
+      "id": 1,
+      "geometry_type": "Point",
+      "geometry_n_coords": 1,
+      "geometry_centroid": [
+        -4.48936016,
+        36.71698075
+      ]
+    },
+    {
+      "properties": {
+        "category": "Static Locations",
+        "name": "Medical Tent",
+        "altitude": null
+      },
+      "id": 2,
+      "geometry_type": "Point",
+      "geometry_n_coords": 1,
+      "geometry_centroid": [
+        -4.488774091,
+        36.71622231
+      ]
+    },
+    {
+      "properties": {
+        "category": "Static Locations",
+        "name": "Tunnel South Scenario",
+        "altitude": null
+      },
+      "id": 3,
+      "geometry_type": "Point",
+      "geometry_n_coords": 1,
+      "geometry_centroid": [
+        -4.48824217,
+        36.71706685
+      ]
+    },
+    {
+      "properties": {
+        "category": "Static Locations",
+        "name": "Tunnel North Scenario",
+        "altitude": null
+      },
+      "id": 4,
+      "geometry_type": "Point",
+      "geometry_n_coords": 1,
+      "geometry_centroid": [
+        -4.48854034,
+        36.71743269
+      ]
+    },
+    {
+      "properties": {
+        "category": "Static Locations",
+        "name": "Ramp Down to the Stream",
+        "altitude": null
+      },
+      "id": 5,
+      "geometry_type": "Point",
+      "geometry_n_coords": 1,
+      "geometry_centroid": [
+        -4.48779425,
+        36.71706344
+      ]
+    },
+    {
+      "properties": {
+        "category": "Static Locations",
+        "name": "Base Station",
+        "altitude": null
+      },
+      "id": 6,
+      "geometry_type": "Point",
+      "geometry_n_coords": 1,
+      "geometry_centroid": [
+        -4.48835542,
+        36.71481194
+      ]
+    },
+    {
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Stream"
+      },
+      "id": 7,
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 9,
+      "geometry_centroid": [
+        -4.486753492074116,
+        36.71610482100338
+      ]
+    },
+    {
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Flood"
+      },
+      "id": 8,
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        -4.485026515556344,
+        36.71488595541616
+      ]
+    },
+    {
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Fire"
+      },
+      "id": 9,
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        -4.487867903143299,
+        36.715685795360734
+      ]
+    },
+    {
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Forensic Area"
+      },
+      "id": 10,
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 6,
+      "geometry_centroid": [
+        -4.488938114265283,
+        36.717310250668994
+      ]
+    },
+    {
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Tunnel Accident"
+      },
+      "id": 11,
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        -4.48843677832321,
+        36.717390360623234
+      ]
+    },
+    {
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Gas Leakage"
+      },
+      "id": 12,
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        -4.487324355955208,
+        36.7148269664608
+      ]
+    },
+    {
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Infrastructure Collapse"
+      },
+      "id": 13,
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        -4.490079177219217,
+        36.71540097843023
+      ]
+    },
+    {
+      "properties": {
+        "category": "Operational Environments",
+        "name": "Command, Communication, and Control Area"
+      },
+      "id": 14,
+      "geometry_type": "Polygon",
+      "geometry_n_coords": 5,
+      "geometry_centroid": [
+        -4.489445090511314,
+        36.71722329208105
+      ]
+    }
+  ]
+}

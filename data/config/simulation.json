@@ -1,5 +1,12 @@
 {
   "env": {
+    "center": [
+      -4.4882224,
+      36.7161254
+    ],
+    "side_length_meters": 400,
+    "zoom": 19,
+    "extra_tiles": 3,
     "arena_width": 20,
     "arena_height": 20,
     "formation_radius": 2
@@ -8,9 +15,11 @@
     "number_of_robots": 20,
     "number_of_groups": 3,
     "max_speed": 0.02,
-    "field_start_x": 1,
-    "field_start_y": 0,
-    "field_width": 7,
-    "field_height": 5
+    "start_bbox": [
+      1,
+      0,
+      7,
+      5
+    ]
   }
 }

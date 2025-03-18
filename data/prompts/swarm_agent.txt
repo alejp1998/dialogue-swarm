@@ -5,8 +5,9 @@ Available Robot IDs [robot_idxs]: {robot_idxs}
 Current Groups [{{group_idx: [robot_idxs]}}, ...]: {groups_str}
 
 # Map Feature Names
-LineStrings: {linestring_feature_names}
-Polygons: {polygon_feature_names}
+Points: {point_names}
+LineStrings: {linestring_names}
+Polygons: {polygon_names}
 
 # Available Tools:
 1. Create a Group by IDs

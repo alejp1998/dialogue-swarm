@@ -12,7 +12,6 @@ const TIME_STEP = 25; // Time step in milliseconds
 
 // -------------------- Simulation Variables --------------------
 
-let arena = {};
 let n_updates = 0;
 let current_step = 0;
 let running = false;
@@ -93,11 +92,9 @@ async function fetchState() {
     // Fetch current state
     const response = await fetch('/state');
     simData = await response.json();
-    arena = simData.arena;
     running = simData.running;
     current_step = simData.current_step;
     groups = simData.groups;
-    delete simData.arena;
     delete simData.running;
     delete simData.current_step;
     delete simData.groups;
@@ -162,40 +159,78 @@ function toggleReset() {
 
 // -------------------- Initialization --------------------
 
-// Add event listener to send button
-document.getElementById("sendButton").onclick = sendChat;
+function addEventListeners() {
+  // Add event listener to send button
+  document.getElementById("sendButton").onclick = sendChat;
 
-// Add event listener to chat input field
-document.getElementById("chatInput").addEventListener("keydown", (event) => {
-  if (event.key === "Enter" && !event.shiftKey) { // Avoid Shift+Enter issue
-    event.preventDefault();  // Stop default new line
-    sendChat();
+  // Add event listener to chat input field
+  document.getElementById("chatInput").addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) { // Avoid Shift+Enter issue
+      event.preventDefault();  // Stop default new line
+      sendChat();
+    }
+  });
+
+  // Add event listeners to control buttons
+  document.getElementById("pause-button").onclick = togglePause;
+  document.getElementById("reset-button").onclick = toggleReset;
+
+  // Add event listener to showOverpassButton and showHardcodedButton
+  document.getElementById("showOverpassButton").addEventListener("click", () => {
+    const iconEl = document.getElementById("showOverpassButton").querySelector(".icon");
+    iconEl.innerHTML = showOverpass ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+    showOverpass = !showOverpass;
+    updateDisplay();
+  });
+  document.getElementById("showHardcodedButton").addEventListener("click", () => {
+    const iconEl = document.getElementById("showHardcodedButton").querySelector(".icon");
+    iconEl.innerHTML = showHardcoded ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+    showHardcoded = !showHardcoded;
+    updateDisplay();
+  });
+
+  // Add event listener to showNamesButton and showShapesButton
+  document.getElementById("showNamesButton").addEventListener("click", () => {
+    const iconEl = document.getElementById("showNamesButton").querySelector(".icon");
+    iconEl.innerHTML = showNames ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+    showNames = !showNames;
+    updateDisplay();
+  });
+  document.getElementById("showShapesButton").addEventListener("click", () => {
+    const iconEl = document.getElementById("showShapesButton").querySelector(".icon");
+    iconEl.innerHTML = showShapes ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+    showShapes = !showShapes;
+    updateDisplay();
+  });
+
+  // Add event listener to the satellite button
+  document.getElementById("satellite-button").onclick = () => {
+    const iconEl = document.getElementById("satellite-button").querySelector(".icon");
+    iconEl.innerHTML = useSatellite ? '<i class="fas fa-satellite-dish"></i>' : '<i class="fas fa-eye-slash"></i>';
+    useSatellite = !useSatellite;
+    updateDisplay();
+  };
+
+  // Add canvas sizing event listener
+  window.addEventListener('resize', () => {
+    setCanvasSize();
+    updateDisplay();
+  });
 }
-});
 
-// Add event listeners to control buttons
-document.getElementById("pause-button").onclick = togglePause;
-document.getElementById("reset-button").onclick = toggleReset;
-
-// Add event listener to showNamesButton and showShapesButton
-document.getElementById("showNamesButton").addEventListener("click", () => {
-  const iconEl = document.getElementById("showNamesButton").querySelector(".icon");
-  iconEl.innerHTML = showNames ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
-  showNames = !showNames;
-  updateDisplay();
-});
-document.getElementById("showShapesButton").addEventListener("click", () => {
-  const iconEl = document.getElementById("showShapesButton").querySelector(".icon");
-  iconEl.innerHTML = showShapes ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
-  showShapes = !showShapes;
-  updateDisplay();
-});
-
-// Add canvas sizing event listener
-window.addEventListener('resize', () => {
-  setCanvasSize();
-  updateDisplay();
-});
-
-// Fetch initial state
-fetchState();
+// Wait until ENV, CONFIG and geoJSON are loaded (different from null values)
+if (ENV === null || CONFIG === null || geoJSON === null) {
+  console.log("Fetching initialization data...");
+  // Fetch simulation config and GeoJSON data (once both are resolved, proceed with initialization)
+  Promise.all([fetchSimConfig(), fetchVisConfig(), loadAndProcessGeoJSON()])
+    .then(() => {
+      console.log("Initialization complete");
+      addEventListeners();
+      fetchState();
+    });   
+}
+// If ENV, CONFIG and geoJSON are already loaded
+else {
+  // Fetch initial state
+  fetchState();
+}
