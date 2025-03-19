@@ -1,0 +1,307 @@
+460912479: {landuse: farmland}
+366376631: {landuse: forest}
+141419720: {landuse: forest, name: Askelund, source: Geodatastyrelsen-Skærmkort-2014}
+454055015: {landuse: farmland}
+913189427: {natural: water, water: lake}
+913189426: {building: farm_auxiliary}
+141418070: {highway: service, name: Hundslevgyden, name:etymology:wikidata: Q129859155, service: driveway}
+614894480: {name: Geelså, waterway: river}
+913189425: {building: yes, man_made: storage_tank}
+141419717: {highway: service, service: driveway}
+913189424: {building: farm_auxiliary}
+913189423: {building: farm_auxiliary}
+141420273: {landuse: forest}
+141420279: {natural: water}
+913189422: {building: farm_auxiliary}
+141419714: {natural: water}
+913189421: {building: farm_auxiliary}
+141419718: {highway: service, service: driveway}
+913189428: {building: farm_auxiliary}
+141419719: {highway: service, service: driveway}
+913189419: {building: farm_auxiliary}
+772794233: {building: yes}
+913189420: {building: farm}
+772759903: {building: yes}
+141420278: {landuse: forest}
+141420271: {landuse: forest}
+24969336: {highway: unclassified, lane_markings: no, lit: no, maxspeed: 80, name: Ørnfeldtvej, source:maxspeed: DK:rural, surface: asphalt}
+24969576: {highway: tertiary, maxspeed: 80, name: Radstrupvejen, name:etymology:wikidata: Q129860806, source:maxspeed: DK:rural, surface: asphalt}
+484179493: {name: Skjoldmose Rende, waterway: ditch}
+141419713: {access: private, highway: track}
+141428110: {landuse: forest}
+113520265: {highway: service, name: Hundslevgyden, name:etymology:wikidata: Q129859155, service: driveway}
+526668193: {building: yes}
+526668195: {building: shed}
+526668194: {building: shed}
+141425215: {highway: service, service: driveway}
+141417587: {landuse: forest}
+460707410: {landuse: farmland}
+772760518: {building: slurry_tank}
+772794239: {building: yes}
+772760494: {building: yes}
+460707409: {natural: scrub}
+772794245: {building: farm_auxiliary}
+484179503: {building: slurry_tank}
+526674769: {building: shed}
+772760145: {building: yes}
+772760425: {building: yes}
+772760504: {building: yes}
+460707400: {landuse: farmland}
+526668197: {building: yes}
+526668198: {highway: service, service: driveway}
+526668196: {building: yes}
+526668204: {building: yes}
+460707398: {landuse: farmland}
+526668199: {building: shed}
+526674767: {building: shed}
+526668202: {building: yes}
+526668206: {building: yes}
+141427970: {highway: service, service: driveway}
+526668200: {building: yes}
+141425217: {highway: service, service: driveway}
+526674766: {building: yes}
+141425218: {highway: service, service: driveway}
+484179499: {natural: water}
+526674768: {building: yes}
+913206093: {building: greenhouse}
+913206096: {natural: water}
+913206095: {natural: water}
+141427973: {highway: service, service: driveway}
+913206094: {natural: water}
+913206097: {building: yes}
+141427972: {highway: service, service: driveway}
+791222373: {building: yes}
+913189430: {building: yes}
+679030965: {name: Råbæk, waterway: stream}
+791223761: {building: yes}
+791223859: {building: yes}
+460707402: {landuse: meadow}
+791223561: {building: yes}
+791223662: {building: yes}
+460707404: {landuse: farmland}
+679030966: {layer: -1, name: Råbæk, tunnel: culvert, waterway: stream}
+113520270: {highway: service, lit: no, name: Odensevej, name:etymology:wikidata: Q25331, service: driveway}
+526451753: {landuse: forest}
+114432073: {landuse: forest}
+679030963: {name: Råbæk, waterway: stream}
+526454608: {building: house}
+913158215: {building: garage}
+994871275: {highway: service, service: driveway}
+141425619: {highway: service, service: driveway}
+913158214: {building: detached}
+526445037: {building: yes}
+679030964: {layer: -1, name: Råbæk, tunnel: culvert, waterway: stream}
+526454617: {building: yes}
+141425620: {highway: service, service: driveway}
+141425621: {highway: service, service: driveway}
+526674771: {building: yes}
+141425622: {highway: service, service: driveway}
+660245337: {bicycle: use_sidepath, highway: tertiary, lanes: 2, maxspeed: 80, maxspeed:advisory: 60, name: Kertemindevejen, name:etymology:wikidata: Q29969, oneway: no, source:maxspeed: DK:rural, surface: asphalt}
+141425749: {highway: service, service: driveway}
+526674770: {building: yes}
+557588132: {highway: tertiary, lanes: 2, maxspeed: 80, name: Mejerivejen, oneway: no, source:maxspeed: DK:rural, surface: asphalt}
+526454609: {building: yes}
+614894481: {layer: -1, name: Geelså, tunnel: culvert, waterway: river}
+526454614: {building: yes}
+526674772: {building: yes}
+913158213: {building: yes}
+913158212: {building: yes}
+660245336: {highway: service, service: driveway}
+526674773: {building: shed}
+526674775: {building: yes}
+913158209: {building: apartments}
+141425618: {highway: service, service: driveway}
+660238198: {highway: service, service: driveway}
+526454615: {building: yes}
+913158211: {building: yes}
+679030961: {name: Råbæk, waterway: stream}
+526454616: {building: yes}
+660245338: {bicycle: use_sidepath, highway: tertiary, lanes: 2, maxspeed: 80, maxspeed:advisory: 60, name: Odensevej, name:etymology:wikidata: Q25331, oneway: no, source:maxspeed: DK:rural, surface: asphalt}
+913158210: {building: yes}
+526674774: {building: yes}
+660245335: {highway: service, service: driveway}
+526454612: {building: yes}
+679030962: {layer: -1, name: Råbæk, tunnel: culvert, waterway: stream}
+526674776: {building: yes}
+526454610: {building: yes}
+526679234: {building: yes}
+526674777: {building: yes}
+627594939: {landuse: meadow}
+526679232: {building: yes}
+526674778: {building: shed}
+526679233: {building: yes}
+913158208: {building: yes}
+526454613: {building: yes}
+141425549: {highway: service, service: driveway}
+141425547: {highway: service, service: driveway}
+913206092: {building: greenhouse}
+141425550: {highway: service, service: driveway}
+526679227: {building: yes}
+526679229: {building: yes}
+526679228: {building: yes}
+141080967: {landuse: forest}
+526679230: {building: shed}
+141425548: {highway: service, service: driveway}
+526679231: {building: shed}
+791224465: {building: yes}
+791224454: {building: yes}
+560834893: {highway: path}
+660245339: {highway: service, lit: no, service: driveway}
+560830926: {bicycle: use_sidepath, highway: tertiary, lanes: 2, maxspeed: 80, name: Odensevej, name:etymology:wikidata: Q25331, oneway: no, source:maxspeed: DK:rural, surface: asphalt}
+560834896: {highway: cycleway, surface: asphalt}
+791223891: {building: yes}
+791224261: {building: yes}
+526679235: {building: yes}
+913158224: {building: detached}
+913158225: {building: yes}
+460728907: {landuse: farmland}
+913158206: {building: greenhouse}
+460731409: {landuse: farmland}
+460731418: {landuse: farmland}
+460731422: {landuse: meadow}
+913158223: {building: yes}
+913158221: {building: yes}
+913158222: {building: yes}
+913158207: {building: greenhouse}
+141080680: {highway: service, lit: no}
+141080275: {landuse: forest}
+913158220: {building: detached}
+141080961: {highway: service, service: driveway}
+526679236: {building: yes}
+913158219: {building: yes}
+526679237: {building: yes}
+913158218: {building: yes}
+460729100: {landuse: farmland}
+791223796: {building: yes}
+913158217: {building: yes}
+791223592: {building: yes}
+791224388: {building: yes}
+460728898: {bicycle: use_sidepath, highway: tertiary, lanes: 2, maxspeed: 80, name: Kertemindevejen, name:etymology:wikidata: Q29969, oneway: no, source:maxspeed: DK:rural, surface: asphalt}
+141427879: {landuse: orchard}
+460731412: {landuse: meadow}
+526679238: {building: yes}
+141080679: {highway: service, lit: no, name: Odensevej, name:etymology:wikidata: Q25331, service: driveway}
+460731417: {landuse: basin}
+141080960: {highway: service, service: driveway}
+460731898: {landuse: meadow}
+526679239: {building: yes}
+141080962: {highway: service, service: driveway}
+526679241: {building: shed}
+526679240: {building: shed}
+141427752: {landuse: forest, leaf_type: broadleaved, name: Råbæk Skov}
+460728911: {landuse: farmland}
+141426075: {highway: track}
+141080963: {highway: service, service: driveway}
+627594943: {landuse: farmland}
+913158216: {building: hotel, building:levels: 1, roof:levels: 1}
+460728884: {natural: grassland}
+679030984: {name: Råbæk, waterway: stream}
+141080030: {landuse: forest, name: Geelsskov}
+460728893: {landuse: farmland}
+460728891: {landuse: meadow}
+913158205: {building: yes}
+141080964: {highway: service, service: driveway}
+912433893: {building: greenhouse}
+113523547: {natural: water}
+913158204: {building: yes}
+141081296: {landuse: forest}
+141080156: {natural: water}
+141081297: {highway: service, service: driveway}
+791224381: {building: yes}
+913158200: {building: yes}
+791224323: {building: yes}
+141427486: {natural: water}
+791223973: {building: yes}
+913158199: {building: yes}
+913158202: {building: yes}
+913158203: {building: yes}
+460825238: {bicycle: designated, foot: designated, highway: cycleway, oneway: no, surface: asphalt}
+677484372: {highway: service, name: Skovlunden, service: driveway}
+913158201: {building: yes}
+660312252: {highway: service, service: driveway}
+912390643: {building: yes}
+141427751: {landuse: orchard}
+912390644: {building: yes}
+460728916: {landuse: meadow}
+912390642: {building: yes}
+460731414: {landuse: farmland}
+912390645: {building: yes}
+526445027: {building: yes}
+460731901: {landuse: farmland}
+675564142: {bicycle: use_sidepath, highway: tertiary, lanes: 2, maxspeed: 80, maxspeed:practical: 60, name: Kertemindevejen, name:etymology:wikidata: Q29969, oneway: no, source:maxspeed: DK:rural, surface: asphalt}
+526445026: {building: yes}
+460728895: {landuse: meadow}
+141427750: {highway: service, service: driveway}
+912390641: {building: yes}
+460731415: {landuse: farmland}
+912390640: {building: yes}
+912390639: {building: yes}
+460731903: {landuse: farmland}
+141427747: {highway: residential, maxspeed: 20, name: Kertemindevejen, name:etymology:wikidata: Q29969, surface: gravel}
+460825235: {highway: service, service: driveway}
+912390634: {building: yes}
+460728918: {landuse: meadow}
+912390636: {building: yes}
+913158197: {building: yes}
+912390627: {building: yes}
+141427748: {landuse: forest}
+912390625: {building: yes}
+912390628: {building: greenhouse}
+913158196: {building: yes}
+1174762790: {highway: service}
+912390638: {building: yes}
+913158198: {building: yes}
+912390637: {building: yes}
+912390626: {building: yes}
+141081294: {highway: service, service: driveway}
+912390623: {building: greenhouse}
+141081293: {highway: service, service: driveway}
+675564141: {bicycle: use_sidepath, highway: tertiary, lanes: 2, maxspeed: 80, maxspeed:practical: 60, name: Kertemindevejen, name:etymology:wikidata: Q29969, oneway: no, source:maxspeed: DK:rural, surface: asphalt}
+912390678: {building: yes}
+627594944: {natural: grassland}
+141081286: {highway: service, service: driveway}
+154521409: {landuse: orchard}
+912390624: {building: yes}
+912390635: {building: yes}
+460728877: {landuse: farmland}
+912390629: {building: yes}
+912390677: {building: yes}
+912390622: {building: yes}
+141427746: {natural: water}
+141427749: {natural: water}
+141081395: {landuse: forest}
+660312253: {highway: service, service: driveway, surface: asphalt}
+912390676: {building: yes}
+141081394: {highway: service}
+912390675: {building: yes}
+660312256: {bicycle: use_sidepath, highway: tertiary, lanes: 2, maxspeed: 80, name: Kertemindevejen, name:etymology:wikidata: Q29969, oneway: no, source:maxspeed: DK:rural, surface: asphalt}
+1124382489: {building: yes}
+675564144: {highway: tertiary, maxspeed: 80, name: Birketvedvejen, source:maxspeed: DK:rural, surface: asphalt}
+460731899: {landuse: forest}
+627594938: {landuse: meadow}
+627594937: {natural: grassland}
+141427380: {highway: service, name: Kertemindevejen, name:etymology:wikidata: Q29969, service: driveway}
+660312257: {highway: service, service: driveway}
+912390646: {building: yes}
+912390648: {building: yes}
+614894482: {name: Geelså, waterway: river}
+141273168: {highway: service, service: driveway}
+912390647: {building: yes}
+141079585: {landuse: forest}
+912390633: {building: yes}
+627594950: {landuse: meadow}
+660312258: {highway: service, service: driveway}
+141081291: {landuse: forest}
+912390632: {building: yes}
+141081393: {highway: service, service: driveway}
+912390631: {building: yes}
+627594947: {natural: grassland}
+460728882: {landuse: farmland}
+141427426: {natural: water}
+627594945: {landuse: meadow}
+912390656: {building: greenhouse}
+1021974511: {landuse: farmland}
+660312255: {bicycle: use_sidepath, hazard: animal_crossing, highway: tertiary, lanes: 2, maxspeed: 80, name: Kertemindevejen, name:etymology:wikidata: Q29969, oneway: no, source:maxspeed: DK:rural, surface: asphalt}
+113523552: {landuse: forest, leaf_type: broadleaved, name: Letmose Skov}
+463226353: {landuse: farmland}
+1083572349: {highway: path}

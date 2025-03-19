@@ -48,9 +48,7 @@
         ]
       },
       "properties": {
-        "natural": "scrub",
-        "unique_name": "natural_scrub_1",
-        "color": "#00FF00"
+        "natural": "scrub"
       }
     },
     {
@@ -104,9 +102,7 @@
         "name": "Bulevar Louis Pasteur",
         "name:etymology:wikidata": "Q529",
         "oneway": "yes",
-        "surface": "asphalt",
-        "unique_name": "highway_Bulevar_Louis_Pasteur_1",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -156,9 +152,7 @@
         "name": "Avenida Dolores Rodríguez de Aragón",
         "oneway": "yes",
         "sidewalk": "right",
-        "surface": "asphalt",
-        "unique_name": "highway_secondary_Avenida_Dolores_Rodriguez_de_Aragon_1",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -208,9 +202,7 @@
         "name": "Avenida Dolores Rodríguez de Aragón",
         "oneway": "yes",
         "sidewalk": "right",
-        "surface": "asphalt",
-        "unique_name": "highway_secondary_Avenida_Dolores_Rodriguez_de_Aragon_2",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -234,9 +226,7 @@
         "layer": "-1",
         "name": "Arroyo de Las Cañas",
         "tunnel": "yes",
-        "waterway": "stream",
-        "unique_name": "waterway_Arroyo_de_Las_Canas_1",
-        "color": "#0000FF"
+        "waterway": "stream"
       }
     },
     {
@@ -282,9 +272,7 @@
         "name": "Bulevar Louis Pasteur",
         "name:etymology:wikidata": "Q529",
         "oneway": "yes",
-        "surface": "asphalt",
-        "unique_name": "highway_tertiary_Bulevar_Louis_Pasteur_1",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -326,9 +314,7 @@
         ]
       },
       "properties": {
-        "natural": "heath",
-        "unique_name": "natural_heath_1",
-        "color": "#00FF00"
+        "natural": "heath"
       }
     },
     {
@@ -354,9 +340,7 @@
         "name": "Avenida Dolores Rodríguez de Aragón",
         "oneway": "yes",
         "sidewalk": "right",
-        "surface": "asphalt",
-        "unique_name": "highway_tertiary_Avenida_Dolores_Rodriguez_de_Aragon_1",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -430,9 +414,7 @@
         ]
       },
       "properties": {
-        "landuse": "grass",
-        "unique_name": "landuse_grass_1",
-        "color": "#008000"
+        "landuse": "grass"
       }
     },
     {
@@ -452,9 +434,7 @@
         ]
       },
       "properties": {
-        "highway": "footway",
-        "unique_name": "highway_footway_1",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -479,9 +459,7 @@
       },
       "properties": {
         "footway": "crossing",
-        "highway": "footway",
-        "unique_name": "highway_footway_crossing_1",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -502,9 +480,7 @@
       },
       "properties": {
         "footway": "crossing",
-        "highway": "footway",
-        "unique_name": "highway_footway_crossing_2",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -558,9 +534,7 @@
         ]
       },
       "properties": {
-        "natural": "heath",
-        "unique_name": "natural_heath_2",
-        "color": "#00FF00"
+        "natural": "heath"
       }
     },
     {
@@ -622,9 +596,7 @@
         ]
       },
       "properties": {
-        "landuse": "grass",
-        "unique_name": "landuse_grass_2",
-        "color": "#008000"
+        "landuse": "grass"
       }
     },
     {
@@ -685,9 +657,7 @@
       },
       "properties": {
         "highway": "cycleway",
-        "surface": "paved",
-        "unique_name": "highway_cycleway_1",
-        "color": "#DC143C"
+        "surface": "paved"
       }
     },
     {
@@ -735,9 +705,7 @@
         ]
       },
       "properties": {
-        "highway": "footway",
-        "unique_name": "highway_footway_2",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -757,9 +725,7 @@
         ]
       },
       "properties": {
-        "highway": "footway",
-        "unique_name": "highway_footway_3",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -804,9 +770,7 @@
         "maxspeed": "30",
         "noname": "yes",
         "oneway": "yes",
-        "surface": "asphalt",
-        "unique_name": "highway_unclassified_1",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -867,9 +831,7 @@
       },
       "properties": {
         "footway": "sidewalk",
-        "highway": "footway",
-        "unique_name": "highway_footway_sidewalk_1",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -935,9 +897,7 @@
         ]
       },
       "properties": {
-        "landuse": "grass",
-        "unique_name": "landuse_grass_3",
-        "color": "#008000"
+        "landuse": "grass"
       }
     },
     {
@@ -972,9 +932,7 @@
         "maxspeed": "40",
         "name": "Calle Rafael Puertas Tricas",
         "sidewalk": "both",
-        "surface": "asphalt",
-        "unique_name": "highway_secondary_Calle_Rafael_Puertas_Tricas_1",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -1016,9 +974,7 @@
         "name": "Bulevar Louis Pasteur",
         "name:etymology:wikidata": "Q529",
         "oneway": "yes",
-        "surface": "asphalt",
-        "unique_name": "highway_tertiary_Bulevar_Louis_Pasteur_2",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -1046,9 +1002,7 @@
         ]
       },
       "properties": {
-        "highway": "footway",
-        "unique_name": "highway_footway_4",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -1122,9 +1076,7 @@
         ]
       },
       "properties": {
-        "landuse": "grass",
-        "unique_name": "landuse_grass_4",
-        "color": "#008000"
+        "landuse": "grass"
       }
     },
     {
@@ -1352,9 +1304,7 @@
         ]
       },
       "properties": {
-        "highway": "footway",
-        "unique_name": "highway_footway_5",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -1379,9 +1329,7 @@
       },
       "properties": {
         "footway": "crossing",
-        "highway": "footway",
-        "unique_name": "highway_footway_crossing_3",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -1599,9 +1547,7 @@
         ]
       },
       "properties": {
-        "natural": "heath",
-        "unique_name": "natural_heath_3",
-        "color": "#00FF00"
+        "natural": "heath"
       }
     },
     {
@@ -1664,9 +1610,7 @@
       },
       "properties": {
         "building": "yes",
-        "building:levels": "1",
-        "unique_name": "building_1",
-        "color": "#A52A2A"
+        "building:levels": "1"
       }
     },
     {
@@ -1714,9 +1658,7 @@
         ]
       },
       "properties": {
-        "highway": "service",
-        "unique_name": "highway_service_1",
-        "color": "#DC143C"
+        "highway": "service"
       }
     },
     {
@@ -1981,9 +1923,7 @@
       },
       "properties": {
         "highway": "cycleway",
-        "surface": "paved",
-        "unique_name": "highway_cycleway_2",
-        "color": "#DC143C"
+        "surface": "paved"
       }
     },
     {
@@ -2033,9 +1973,7 @@
         ]
       },
       "properties": {
-        "landuse": "grass",
-        "unique_name": "landuse_grass_5",
-        "color": "#008000"
+        "landuse": "grass"
       }
     },
     {
@@ -2083,9 +2021,7 @@
         ]
       },
       "properties": {
-        "highway": "footway",
-        "unique_name": "highway_footway_6",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -2125,9 +2061,7 @@
       "properties": {
         "building": "roof",
         "building:levels": "1",
-        "layer": "1",
-        "unique_name": "building_roof_1",
-        "color": "#A52A2A"
+        "layer": "1"
       }
     },
     {
@@ -2162,9 +2096,7 @@
         "maxspeed": "40",
         "name": "Calle Rafael Puertas Tricas",
         "sidewalk": "both",
-        "surface": "asphalt",
-        "unique_name": "highway_secondary_Calle_Rafael_Puertas_Tricas_2",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -2208,9 +2140,7 @@
       "properties": {
         "building": "roof",
         "building:levels": "1",
-        "layer": "1",
-        "unique_name": "building_roof_2",
-        "color": "#A52A2A"
+        "layer": "1"
       }
     },
     {
@@ -2292,9 +2222,7 @@
         ]
       },
       "properties": {
-        "landuse": "grass",
-        "unique_name": "landuse_grass_6",
-        "color": "#008000"
+        "landuse": "grass"
       }
     },
     {
@@ -2323,9 +2251,7 @@
       },
       "properties": {
         "footway": "crossing",
-        "highway": "footway",
-        "unique_name": "highway_footway_crossing_4",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -2353,9 +2279,7 @@
         ]
       },
       "properties": {
-        "highway": "footway",
-        "unique_name": "highway_footway_7",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -2389,9 +2313,7 @@
         ]
       },
       "properties": {
-        "landuse": "grass",
-        "unique_name": "landuse_grass_7",
-        "color": "#008000"
+        "landuse": "grass"
       }
     },
     {
@@ -2427,9 +2349,7 @@
         "junction": "roundabout",
         "lanes": "2",
         "noname": "yes",
-        "surface": "asphalt",
-        "unique_name": "highway_roundabout_1",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -2471,9 +2391,7 @@
         ]
       },
       "properties": {
-        "landuse": "grass",
-        "unique_name": "landuse_grass_8",
-        "color": "#008000"
+        "landuse": "grass"
       }
     },
     {
@@ -2509,9 +2427,7 @@
       "properties": {
         "building": "kiosk",
         "building:levels": "1",
-        "shop": "kiosk",
-        "unique_name": "building_kiosk_1",
-        "color": "#A52A2A"
+        "shop": "kiosk"
       }
     },
     {
@@ -2576,9 +2492,7 @@
       },
       "properties": {
         "footway": "sidewalk",
-        "highway": "footway",
-        "unique_name": "highway_footway_sidewalk_2",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -2599,9 +2513,7 @@
       },
       "properties": {
         "footway": "crossing",
-        "highway": "footway",
-        "unique_name": "highway_footway_crossing_5",
-        "color": "#DC143C"
+        "highway": "footway"
       }
     },
     {
@@ -2707,9 +2619,7 @@
         ]
       },
       "properties": {
-        "landuse": "grass",
-        "unique_name": "landuse_grass_9",
-        "color": "#008000"
+        "landuse": "grass"
       }
     },
     {
@@ -2772,9 +2682,7 @@
         "name:etymology": "Pedro Ortiz Ramos",
         "name:etymology:wikidata": "Q131607567",
         "oneway": "no",
-        "surface": "asphalt",
-        "unique_name": "highway_Calle_Doctor_Ortiz_Ramos_1",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -2809,9 +2717,7 @@
       },
       "properties": {
         "building": "roof",
-        "building:levels": "1",
-        "unique_name": "building_roof_3",
-        "color": "#A52A2A"
+        "building:levels": "1"
       }
     },
     {
@@ -2887,9 +2793,7 @@
         "junction": "roundabout",
         "lanes": "2",
         "noname": "yes",
-        "surface": "asphalt",
-        "unique_name": "highway_roundabout_2",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -2986,9 +2890,7 @@
       },
       "properties": {
         "highway": "cycleway",
-        "surface": "paved",
-        "unique_name": "highway_cycleway_3",
-        "color": "#DC143C"
+        "surface": "paved"
       }
     },
     {
@@ -3212,9 +3114,7 @@
         ]
       },
       "properties": {
-        "highway": "track",
-        "unique_name": "highway_track_1",
-        "color": "#DC143C"
+        "highway": "track"
       }
     },
     {
@@ -3424,9 +3324,7 @@
         ]
       },
       "properties": {
-        "natural": "heath",
-        "unique_name": "natural_heath_4",
-        "color": "#00FF00"
+        "natural": "heath"
       }
     },
     {
@@ -3460,9 +3358,7 @@
         ]
       },
       "properties": {
-        "building": "yes",
-        "unique_name": "building_2",
-        "color": "#A52A2A"
+        "building": "yes"
       }
     },
     {
@@ -3692,9 +3588,7 @@
         ]
       },
       "properties": {
-        "natural": "scrub",
-        "unique_name": "natural_scrub_2",
-        "color": "#00FF00"
+        "natural": "scrub"
       }
     },
     {
@@ -3772,9 +3666,7 @@
       "properties": {
         "intermittent": "yes",
         "name": "Arroyo de Las Cañas",
-        "waterway": "stream",
-        "unique_name": "waterway_Arroyo_de_Las_Canas_2",
-        "color": "#0000FF"
+        "waterway": "stream"
       }
     },
     {
@@ -3816,9 +3708,7 @@
         "lanes:forward": "2",
         "maxspeed": "40",
         "name": "Calle Rafael Puertas Tricas",
-        "surface": "asphalt",
-        "unique_name": "highway_Calle_Rafael_Puertas_Tricas_3",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -4166,9 +4056,7 @@
         ]
       },
       "properties": {
-        "natural": "heath",
-        "unique_name": "natural_heath_5",
-        "color": "#00FF00"
+        "natural": "heath"
       }
     },
     {
@@ -4208,9 +4096,7 @@
         ]
       },
       "properties": {
-        "highway": "service",
-        "unique_name": "highway_service_2",
-        "color": "#DC143C"
+        "highway": "service"
       }
     },
     {
@@ -4245,9 +4131,7 @@
       },
       "properties": {
         "building": "service",
-        "building:levels": "1",
-        "unique_name": "building_service_1",
-        "color": "#A52A2A"
+        "building:levels": "1"
       }
     },
     {
@@ -4281,9 +4165,7 @@
         ]
       },
       "properties": {
-        "building": "kiosk",
-        "unique_name": "building_kiosk_2",
-        "color": "#A52A2A"
+        "building": "kiosk"
       }
     },
     {
@@ -4332,9 +4214,7 @@
         "maxspeed": "40",
         "name": "Calle Arquitecto Francisco Peñalosa",
         "oneway": "yes",
-        "surface": "asphalt",
-        "unique_name": "highway_Calle_Arquitecto_Francisco_Penalosa_1",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -4456,9 +4336,7 @@
         ]
       },
       "properties": {
-        "landuse": "grass",
-        "unique_name": "landuse_grass_10",
-        "color": "#008000"
+        "landuse": "grass"
       }
     },
     {
@@ -4568,9 +4446,7 @@
         "junction": "roundabout",
         "lanes": "3",
         "noname": "yes",
-        "surface": "asphalt",
-        "unique_name": "highway_roundabout_3",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -4604,9 +4480,7 @@
         ]
       },
       "properties": {
-        "landuse": "grass",
-        "unique_name": "landuse_grass_11",
-        "color": "#008000"
+        "landuse": "grass"
       }
     },
     {
@@ -4651,9 +4525,7 @@
         "maxspeed": "40",
         "name": "Calle Arquitecto Francisco Peñalosa",
         "oneway": "yes",
-        "surface": "asphalt",
-        "unique_name": "highway_Calle_Arquitecto_Francisco_Penalosa_2",
-        "color": "#DC143C"
+        "surface": "asphalt"
       }
     },
     {
@@ -4681,9 +4553,7 @@
         ]
       },
       "properties": {
-        "highway": "track",
-        "unique_name": "highway_track_2",
-        "color": "#DC143C"
+        "highway": "track"
       }
     },
     {
@@ -4777,9 +4647,7 @@
         ]
       },
       "properties": {
-        "highway": "track",
-        "unique_name": "highway_track_3",
-        "color": "#DC143C"
+        "highway": "track"
       }
     },
     {
@@ -4811,9 +4679,7 @@
         ]
       },
       "properties": {
-        "highway": "track",
-        "unique_name": "highway_track_4",
-        "color": "#DC143C"
+        "highway": "track"
       }
     },
     {
@@ -4875,9 +4741,7 @@
         ]
       },
       "properties": {
-        "natural": "heath",
-        "unique_name": "natural_heath_6",
-        "color": "#00FF00"
+        "natural": "heath"
       }
     },
     {
@@ -5087,9 +4951,7 @@
         ]
       },
       "properties": {
-        "natural": "heath",
-        "unique_name": "natural_heath_7",
-        "color": "#00FF00"
+        "natural": "heath"
       }
     },
     {
@@ -5153,9 +5015,7 @@
         ]
       },
       "properties": {
-        "highway": "track",
-        "unique_name": "highway_track_5",
-        "color": "#DC143C"
+        "highway": "track"
       }
     },
     {
@@ -5183,9 +5043,7 @@
         ]
       },
       "properties": {
-        "highway": "path",
-        "unique_name": "highway_path_1",
-        "color": "#DC143C"
+        "highway": "path"
       }
     },
     {
@@ -5403,9 +5261,7 @@
         ]
       },
       "properties": {
-        "natural": "heath",
-        "unique_name": "natural_heath_8",
-        "color": "#00FF00"
+        "natural": "heath"
       }
     },
     {
@@ -5533,9 +5389,7 @@
         ]
       },
       "properties": {
-        "highway": "track",
-        "unique_name": "highway_track_6",
-        "color": "#DC143C"
+        "highway": "track"
       }
     },
     {
@@ -5583,9 +5437,7 @@
         ]
       },
       "properties": {
-        "highway": "track",
-        "unique_name": "highway_track_7",
-        "color": "#DC143C"
+        "highway": "track"
       }
     },
     {
@@ -5621,9 +5473,7 @@
         ]
       },
       "properties": {
-        "highway": "track",
-        "unique_name": "highway_track_8",
-        "color": "#DC143C"
+        "highway": "track"
       }
     },
     {
@@ -5654,9 +5504,7 @@
         "highway": "motorway_link",
         "lanes": "2",
         "maxspeed": "80",
-        "oneway": "yes",
-        "unique_name": "highway_motorway_link_1",
-        "color": "#DC143C"
+        "oneway": "yes"
       }
     },
     {
@@ -5994,438 +5842,8 @@
         ]
       },
       "properties": {
-        "natural": "scrub",
-        "unique_name": "natural_scrub_3",
-        "color": "#00FF00"
+        "natural": "scrub"
       }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Static Locations",
-        "name": "Forward Control Center",
-        "altitude": null,
-        "unique_name": "static_Forward_Control_Center_1",
-        "color": "#808000"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -4.48936016,
-          36.71698075
-        ]
-      },
-      "id": 1
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Static Locations",
-        "name": "Medical Tent",
-        "altitude": null,
-        "unique_name": "static_Medical_Tent_1",
-        "color": "#808000"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -4.488774091,
-          36.71622231
-        ]
-      },
-      "id": 2
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Static Locations",
-        "name": "Tunnel South Scenario",
-        "altitude": null,
-        "unique_name": "static_Tunnel_South_Scenario_1",
-        "color": "#808000"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -4.48824217,
-          36.71706685
-        ]
-      },
-      "id": 3
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Static Locations",
-        "name": "Tunnel North Scenario",
-        "altitude": null,
-        "unique_name": "static_Tunnel_North_Scenario_1",
-        "color": "#808000"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -4.48854034,
-          36.71743269
-        ]
-      },
-      "id": 4
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Static Locations",
-        "name": "Ramp Down to the Stream",
-        "altitude": null,
-        "unique_name": "static_Ramp_down_to_the_Stream_1",
-        "color": "#808000"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -4.48779425,
-          36.71706344
-        ]
-      },
-      "id": 5
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Static Locations",
-        "name": "Base Station",
-        "altitude": null,
-        "unique_name": "static_Base_Station_1",
-        "color": "#808000"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -4.48835542,
-          36.71481194
-        ]
-      },
-      "id": 6
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Operational Environments",
-        "name": "Stream",
-        "unique_name": "operational_Stream_1",
-        "color": "#40E0D0"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -4.486674743233518,
-              36.71633791704991
-            ],
-            [
-              -4.487579328088151,
-              36.71677211240119
-            ],
-            [
-              -4.487822956259148,
-              36.71665233153578
-            ],
-            [
-              -4.487603544666983,
-              36.71648030916452
-            ],
-            [
-              -4.487212637954313,
-              36.71623288350985
-            ],
-            [
-              -4.486808031729199,
-              36.71615681430162
-            ],
-            [
-              -4.485772955907116,
-              36.71514417183092
-            ],
-            [
-              -4.48563224327477,
-              36.71523871576353
-            ],
-            [
-              -4.486674743233518,
-              36.71633791704991
-            ]
-          ]
-        ]
-      },
-      "id": 7
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Operational Environments",
-        "name": "Flood",
-        "unique_name": "operational_Flood_1",
-        "color": "#40E0D0"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -4.484829212575513,
-              36.71474515566967
-            ],
-            [
-              -4.484779352954421,
-              36.71492925406859
-            ],
-            [
-              -4.485203829603941,
-              36.71503110060748
-            ],
-            [
-              -4.485282429162033,
-              36.71483953490688
-            ],
-            [
-              -4.484829212575513,
-              36.71474515566967
-            ]
-          ]
-        ]
-      },
-      "id": 8
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Operational Environments",
-        "name": "Fire",
-        "unique_name": "operational_Fire_1",
-        "color": "#40E0D0"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -4.487848021405036,
-              36.71586547674929
-            ],
-            [
-              -4.488093070436223,
-              36.71570969284928
-            ],
-            [
-              -4.487982297403107,
-              36.71554186606874
-            ],
-            [
-              -4.487738994337982,
-              36.71553418807757
-            ],
-            [
-              -4.487678056539125,
-              36.71578021898811
-            ],
-            [
-              -4.487848021405036,
-              36.71586547674929
-            ]
-          ]
-        ]
-      },
-      "id": 9
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Operational Environments",
-        "name": "Forensic Area",
-        "unique_name": "operational_Forensic_Area_1",
-        "color": "#40E0D0"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -4.488804730222345,
-              36.71742151767258
-            ],
-            [
-              -4.489061732260755,
-              36.71743130463144
-            ],
-            [
-              -4.489072544301518,
-              36.71724931033286
-            ],
-            [
-              -4.48892703832541,
-              36.71714056328588
-            ],
-            [
-              -4.488798045086809,
-              36.71728455744532
-            ],
-            [
-              -4.488804730222345,
-              36.71742151767258
-            ]
-          ]
-        ]
-      },
-      "id": 10
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Operational Environments",
-        "name": "Tunnel Accident",
-        "unique_name": "operational_Tunnel_Accident_1",
-        "color": "#40E0D0"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -4.488279037244665,
-              36.71725044304421
-            ],
-            [
-              -4.488411328718701,
-              36.71758040304144
-            ],
-            [
-              -4.488613385869482,
-              36.71751023601824
-            ],
-            [
-              -4.488426451808412,
-              36.71718987055259
-            ],
-            [
-              -4.488279037244665,
-              36.71725044304421
-            ]
-          ]
-        ]
-      },
-      "id": 11
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Operational Environments",
-        "name": "Gas Leakage",
-        "unique_name": "operational_Gas_Leakage_1",
-        "color": "#40E0D0"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -4.487856984386464,
-              36.7150331591818
-            ],
-            [
-              -4.487876174219966,
-              36.71466909516985
-            ],
-            [
-              -4.486609380533256,
-              36.71460378563209
-            ],
-            [
-              -4.487053245962628,
-              36.71505856182208
-            ],
-            [
-              -4.487856984386464,
-              36.7150331591818
-            ]
-          ]
-        ]
-      },
-      "id": 12
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Operational Environments",
-        "name": "Infrastructure Collapse",
-        "unique_name": "operational_Infrastructure_Collapse_1",
-        "color": "#40E0D0"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -4.490237895076906,
-              36.7155291153807
-            ],
-            [
-              -4.490153296947224,
-              36.7151991738615
-            ],
-            [
-              -4.489892901655185,
-              36.71535998188331
-            ],
-            [
-              -4.49000904424596,
-              36.71555441220752
-            ],
-            [
-              -4.490237895076906,
-              36.7155291153807
-            ]
-          ]
-        ]
-      },
-      "id": 13
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "category": "Operational Environments",
-        "name": "Command, Communication, and Control Area",
-        "unique_name": "operational_Command_Communication_and_Control_Area_1",
-        "color": "#40E0D0"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -4.489649318647352,
-              36.71685294864699
-            ],
-            [
-              -4.489235324515516,
-              36.71685320098904
-            ],
-            [
-              -4.489231434443042,
-              36.71757653698525
-            ],
-            [
-              -4.489659379736474,
-              36.71760226270865
-            ],
-            [
-              -4.489649318647352,
-              36.71685294864699
-            ]
-          ]
-        ]
-      },
-      "id": 14
     }
   ]
 }

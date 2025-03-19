@@ -36,8 +36,8 @@ with open(SIM_CONFIGS_FILE, "r") as file:
     SIM_CONFIGS = json.load(file)
 
 # Select the simulation configuration
-SIM_CONFIG_NAMES = ["uma_sar_scenario", "geelsa_greenhouses"]
 REGENERATE_FEATURES = False
+SIM_CONFIG_NAMES = ["uma_sar_scenario", "geelsa_greenhouses"]
 SIM_CONFIG_NAME = SIM_CONFIG_NAMES[0]
 SIM_CONFIG = SIM_CONFIGS[SIM_CONFIG_NAME]
 
@@ -52,7 +52,7 @@ SETTINGS = SIM_CONFIG["settings"]
 # Compute the bounding box
 bbox, tiles_adapted_bbox = compute_square_bbox(ENV["center"], ENV["side_length_meters"], ENV["zoom"])
 
-features_processed_geojson_file = os.path.join(app.root_path, "data", "features", SIM_CONFIG_NAME, "features_processed.geojson")
+features_processed_geojson_file = os.path.join(app.root_path, "data", "features", SIM_CONFIG_NAME, "processed.geojson")
 if REGENERATE_FEATURES or not os.path.exists(features_processed_geojson_file):
     # Get Overpass features as GeoJSON
     features_geojson = get_geojson_features(tiles_adapted_bbox, SIM_CONFIG_NAME)
@@ -170,7 +170,7 @@ def control():
         if command == 'reset':
             simulation_state["swarm"] = initialize_swarm()
             simulation_state["current_step"] = 0
-            agent_state["agent"] = SwarmAgent(app, simulation_state["swarm"])
+            agent_state["agent"] = SwarmAgent(app, simulation_state["swarm"], features_geojson)
             agent_state["messages"] = initial_messages.copy()
         elif command == 'pause':
             simulation_state["running"] = not simulation_state["running"]
@@ -193,6 +193,11 @@ def chat():
 def index():
     """Serve the index.html file"""
     return send_from_directory('./public', 'index.html')
+
+@app.route('/processed.geojson')
+def processed_geojson():
+    """Serve the processed GeoJSON file"""
+    return send_from_directory('./data/features', os.path.join(SIM_CONFIG_NAME, 'processed.geojson'))
 
 @app.route('/<path:path>')
 def static_file(path):

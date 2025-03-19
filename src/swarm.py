@@ -20,6 +20,13 @@ MODEL_NAME = "gpt-4o-mini"
 with open("mykeys/openai_api_key.txt", "r") as f:
     OPENAI_API_KEY = f.read()
 
+nato_phonetic_alphabet = [
+    "Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel", 
+    "India", "Juliett", "Kilo", "Lima", "Mike", "November", "Oscar", "Papa", 
+    "Quebec", "Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", 
+    "X-ray", "Yankee", "Zulu"
+]
+
 # POSSIBLE BEHAVIORS AND PARAMS
 BEHAVIORS = {
     "form_and_follow_trajectory": {
@@ -543,6 +550,13 @@ class SwarmAgent:
                 "required": ["group_idx", "formation_shape", "formation_radius", "name"]
             }
         
+    def _get_feature_by_unique_name(self, unique_name):
+        """Get GeoJSON feature by unique name"""
+        for feature in self.features_geojson["features"]:
+            if feature["properties"]["unique_name"] == unique_name:
+                return feature
+        return None
+        
     def _set_feature_name_lists(self):
         # Create list of unique_names that correspond to Polygon features
         polygon_names = []
@@ -550,7 +564,7 @@ class SwarmAgent:
         point_names = []
 
         for feature in self.features_geojson["features"]:
-            if feature["geometry"]["type"] == "Polygon":
+            if feature["geometry"]["type"] == "Polygon" or feature["geometry"]["type"] == "MultiPolygon":
                 try :
                     polygon_names.append(feature["properties"]["unique_name"])
                 except KeyError:
@@ -571,6 +585,7 @@ class SwarmAgent:
         linestring_names.sort()
         point_names.sort()
 
+        # Store them in the class
         self.point_names = point_names
         self.linestring_names = linestring_names
         self.polygon_names = polygon_names
@@ -716,16 +731,35 @@ class SwarmAgent:
             return "Invalid radius value: must be between 0.125 and 1.0"
         if formation_shape not in ["circle", "square", "triangle", "hexagon"]:
             return "Invalid formation shape: must be 'circle', 'square', 'triangle', or 'hexagon'"
-        if name not in self.polygon_names + self.linestring_names + self.point_names:
+        if name not in self.polygon_names + self.linestring_names:
             return "Invalid feature name: must be one of the available features"
         
         # Get the GeoJSON feature with unique_name = name
-        feature = next(f for f in self.features_geojson["features"] if f["properties"]["unique_name"] == name)
+        feature = self._get_feature_by_unique_name(name)
+        if feature is None:
+            return "Feature not found"
+        
         # Get the coordinates of the feature depending on its geometry type
-        if feature["geometry"]["type"] == "Polygon":
-            coords = feature["geometry"]["coordinates"][0]
+        if feature["geometry"]["type"] == "Polygon" or feature["geometry"]["type"] == "MultiPolygon":
+            if feature["geometry"]["type"] == "MultiPolygon":
+                coords = feature["geometry"]["coordinates"][0][0]
+            else:
+                coords = feature["geometry"]["coordinates"][0]
+
+            # Reorder coordinates so that initial position is the closest to the center of the group
+            # If it is the coordinate at index 2, shift that coordinate to be the first one and put any previous ones at the end
+            group_virtual_center = self.swarm._get_group_by_idx(group_idx).virtual_center
+            closest_coord_idx = np.argmin([np.linalg.norm(np.array(coord) - np.array(group_virtual_center)) for coord in coords])
+            coords = coords[closest_coord_idx:] + coords[1:closest_coord_idx] + [coords[closest_coord_idx]]
+
         elif feature["geometry"]["type"] == "LineString":
             coords = feature["geometry"]["coordinates"]
+            # Check if the first or the last coordinate is the closest to the center of the group
+            # If the last one is the closest, invert the order of the coordinates
+            group_virtual_center = self.swarm._get_group_by_idx(group_idx).virtual_center
+            closest_coord_idx = np.argmin([np.linalg.norm(np.array(coord) - np.array(group_virtual_center)) for coord in coords])
+            if closest_coord_idx == len(coords) - 1:
+                coords = coords[::-1]
         else:
             return "Invalid feature type"
         
@@ -749,10 +783,17 @@ class SwarmAgent:
             return "Invalid feature name: must be one of the available features"
         
         # Get the GeoJSON feature with unique_name = name
-        feature = next(f for f in self.features_geojson["features"] if f["properties"]["unique_name"] == name)
+        feature = self._get_feature_by_unique_name(name)
+        if feature is None:
+            return "Feature not found"
+        
         # Get the coordinates of the feature depending on its geometry type
-        if feature["geometry"]["type"] == "Polygon":
-            coords = feature["geometry"]["coordinates"][0]
+        if feature["geometry"]["type"] == "Polygon" or feature["geometry"]["type"] == "MultiPolygon":
+            if feature["geometry"]["type"] == "MultiPolygon":
+                coords = feature["geometry"]["coordinates"][0][0]
+            else:
+                coords = feature["geometry"]["coordinates"][0]
+
             x = np.mean([coord[0] for coord in coords])
             y = np.mean([coord[1] for coord in coords])
             coords = [[x, y]]

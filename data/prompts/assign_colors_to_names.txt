@@ -1,31 +1,9 @@
-Generate a JSON dictionary mapping each word to an hexadecimal color code.
+Generate a JSON dictionary mapping each GeoJSON feature type to an hexadecimal color code. 
+Try to assign colors that match the words when possible, ensuring colors are highly differentiable.
 
-These are the color codes you can use: 
-#FF0000 (Red)
-#00FF00 (Green)
-#0000FF (Blue)
-#FFFF00 (Yellow)
-#FF00FF (Magenta)
-#00FFFF (Cyan)
-#800000 (Maroon)
-#808000 (Olive)
-#008000 (Dark Green)
-#800080 (Purple)
-#008080 (Teal)
-#000080 (Navy)
-#FFA500 (Orange)
-#A52A2A (Brown)
-#7FFF00 (Chartreuse)
-#DC143C (Crimson)
-#00FA9A (Spring Green)
-#4682B4 (Steel Blue)
-#FFD700 (Gold)
-#40E0D0 (Turquoise)
-
-Example: ['sky', 'grass', 'sand'] -> {'sky': '#00FFFF', 'grass': '#00FF00', 'sand': '#FFD700'}.
-
-Example Output JSON Schema: 
-{
-  "<name>": "<color>", 
-  ...
+Example: ['building', 'landuse', 'natural', 'highway'] -> {
+    "building": "#8B5A2B",
+    "landuse": "#FFD700",
+    "natural": "#008080",
+    "highway": "#FF4500"
 }

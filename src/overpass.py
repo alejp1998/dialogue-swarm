@@ -79,10 +79,6 @@ def name_features(geojson_str_no_coords, feature_collection):
         print(f"Error decoding JSON response: {e}")
         print(f"Response text: {completion.text}") #print the raw response for debugging.
         return feature_collection #Return the original feature collection.
-    
-    # Write mapping to file
-    with open(features_dir + "features_mapped_to_names.json", "w") as f:
-        json.dump(names_mapped_to_feature_ids, f, indent=2)
 
     # Flip the dictionary to map feature IDs to names
     feature_ids_mapped_to_names = {str(v): k for k, v in names_mapped_to_feature_ids.items()}
@@ -202,15 +198,15 @@ def get_geojson_features(bbox, config_name=""):
     feature_collection = overpass_to_geojson_featurecollection(overpass_data)
     geojson_str = geojson.dumps(feature_collection, indent=2)
 
-    # # Save original GeoJSON
-    # file_path_geojson = features_dir + "features.geojson"
-    # with open(file_path_geojson, "w") as f:
-    #     f.write(geojson_str)
+    # Save overpass GeoJSON
+    file_path_geojson = features_dir + config_name + "/overpass.geojson"
+    with open(file_path_geojson, "w") as f:
+        f.write(geojson_str)
 
     # Mix features with hardcoded features
     if config_name:
         # Load hardcoded features if file exists
-        file_path_config_features = features_dir + config_name + "/features.geojson"
+        file_path_config_features = features_dir + config_name + "/hardcoded.geojson"
         if not os.path.exists(file_path_config_features):
             print(f"Warning: Hardcoded features file '{file_path_config_features}' does not exist.")
         else:
@@ -225,34 +221,26 @@ def get_geojson_features(bbox, config_name=""):
     # Modify features to replace coordinates with count and other simplifications
     feature_collection_no_coords = simplify_geojson(feature_collection)
 
-    # Convert to GeoJSON string
-    geojson_str_no_coords = geojson.dumps(feature_collection_no_coords, indent=2)
-
-    # Save simplified GeoJSON
-    file_path_geojson_no_coords = features_dir + "features_no_coords.geojson"
-    with open(file_path_geojson_no_coords, "w") as f:
-        f.write(geojson_str_no_coords)
-
      # Get descriptive string for features
     features_descriptive_string = get_features_descriptive_string(feature_collection_no_coords)
     
     # Save descriptive string
-    file_path_feature_descriptive_string = features_dir + "features_descriptive_string.txt"
+    file_path_feature_descriptive_string = features_dir + config_name + "/descriptive.txt"
     with open(file_path_feature_descriptive_string, "w") as f:
         f.write(features_descriptive_string)
 
-    # Name features using OpenAI API
-    feature_collection_named = name_features(features_descriptive_string, feature_collection)
+    # Name and assign colors to features using an LLM model
+    feature_collection_processed = name_features(features_descriptive_string, feature_collection)
 
     # Convert to GeoJSON string
-    geojson_str_named = geojson.dumps(feature_collection_named, indent=2)
+    geojson_str_processed = geojson.dumps(feature_collection_processed, indent=2)
 
     # Save named GeoJSON
-    file_path_geojson_named = features_dir + "features.geojson"
-    with open(file_path_geojson_named, "w") as f:
-        f.write(geojson_str_named)
+    file_path_geojson_processed = features_dir + config_name + "/processed.geojson"
+    with open(file_path_geojson_processed, "w") as f:
+        f.write(geojson_str_processed)
 
-    return feature_collection_named
+    return feature_collection_processed
 
 # Transform lat/lon to tile coordinates
 def lonLatToTile(lon, lat, zoom):
@@ -340,6 +328,11 @@ def map_features_to_arena(features_geojson, bbox, arena_width, arena_height):
     # Map coordinates to arena
     for feature in features:
         if "geometry" in feature:
+            if feature["geometry"]["type"] == "MultiPolygon":
+                for i, part in enumerate(feature["geometry"]["coordinates"]):
+                    for j, coord in enumerate(part[0]):
+                        x, y = lonLatToArena(coord[0], coord[1], bbox, arena_width, arena_height) 
+                        feature["geometry"]["coordinates"][i][0][j] = [x, y]
             if feature["geometry"]["type"] == "Polygon":
                 for i, part in enumerate(feature["geometry"]["coordinates"]):
                     for j, coord in enumerate(part):

@@ -2,7 +2,7 @@
 
 // -------------------- Constants --------------------
 
-const PPC = 100; // Pixels per cell
+const PPC = 200; // Pixels per cell
 const tileSize = 256; // Changed from 128 to match OSM standard
 
 // Define the bounding box (min_lat, min_lon, max_lat, max_lon)
@@ -178,35 +178,63 @@ function lonLatToCanvas(lon, lat) {
   return { x, y };
 }
 
-function calculateCentroid(coords) {
-  let sumLon = 0, sumLat = 0;
-  coords.forEach(coord => {
-      sumLon += coord[0];
-      sumLat += coord[1];
+function calculateCentroid(points) {
+  let x = 0;
+  let y = 0;
+  points.forEach(point => {
+    x += point.x;
+    y += point.y;
   });
-  return [sumLon / coords.length, sumLat / coords.length]
+  return { x: x / points.length, y: y / points.length };
 }
 
 function drawPolygon(feature) {
   try {
     const featureColor = hexToRgba(feature.properties.color, 0.8) || 'rgba(0, 0, 0, 0.8)';
-    const points = feature.geometry.points;
+    if (feature.geometry.type === 'Polygon') {
+      const points = feature.geometry.points;
 
-    // Path
-    ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-    points.slice(1).forEach(point => ctx.lineTo(point.x, point.y));
-    ctx.closePath();
-    
-    // Style
-    ctx.fillStyle = featureColor || 'rgba(0, 0, 0, 0.5)';
-    ctx.strokeStyle = 'black';
-    ctx.lineWidth = 1;
-    
-    // Draw
-    ctx.fill();
-    ctx.stroke();
-    
+      // Path
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      points.slice(1).forEach(point => ctx.lineTo(point.x, point.y));
+      ctx.closePath();
+      
+      // Style
+      ctx.fillStyle = featureColor || 'rgba(0, 0, 0, 0.5)';
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = 1;
+
+      // Draw
+      ctx.fill();
+      ctx.stroke();
+    } else if (feature.geometry.type === 'MultiPolygon') {
+      const polygons = feature.geometry.points;
+
+      // Draw first polygon representing the outer boundary
+      ctx.beginPath();
+      ctx.moveTo(polygons[0][0].x, polygons[0][0].y);
+      polygons[0].slice(1).forEach(point => ctx.lineTo(point.x, point.y));
+      ctx.closePath();
+      ctx.fillStyle = featureColor || 'rgba(0, 0, 0, 0.5)';
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = 1;
+      ctx.fill();
+      ctx.stroke();
+
+      // Draw inner polygons representing holes
+      polygons.slice(1).forEach(polygon => {
+        ctx.beginPath();
+        ctx.moveTo(polygon[0].x, polygon[0].y);
+        polygon.slice(1).forEach(point => ctx.lineTo(point.x, point.y));
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; // White for holes
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 1;
+        ctx.fill();
+        ctx.stroke();
+      });
+    }
   } catch (error) {
     // console.log(error);
   }
@@ -214,7 +242,7 @@ function drawPolygon(feature) {
 
 function drawLineString(feature) {
   try {
-    const featureColor = hexToRgba(feature.properties.color, 0.8) || 'rgba(0, 0, 0, 0.8)';
+    const featureColor = hexToRgba(feature.properties.color, 1.0) || 'rgba(0, 0, 0, 1.0)';
     const points = feature.geometry.points;
 
     // Path
@@ -223,8 +251,8 @@ function drawLineString(feature) {
     points.slice(1).forEach(point => ctx.lineTo(point.x, point.y));
     
     // Style
-    ctx.strokeStyle = featureColor || 'rgba(0, 0, 0, 0.5)';
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = featureColor || 'rgba(0, 0, 0, 1.0)';
+    ctx.lineWidth = 3;
     
     // Draw
     ctx.stroke();
@@ -277,10 +305,22 @@ function drawGeoJSON() {
       const uniqueName = feature.properties.unique_name;
       
       // Convert coordinates to canvas points
-      let points = [];
       let geoCoords = [];
       
-      if (feature.geometry.type === 'Polygon') {
+      if (feature.geometry.type === 'MultiPolygon') {
+          geoCoords = coords[0];
+          if (!feature.geometry.points) {
+            feature.geometry.points = [];
+            for (let i = 0; i < geoCoords.length; i++) {
+              feature.geometry.points[i] = [];
+              for (let j = 0; j < geoCoords[i].length; j++) {
+                const coord = geoCoords[i][j];
+                const [lon, lat] = coord;
+                feature.geometry.points[i].push(lonLatToCanvas(lon, lat));
+              }
+            }
+          }
+      } else if (feature.geometry.type === 'Polygon') {
           geoCoords = coords[0];
           if (!feature.geometry.points) {
             feature.geometry.points = geoCoords.map(coord => {
@@ -290,9 +330,6 @@ function drawGeoJSON() {
           }
       } else if (feature.geometry.type === 'LineString') {
           geoCoords = coords;
-          if (!feature.geometry.centroid) {
-            feature.geometry.centroid = calculateCentroid(geoCoords);
-          }
           if (!feature.geometry.points) {
             feature.geometry.points = geoCoords.map(coord => {
                 const [lon, lat] = coord;
@@ -314,10 +351,12 @@ function drawGeoJSON() {
         const showFeature = (showHardcoded && feature.id < 1000) || (showOverpass && feature.id > 1000);
         const points = feature.geometry.points;
         if (showFeature) {
-          if (feature.geometry.type === 'Polygon') {
-            const centroidGeo = calculateCentroid(geoCoords);
-            const centroidCanvas = lonLatToCanvas(centroidGeo[0], centroidGeo[1]);
-            namesToDraw.push(uniqueName, centroidCanvas);
+          if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
+            if (feature.geometry.type === 'MultiPolygon') {
+              namesToDraw.push(uniqueName, calculateCentroid(points[0]));
+            } else {
+              namesToDraw.push(uniqueName, calculateCentroid(points));
+            }
             if (showShapes) {
               drawPolygon(feature);
             }
@@ -345,19 +384,25 @@ function drawGeoJSON() {
   });
 
   // Draw names
+  const scaledFontSize = Math.floor(Math.max(6, Math.min(40, 30 / zoomLevel)));
+  const lineWidth = scaledFontSize / 10;
   if (showNames) {
     namesToDraw.forEach((name, idx) => {
       if (idx % 2 === 0) {
         const textX = namesToDraw[idx + 1].x;
         const textY = namesToDraw[idx + 1].y;
-        if (useSatellite) {
+        if (useSatellite || showShapes) {
           ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+          ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
         } else {
           ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
         }
-        ctx.font = '12px Arial';
+        ctx.lineWidth = lineWidth;
+        ctx.font = `${scaledFontSize}px Arial`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
+        ctx.strokeText(name, textX, textY);
         ctx.fillText(name, textX, textY);
       }
     });
@@ -456,7 +501,7 @@ function drawDestination(group) {
     const py = dest[1] * PPC;
     
     // Scale the cross size
-    const denom = 5;
+    const denom = 10;
     const size = (PPC / denom) * scale;
     
     ctx.save();
@@ -491,8 +536,8 @@ function drawRobot(robot, color) {
   // Convert coordinates to pixels
   const px = robot.x * PPC;
   const py = robot.y * PPC;
-  const endX = px + Math.cos(robot.angle) * (PPC / 2) * scale;
-  const endY = py + Math.sin(robot.angle) * (PPC / 2) * scale;
+  const endX = px + Math.cos(robot.angle) * (PPC / 4) * scale;
+  const endY = py + Math.sin(robot.angle) * (PPC / 4) * scale;
   const targetX = robot.target_x * PPC;
   const targetY = robot.target_y * PPC;
 
@@ -541,7 +586,7 @@ function drawRobot(robot, color) {
   ctx.fillText(robot.idx, px, py);
 
   // Target marker (small cross)
-  const denom = 10;
+  const denom = 20;
   const size = (PPC / denom) * scale;
   ctx.strokeStyle = color;
   ctx.lineWidth = 3 * scale;
@@ -563,7 +608,6 @@ function drawStatus() {
   // Reset transformations to ensure fixed positioning
   ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-  ctx.fillStyle = '#000';
   ctx.font = 'bold 30px Arial';
   ctx.textAlign = 'left';
   
@@ -597,7 +641,8 @@ function drawStatus() {
     const statusText = `G${group.idx} [${robotsInGroup}] -> ${behaviorString}`;
     const color = group.robots.length > 1 ? COLORS[group.idx % COLORS.length] : '#000';
 
-    ctx.fillStyle = color;
+    // ctx.fillStyle = color;
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
     ctx.fillText(statusText, 10, yOffset);
     yOffset += 30;
   });

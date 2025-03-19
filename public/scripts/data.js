@@ -103,7 +103,7 @@ function loadTiles() {
 // And parse the data into a JSON object
 async function fetchGeoJSONData() {
   try {
-    const response = await fetch("/data/features/features.geojson");
+    const response = await fetch("/processed.geojson");
     if (!response.ok) {
       throw new Error(`Failed to load GeoJSON: ${response.statusText}`);
     }
@@ -130,11 +130,11 @@ function reorderGeoJSON(geoJSON) {
     return geoJSON;
   }
 
-  const polygons = geoJSON.features.filter(feature => feature.geometry.type === 'Polygon');
+  const polygons = geoJSON.features.filter(feature => feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon');
   const lineStrings = geoJSON.features.filter(feature => feature.geometry.type === 'LineString');
   const points = geoJSON.features.filter(feature => feature.geometry.type === 'Point');
   
-  return { ...geoJSON, features: polygons.concat(lineStrings).concat(points) };
+  return { ...geoJSON, features: polygons.concat(lineStrings, points) };
 }
 
 // Fetch and process the GeoJSON data

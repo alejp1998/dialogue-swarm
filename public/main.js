@@ -178,6 +178,8 @@ function addEventListeners() {
   // Add event listener to showOverpassButton and showHardcodedButton
   document.getElementById("showOverpassButton").addEventListener("click", () => {
     const iconEl = document.getElementById("showOverpassButton").querySelector(".icon");
+    const textEl = document.getElementById("showOverpassButton").querySelector(".text");
+    textEl.innerHTML = showOverpass ? "Overpass" : "<b>Overpass</b>";
     iconEl.innerHTML = showOverpass ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
     showOverpass = !showOverpass;
     updateDisplay();

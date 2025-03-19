@@ -90,3 +90,4 @@
 12: {category: Operational Environments, name: Gas Leakage}
 13: {category: Operational Environments, name: Infrastructure Collapse}
 14: {category: Operational Environments, name: Command, Communication, and Control Area}
+15: {category: Operational Environments, name: Coverage Area}
