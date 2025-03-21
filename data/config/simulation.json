@@ -1,24 +1,18 @@
 {
   "env": {
     "center": [
-      -4.4882224,
-      36.7161254
+      10.5553255,
+      55.4046926
     ],
-    "side_length_meters": 400,
-    "zoom": 19,
+    "side_length_meters": 2000,
+    "zoom": 16,
     "extra_tiles": 3,
     "arena_width": 10,
     "arena_height": 10,
     "formation_radius": 2
   },
   "settings": {
-    "number_of_robots": 10,
-    "max_speed": 0.01,
-    "start_bbox": [
-      1,
-      1,
-      3,
-      3
-    ]
+    "number_of_robots": 5,
+    "max_speed": 180
   }
 }

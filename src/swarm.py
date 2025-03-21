@@ -5,6 +5,7 @@ This module contains the Swarm, Group, and Robot classes.
 It also has the SwarmAgent class, which is an agent that controls the swarm by interpreting user commands with an LLM.
 """
 
+import math
 import random
 import numpy as np
 from scipy.optimize import linear_sum_assignment
@@ -14,6 +15,9 @@ from openai import OpenAI
 from typing import Dict, List, Tuple, Any
 import geojson
 import json
+
+import shapely
+from trajgenpy import Geometries
 
 # CONSTANTS
 MODEL_NAME = "gpt-4o-mini"
@@ -33,8 +37,24 @@ BEHAVIORS = {
         "states": ["form", "rotate", "move"],
         "params": {
             "formation_shape": ["circle", "square", "triangle", "hexagon"],
-            "formation_radius": [0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0],
-            "trajectory": [[0.0, 0.0], [1.0, 1.0], [2.0, 2.0], [3.0, 3.0]]
+            "formation_radius": [5, 10, 15, 20], # meters
+            "trajectory": [
+                [0.0, 0.0], 
+                [1.0, 1.0], 
+                [2.0, 2.0], 
+                [3.0, 3.0]
+            ] # trajectory points
+        }
+    },
+    "cover_shape": {
+        "states": ["move"],
+        "params": {
+            "coords": [
+                [0.0, 0.0], 
+                [1.0, 1.0], 
+                [2.0, 2.0], 
+                [3.0, 3.0]
+            ] # sweep trajectories points
         }
     },
     "random_walk": {
@@ -55,107 +75,125 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 class Robot:
     """
-    A single robot agent in the swarm
+    A single robot agent in the swarm.
     """
-    
-    def __init__(self, idx, x, y, max_speed=0.05):
+
+    def __init__(self, idx, x, y, max_speed=20.0):
         """
-        Initialize a robot at specified coordinates
+        Initialize a robot at specified coordinates.
         
         Args:
-            idx (int): Robot index
-            x (float): Initial x-position
-            y (float): Initial y-position
-            max_speed (float): Maximum allowed speed
+            idx (int): Robot index.
+            x (float): Initial longitude.
+            y (float): Initial latitude.
+            max_speed (float): Maximum allowed speed in km/h.
         """
         self.idx = idx
         self.x = x
         self.y = y
         self.max_speed = max_speed
-        self.angle = 0.0
-        self.update_target(x, y)
-        self.vx = 0.0
+        self.max_rotation_speed = 2.0  # rad/s
+        self.angle = 0.0  # Initial heading in radians
+
+        self.target_x = x
+        self.target_y = y
+        self.target_angle = 0.0
+        self.angle_diff = 0.0
+
+        self.vx = 0.0  # Velocity in km/h
         self.vy = 0.0
         self.rotation_speed = 0.0
         self.battery_level = 1.0
-    
+
+        self.update_target(x, y)
+
     def update_target_angle(self, target_x, target_y):
-        """Update target angle for robot"""
-        target_angle = np.arctan2(target_y - self.y, target_x - self.x)
-        self.target_angle = target_angle
-    
+        """Update target angle for robot using geodesic coordinates."""
+        lon_per_meter, lat_per_meter = calculate_lon_lat_per_meter((self.x, self.y))
+        dx_in_meters = (target_x - self.x) / lon_per_meter
+        dy_in_meters = (target_y - self.y) / lat_per_meter
+        self.target_angle = math.atan2(dy_in_meters, dx_in_meters)
+
     def update_target(self, target_x, target_y):
-        """Update target position for robot"""
+        """Update target position for the robot."""
         self.target_x = target_x
         self.target_y = target_y
         self.update_target_angle(target_x, target_y)
 
-    def move(self):
+    def move(self, step_ms):
         """
-        Move robot towards target position with rotation and velocity control
+        Move robot towards target position with rotation and velocity control.
         """
-        # Do not move if robot is out of battery
         if self.battery_level <= 0:
             return
-        
-        # Update battery level
+
         self._update_battery_level()
-        
-        # First align robot with assigned target angle
+
         if not self.is_robot_aligned():
-            self.rotation_speed = np.sign(self.angle_diff) * max(0.1 * (abs(self.angle_diff) / np.pi), 0.005)
-            # print('Robot is rotating', self.rotation_speed)
-        # Move if it is not in position when aligned
+            self.rotation_speed = np.sign(self.angle_diff) * max(min(abs(self.angle_diff), self.max_rotation_speed), 0.2)
         else:
             if not self.is_robot_in_position():
-                self.vx = (self.dx / self.dist) * self.max_speed
-                self.vy = (self.dy / self.dist) * self.max_speed
-                # print('Robot is moving', self.vx, self.vy)
+                # self.vx = (self.dx_in_meters / self.dist_in_meters) * self.max_speed
+                # self.vy = (self.dy_in_meters / self.dist_in_meters) * self.max_speed
+                self.vx = np.cos(self.angle) * self.max_speed
+                self.vy = np.sin(self.angle) * self.max_speed
+                self.rotation_speed = np.sign(self.angle_diff) * max(min(abs(self.angle_diff), self.max_rotation_speed), 0.2)
 
-        # Update position based on velocity and rotation speed
-        self._update_position()
+        self._update_position(step_ms)
 
     def _calculate_distance(self):
-        """Calculate distance to target position"""
+        """Calculate distance to target position."""
         dx = self.target_x - self.x
         dy = self.target_y - self.y
-        dist = np.hypot(dx, dy)
-        return dx, dy, dist
-    
+        return dx, dy, np.hypot(dx, dy)
+
+    def _calculate_distance_in_meters(self):
+        """Calculate geospatial distance to target position in meters."""
+        self.dx, self.dy, self.dist = self._calculate_distance()
+        lon_per_meter, lat_per_meter = calculate_lon_lat_per_meter((self.x, self.y))
+        self.dx_in_meters = self.dx / lon_per_meter
+        self.dy_in_meters = self.dy / lat_per_meter
+        self.dist_in_meters = np.hypot(self.dx_in_meters, self.dy_in_meters)
+
     def _calculate_angle_diff(self):
-        """Calculate angle difference to target angle"""
-        angle_diff = (self.target_angle - self.angle + np.pi) % (2 * np.pi) - np.pi
-        return angle_diff
+        """Calculate and normalize angle difference to target."""
+        self.angle_diff = (self.target_angle - self.angle + np.pi) % (2 * np.pi) - np.pi
 
     def is_robot_in_position(self):
-        """Check if robot is close to assigned target position"""
-        self.dx, self.dy, self.dist = self._calculate_distance()
-        return self.dist < 0.05
-    
+        """Check if robot is within a 0.25m tolerance of the target position."""
+        self._calculate_distance_in_meters()
+        return self.dist_in_meters < 0.25 # 25cm tolerance
+
     def is_robot_aligned(self):
-        """Check if robot is aligned with assigned target angle"""
-        self.angle_diff = self._calculate_angle_diff()
-        return abs(self.angle_diff) < 0.01
-    
-    def _update_position(self):
+        """Check if robot is aligned with target within 0.1 degrees."""
+        self._calculate_angle_diff()
+        return abs(self.angle_diff) < np.radians(0.5)  # 0.5 degrees tolerance
+
+    def _update_position(self, step_ms):
         """
-        Update robot position based on current velocity and rotation speed
+        Update robot position based on velocity and rotation speed.
         """
-        # Update position
-        self.x = (self.x + self.vx)
-        self.y = (self.y + self.vy)
-        # Update angle and wrap to [0, 2*pi]
-        self.angle = (self.angle + self.rotation_speed) % (2 * np.pi)
-        # Reset velocity and rotation speed after movement
+        vx_m_per_s = self.vx / 3.6
+        vy_m_per_s = self.vy / 3.6
+
+        displacement_x_m = vx_m_per_s * (step_ms / 1000)
+        displacement_y_m = vy_m_per_s * (step_ms / 1000)
+
+        lon_per_meter, lat_per_meter = calculate_lon_lat_per_meter((self.x, self.y))
+        self.x += displacement_x_m * lon_per_meter
+        self.y += displacement_y_m * lat_per_meter
+
+        self.angle = (self.angle + self.rotation_speed * (step_ms / 1000)) % (2 * np.pi)
+        if self.angle > np.pi:
+            self.angle -= 2 * np.pi
+
         self.vx = 0.0
         self.vy = 0.0
         self.rotation_speed = 0.0
 
     def _update_battery_level(self):
-        """Update robot battery level"""
-        self.battery_level = self.battery_level - 1/25000
-        if self.battery_level <= 0:
-            self.battery_level = 0
+        """Update robot battery level based on time."""
+        self.battery_level = max(0, self.battery_level - (1 / 25000))
 
 class Group:
     """
@@ -191,7 +229,8 @@ class Group:
         if behavior_name == "form_and_follow_trajectory":
             # Assign formation positions
             n = len(self.robots)
-            formation_pts = compute_formation_positions(n, behavior_params['formation_shape'], behavior_params['formation_radius'])
+            coord = self.virtual_center
+            formation_pts = compute_formation_coordinate_offsets(coord, n, behavior_params["formation_shape"], behavior_params["formation_radius"])
             
             # Create cost matrix
             cost_matrix = np.zeros((len(self.robots), len(formation_pts)))
@@ -210,12 +249,58 @@ class Group:
             # Initialize behavior state
             behavior_dict["state"] = 0
             self.bhvr = behavior_dict
+        elif behavior_name == "cover_shape":
+            n = len(self.robots)
+            coords = behavior_params["coords"]
+
+            # Divide the coords into n segments
+            segments = np.array_split(coords, n)
+            unassigned_segments = set(range(n))  # Keep track of available segment indices
+
+            # Save a dictionary mapping robots to segments
+            robot_segments = {}
+
+            # Compute distances for each robot to each segment
+            distances = []  # List of (robot_idx, segment_idx, distance, reversed) tuples
+
+            for robot in self.robots:
+                robot_pos = np.array([robot.x, robot.y])
+                robot_idx = robot.idx
+
+                for i, segment in enumerate(segments):
+                    start_dist = np.linalg.norm(robot_pos - segment[0])
+                    end_dist = np.linalg.norm(robot_pos - segment[-1])
+
+                    if start_dist < end_dist:
+                        distances.append((robot_idx, i, start_dist, False))  # Normal order
+                    else:
+                        distances.append((robot_idx, i, end_dist, True))  # Reversed order
+
+            # Sort distances by closest match first
+            distances.sort(key=lambda x: x[2])
+
+            # Assign segments to robots in a fair way
+            assigned_robots = set()
+            for robot_idx, seg_idx, _, reversed_order in distances:
+                if seg_idx in unassigned_segments and robot_idx not in assigned_robots:
+                    assigned_robots.add(robot_idx)
+                    unassigned_segments.remove(seg_idx)
+                    robot_segments[robot_idx] = segments[seg_idx][::-1].tolist() if reversed_order else segments[seg_idx].tolist()
+
+            # Save it to behavior data
+            behavior_dict["data"]["segments"] = robot_segments
+            behavior_dict["data"]["segment_indexes"] = {robot.idx: 0 for robot in self.robots}
+
+            # Set beahavior state
+            behavior_dict["state"] = 0
+            self.bhvr = behavior_dict
+
         elif behavior_name == "random_walk":
             # Initialize behavior state
             behavior_dict["state"] = 0
             self.bhvr = behavior_dict
 
-    def step(self):
+    def step(self, step_ms):
         """Perform one simulation step for the group"""
         bhvr = self.bhvr
 
@@ -230,7 +315,7 @@ class Group:
                                 self.virtual_center[0] + bhvr["data"]["formation_positions"][robot.idx][0],
                                 self.virtual_center[1] + bhvr["data"]["formation_positions"][robot.idx][1]
                             )
-                            robot.move()
+                            robot.move(step_ms)
                         
                         # Check transition to next state
                         if all(r.is_robot_in_position() for r in self.robots):
@@ -242,7 +327,7 @@ class Group:
                                 bhvr["params"]["trajectory"][bhvr["data"]["traj_index"]][0] + bhvr["data"]["formation_positions"][robot.idx][0],
                                 bhvr["params"]["trajectory"][bhvr["data"]["traj_index"]][1] + bhvr["data"]["formation_positions"][robot.idx][1]
                             )
-                            robot.move()
+                            robot.move(step_ms)
 
                         # Check transition to next state
                         if all(r.is_robot_aligned() for r in self.robots):
@@ -254,7 +339,7 @@ class Group:
                                 bhvr["params"]["trajectory"][bhvr["data"]["traj_index"]][0] + bhvr["data"]["formation_positions"][robot.idx][0],
                                 bhvr["params"]["trajectory"][bhvr["data"]["traj_index"]][1] + bhvr["data"]["formation_positions"][robot.idx][1]
                             )
-                            robot.move()
+                            robot.move(step_ms)
 
                         # Update virtual center 
                         self._update_virtual_center()
@@ -269,18 +354,47 @@ class Group:
                                 bhvr["state"] = 1
                                 bhvr["data"]["traj_index"] += 1
 
+            # State machine for coverage
+            case "cover_shape":
+                for robot in self.robots:
+                    # Get the robot's assigned segment
+                    segment = bhvr["data"]["segments"][robot.idx]
+                    segment_index = bhvr["data"]["segment_indexes"][robot.idx]
+
+                    # Get the robot's target position
+                    target_pos = segment[segment_index]
+
+                    # Update the robot's target position
+                    robot.update_target(target_pos[0], target_pos[1])
+
+                    # Move the robot
+                    robot.move(step_ms)
+
+                    if robot.is_robot_in_position():
+                        # Check if robot is at the end of its segment
+                        if segment_index >= len(segment) - 1:
+                            segment_index = -1  # Mark as finished
+                        elif segment_index >= 0 and segment_index < len(segment) - 1:
+                            # Increment the segment index
+                            segment_index += 1
+
+                        # Store the updated index back in behavior data
+                        bhvr["data"]["segment_indexes"][robot.idx] = segment_index
+
+                # Check if all robots have segments finished
+                if all(index == -1 for index in bhvr["data"]["segment_indexes"].values()):
+                    bhvr["state"] = -1
+
+
             # State machine for random walk
             case "random_walk":
                 for robot in self.robots:
                     # If they havent reached their target, move them
                     if not robot.is_robot_in_position():
-                        robot.move()
+                        robot.move(step_ms)
                     # If they have reached their target, pick a new target
                     else: 
                         robot.update_target(robot.x + random.uniform(-0.5, 0.5), robot.y + random.uniform(-0.5, 0.5))
-
-    def _update_robot_targets(self):
-        """Update robot targets based on current behavior"""
 
     def _update_virtual_center(self):
         """Update virtual center to current robot positions average"""
@@ -294,13 +408,14 @@ class Swarm:
     A swarm of robots that can move and interact with each other forming groups
     """
     
-    def __init__(self, robots):
+    def __init__(self, robots, step_ms=10):
         """
         Initialize a swarm of robots
         
         Args:
             robots (list[Robot]): List of robots in the swarm
         """  
+        self.step_ms = step_ms
         self.robots = robots
         self.groups = []
         self.group_idx_counter = 0
@@ -329,6 +444,15 @@ class Swarm:
                 "formation_shape": formation_shape,
                 "formation_radius": formation_radius,
                 "trajectory": trajectory
+            }
+        })
+
+    def assign_cover_shape_behavior_to_group(self, group_idx, coords):
+        """Assign cover_shape behavior to a group"""
+        self._get_group_by_idx(group_idx).set_behavior({
+            "name": "cover_shape",
+            "params": {
+                "coords": coords
             }
         })
 
@@ -398,7 +522,7 @@ class Swarm:
             if group.bhvr["state"] == -1:
                 continue
                 
-            group.step()
+            group.step(self.step_ms)
 
 class SwarmAgent:
     def __init__(self, app, swarm: Swarm, features_geojson):
@@ -406,13 +530,15 @@ class SwarmAgent:
         self.swarm = swarm
         self.features_geojson = features_geojson
         self._set_feature_name_lists()
+        self._set_epsg_based_on_features()
         self.tools = [
             self.gen_group_by_ids,
             self.gen_groups_by_clustering,
             self.random_walk,
             self.form_and_follow_trajectory,
             self.form_and_move_around_shape,
-            self.form_and_move_to_shape
+            self.form_and_move_to_shape,
+            self.cover_shape
         ]
         self.memory = []
         self.system_prompt = SYSTEM_PROMPT
@@ -492,8 +618,8 @@ class SwarmAgent:
                     },
                     "formation_radius": {
                         "type": "number",
-                        "minimum": 0.125,
-                        "maximum": 1.0
+                        "minimum": 5.0,
+                        "maximum": 30.0
                     },
                     "trajectory": {
                         "type": "array",
@@ -520,8 +646,8 @@ class SwarmAgent:
                     },
                     "formation_radius": {
                         "type": "number",
-                        "minimum": 0.125,
-                        "maximum": 1.0
+                        "minimum": 5.0,
+                        "maximum": 30.0
                     },
                     "name": {
                         "type": "string",
@@ -540,8 +666,8 @@ class SwarmAgent:
                     },
                     "formation_radius": {
                         "type": "number",
-                        "minimum": 0.125,
-                        "maximum": 1.0
+                        "minimum": 5.0,
+                        "maximum": 30.0
                     },
                     "name": {
                         "type": "string",
@@ -549,10 +675,23 @@ class SwarmAgent:
                 },
                 "required": ["group_idx", "formation_shape", "formation_radius", "name"]
             }
+        elif func.__name__ == "cover_shape":
+            return {
+                "type": "object",
+                "properties": {
+                    "group_idx": {"type": "integer"},
+                    "name": {
+                        "type": "string",
+                    },
+                },
+                "required": ["group_idx", "name"]
+            }
         
     def _get_feature_by_unique_name(self, unique_name):
         """Get GeoJSON feature by unique name"""
         for feature in self.features_geojson["features"]:
+            if "unique_name" not in feature["properties"]:
+                continue
             if feature["properties"]["unique_name"] == unique_name:
                 return feature
         return None
@@ -568,17 +707,17 @@ class SwarmAgent:
                 try :
                     polygon_names.append(feature["properties"]["unique_name"])
                 except KeyError:
-                    print(feature)
+                    self.app.logger.warning(f"Feature without unique name with id: {feature["id"]} and properties: {feature["properties"]}")
             elif feature["geometry"]["type"] == "LineString":
                 try :
                     linestring_names.append(feature["properties"]["unique_name"])
                 except KeyError:
-                    print(feature)
+                    self.app.logger.warning(f"Feature without unique name with id: {feature["id"]} and properties: {feature["properties"]}")
             elif feature["geometry"]["type"] == "Point":
                 try :
                     point_names.append(feature["properties"]["unique_name"])
                 except KeyError:
-                    print(feature)
+                    self.app.logger.warning(f"Feature without unique name with id: {feature["id"]} and properties: {feature["properties"]}")
                 
         # Sort them alphabetically
         polygon_names.sort()
@@ -589,6 +728,16 @@ class SwarmAgent:
         self.point_names = point_names
         self.linestring_names = linestring_names
         self.polygon_names = polygon_names
+    
+    def _set_epsg_based_on_features(self):
+        """
+        Set the EPSG code based on the features in the GeoJSON file.
+        This is a placeholder function and should be implemented based on your requirements.
+        """
+        # Get feature with unique name "bbox_center"
+        bbox_center = self._get_feature_by_unique_name("bbox_center")
+        coords = bbox_center["geometry"]["coordinates"]
+        self.epsg = guess_utm_crs(coords[0], coords[1])
         
     def send_message(self, user_input: str):
         # Build current context strings
@@ -710,8 +859,8 @@ class SwarmAgent:
                                     formation_radius: float,
                                     trajectory: List[Tuple[float, float]]): 
         # Validation logic
-        if formation_radius < 0.125 or formation_radius > 1.0:
-            return "Invalid radius value: must be between 0.125 and 1.0"
+        if formation_radius < 5 or formation_radius > 30:
+            return "Invalid radius value: must be between 5 and 30"
         if formation_shape not in ["circle", "square", "triangle", "hexagon"]:
             return "Invalid formation shape: must be 'circle', 'square', 'triangle', or 'hexagon'"
         if len(trajectory) < 1 or any(len(pos) != 2 for pos in trajectory):
@@ -727,12 +876,12 @@ class SwarmAgent:
                                     formation_radius: float,
                                     name: str):
         # Validation logic
-        if formation_radius < 0.125 or formation_radius > 1.0:
-            return "Invalid radius value: must be between 0.125 and 1.0"
+        if formation_radius < 5 or formation_radius > 30:
+            return "Invalid radius value: must be between 5 and 30"
         if formation_shape not in ["circle", "square", "triangle", "hexagon"]:
             return "Invalid formation shape: must be 'circle', 'square', 'triangle', or 'hexagon'"
         if name not in self.polygon_names + self.linestring_names:
-            return "Invalid feature name: must be one of the available features"
+            return "Invalid feature name: must be one of the available multipolygon, polygon, or linestring features"
         
         # Get the GeoJSON feature with unique_name = name
         feature = self._get_feature_by_unique_name(name)
@@ -775,8 +924,8 @@ class SwarmAgent:
                                 formation_radius: float,
                                 name: str):
         # Validation logic
-        if formation_radius < 0.125 or formation_radius > 1.0:
-            return "Invalid radius value: must be between 0.125 and 1.0"
+        if formation_radius < 5 or formation_radius > 30:
+            return "Invalid radius value: must be between 5 and 30"
         if formation_shape not in ["circle", "square", "triangle", "hexagon"]:
             return "Invalid formation shape: must be 'circle', 'square', 'triangle', or 'hexagon'"
         if name not in self.polygon_names + self.linestring_names + self.point_names:
@@ -812,8 +961,94 @@ class SwarmAgent:
             group_idx, formation_shape, formation_radius, coords
         )
         return f"form_and_move_to_shape behavior assigned to group {group_idx} with formation shape {formation_shape}, radius {formation_radius}, and feature name {name}"
+    
+    def cover_shape(self, group_idx: int, name: str):
+        # Validation logic
+        if name not in self.polygon_names:
+            return "Invalid feature name: must be one of the available multipolygon or polygon features"
+        
+        # Get the GeoJSON feature with unique_name = name
+        feature = self._get_feature_by_unique_name(name)
+        if feature is None:
+            return "Feature not found"
+        
+        # Get the coordinates of the feature depending on its geometry type
+        if feature["geometry"]["type"] == "MultiPolygon":
+            # Outer polygon
+            poly_coords = feature["geometry"]["coordinates"][0][0]
+            poly = shapely.Polygon(poly_coords)
+
+            geo_poly = Geometries.GeoPolygon(poly)
+            geo_poly.set_crs(self.epsg) # EPSG:2062 for coords in Spain
+            geo_poly.buffer(-2) # Distance in meters from the border of the polygon
+
+            # Inner polygons or holes
+            holes = []
+            for coords in feature["geometry"]["coordinates"][0][1:]:
+                hole = shapely.Polygon(coords)
+                holes.append(hole)
+            
+            # Create geo holes multipolygon
+            geo_holes = Geometries.GeoMultiPolygon(holes)
+            geo_holes.set_crs(self.epsg) # EPSG:2062 for coords in Spain
+            geo_holes.buffer(2) # Distance in meters from the border of the holes
+
+            # Build polygons list object
+            polygons_list = Geometries.decompose_polygon(
+                geo_poly.get_geometry(),
+                obstacles=geo_holes.get_geometry(),
+            )
+        elif feature["geometry"]["type"] == "Polygon":
+            # Polygon
+            poly_coords = feature["geometry"]["coordinates"][0]
+            poly = shapely.Polygon(poly_coords)
+            geo_poly = Geometries.GeoPolygon(poly)
+            geo_poly.set_crs(self.epsg) # EPSG:2062 for coords in Spain
+            geo_poly.buffer(-2) # Distance in meters from the border of the polygon
+
+            # Build polygons list object
+            polygons_list = Geometries.decompose_polygon(
+                geo_poly.get_geometry(),
+                obstacles=None,
+            )
+
+        else:
+            return "Invalid feature type"
+        
+        # Set offset (separation between sweeps depending on overlap ratio, altitude in meters and field of view in degrees)
+        offset = Geometries.get_sweep_offset(0.1, 30, 60)
+        coords = []
+        for decomposed_poly in polygons_list:
+            sweeps_connected = Geometries.generate_sweep_pattern(
+                decomposed_poly, offset, clockwise=True, connect_sweeps=True
+            )
+            # self.app.logger.info(sweeps_connected)
+            # Get the coordinates of the sweeps given that they are linestrings
+            for sweep in sweeps_connected:
+                # Turn sweep linestring into trajectory
+                sweep_trajectory = Geometries.GeoTrajectory(sweep, crs=self.epsg)
+                # Turn them back into geodesic coordinates
+                sweep_trajectory.set_crs("WGS84")
+                coords += list(sweep_trajectory.geometry.coords)
+
+        # Reorder coordinates so that initial position is the closest to the center of the group
+        group_virtual_center = self.swarm._get_group_by_idx(group_idx).virtual_center
+        closest_coord_idx = np.argmin([np.linalg.norm(np.array(coord) - np.array(group_virtual_center)) for coord in coords])
+        coords = coords[closest_coord_idx:] + coords[:closest_coord_idx]
+
+        self.app.logger.info(f"Coords: {coords}")
+        self.swarm.assign_cover_shape_behavior_to_group(
+            group_idx, coords
+        )
+        
+        return f"cover_shape behavior assigned to group {group_idx} with feature name {name}"
 
 # AUXILIARY FUNCTIONS
+
+def guess_utm_crs(lon, lat):
+    zone = int((lon + 180) / 6) + 1  # Calculate UTM zone
+    epsg = 32600 + zone if lat >= 0 else 32700 + zone  # 326 for Northern, 327 for Southern Hemisphere
+    return f"EPSG:{epsg}"
 
 def compute_formation_positions(n, formation_shape, formation_radius):
     """Calculate equally shaped positions along a shape's perimeter"""
@@ -825,6 +1060,33 @@ def compute_formation_positions(n, formation_shape, formation_radius):
         return compute_triangle_positions(n, formation_radius*2)
     elif formation_shape == 'hexagon':
         return compute_hexagon_positions(n, formation_radius)
+    
+def calculate_lon_lat_per_meter(coord):
+    """
+    Calculate the approximate conversion factors for longitude and latitude per meter.
+    """
+    x_center, y_center = coord
+
+    # Convert meters to degrees (approximate)
+    lat_per_meter = 1 / 111320  # degrees per meter
+    lon_per_meter = 1 / (111320 * np.cos(np.radians(y_center)))  # degrees per meter
+
+    return lon_per_meter, lat_per_meter
+    
+def compute_formation_coordinate_offsets(coord, n, formation_shape, formation_radius):
+    if n <= 0:
+        raise ValueError("Number of robots must be greater than 0")
+    if n == 1:
+        return np.array([[0, 0]])
+    
+    # Compute what a meter corresponds to in the current coordinate system
+    lon_per_meter, lat_per_meter = calculate_lon_lat_per_meter(coord)
+
+    # Turn formation offsets in meters into degrees
+    formation_positions = compute_formation_positions(n, formation_shape, formation_radius)
+    formation_positions[:, 0] *= lon_per_meter
+    formation_positions[:, 1] *= lat_per_meter
+    return formation_positions
 
 # Formation calculation functions   
 def compute_circle_positions(n, radius):

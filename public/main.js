@@ -213,6 +213,14 @@ function addEventListeners() {
     updateDisplay();
   };
 
+  // Add event listener to click pause button on ctrl + space
+  document.addEventListener('keydown', (event) => {
+    if (event.ctrlKey && event.key === ' ') {
+      event.preventDefault(); // Prevent scrolling
+      togglePause();
+    }
+  });
+
   // Add canvas sizing event listener
   window.addEventListener('resize', () => {
     setCanvasSize();

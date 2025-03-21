@@ -422,6 +422,20 @@ function drawDashedLine(ctx, start, end, dashLength = 5) {
   ctx.restore();
 }
 
+// Draw a cross shape
+function drawCross(ctx, x, y, size, color) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(x - size, y - size);
+  ctx.lineTo(x + size, y + size);
+  ctx.moveTo(x + size, y - size);
+  ctx.lineTo(x - size, y + size);
+  ctx.stroke();
+  ctx.restore();
+}
+
 // Draw grid lines (each cell is PPC pixels)
 function drawGrid() {
   ctx.save();
@@ -493,12 +507,12 @@ function drawDestination(group) {
   const scale = 1 / zoomLevel; // Inverse scaling to keep size constant
 
   for (let i = 0; i < trajectory.length; i++) {
-    const dest = trajectory[i];
+    const dest = lonLatToCanvas(trajectory[i][0], trajectory[i][1]);
     const color = group.robots.length > 1 ? COLORS[group.idx % COLORS.length] : '#000';
     
     // Convert destination to pixel space
-    const px = dest[0] * PPC;
-    const py = dest[1] * PPC;
+    const px = dest.x;
+    const py = dest.y;
     
     // Scale the cross size
     const denom = 10;
@@ -523,23 +537,64 @@ function drawDestination(group) {
     ctx.textBaseline = 'middle';
     ctx.fillText(i, px, py - size * 2);
 
+    // Draw line connecting destinations
+    if (i > 0) {
+      const prevDest = lonLatToCanvas(trajectory[i - 1][0], trajectory[i - 1][1]);
+      const prevPx = prevDest.x;
+      const prevPy = prevDest.y;
+      ctx.beginPath();
+      ctx.moveTo(prevPx, prevPy);
+      ctx.lineTo(px, py);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2 * scale;
+      ctx.stroke();
+    }
+
     ctx.restore();
   }
 }
 
 
 // Draw a robot with a directional line, index label, and target cross
-function drawRobot(robot, color) {
+function drawRobot(group, robot, color) {
   // Adjust scale based on zoom level
   const scale = 1 / zoomLevel;
 
+  // Convert robot coordinates to canvas coordinates
+  const canvasCoords = lonLatToCanvas(robot.x, robot.y);
+  const canvasCoordsTarget = lonLatToCanvas(robot.target_x, robot.target_y);
+
+  // Convert angle since y-axis is inverted
+  const canvasAngle = -robot.angle;
+  const canvasTargetAngle = -robot.target_angle;
+
   // Convert coordinates to pixels
-  const px = robot.x * PPC;
-  const py = robot.y * PPC;
-  const endX = px + Math.cos(robot.angle) * (PPC / 4) * scale;
-  const endY = py + Math.sin(robot.angle) * (PPC / 4) * scale;
-  const targetX = robot.target_x * PPC;
-  const targetY = robot.target_y * PPC;
+  const px = canvasCoords.x;
+  const py = canvasCoords.y;
+  const endX = px + Math.cos(canvasAngle) * (PPC / 4) * scale;
+  const endY = py + Math.sin(canvasAngle) * (PPC / 4) * scale;
+  const targetX = canvasCoordsTarget.x;
+  const targetY = canvasCoordsTarget.y;
+
+  // Draw a dashed linevery far from robot in the direction of the target
+  ctx.setLineDash([5, 5]);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1 * scale;
+  ctx.beginPath();
+  ctx.moveTo(px, py);
+  ctx.lineTo(px + Math.cos(canvasTargetAngle) * (PPC * 100 * scale), py + Math.sin(canvasTargetAngle) * (PPC * 100 * scale));
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Draw a dashed line from robot in the direction of the angle 
+  ctx.setLineDash([5, 5]);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1 * scale;
+  ctx.beginPath();
+  ctx.moveTo(px, py);
+  ctx.lineTo(px + Math.cos(canvasAngle) * (PPC * 100 * scale), py + Math.sin(canvasAngle) * (PPC * 100 * scale));
+  ctx.stroke();
+  ctx.setLineDash([]);
 
   ctx.save();
 
@@ -585,17 +640,54 @@ function drawRobot(robot, color) {
   ctx.textBaseline = 'middle';
   ctx.fillText(robot.idx, px, py);
 
-  // Target marker (small cross)
-  const denom = 20;
-  const size = (PPC / denom) * scale;
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 3 * scale;
-  ctx.beginPath();
-  ctx.moveTo(targetX - size, targetY - size);
-  ctx.lineTo(targetX + size, targetY + size);
-  ctx.moveTo(targetX + size, targetY - size);
-  ctx.lineTo(targetX - size, targetY + size);
-  ctx.stroke();
+  if (group.bhvr.name === "form_and_follow_trajectory" || group.bhvr.name === "random_walk") {
+    // Target marker (small cross)
+    const denom = 20;
+    const size = (PPC / denom) * scale;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3 * scale;
+    ctx.beginPath();
+    ctx.moveTo(targetX - size, targetY - size);
+    ctx.lineTo(targetX + size, targetY + size);
+    ctx.moveTo(targetX + size, targetY - size);
+    ctx.lineTo(targetX - size, targetY + size);
+    ctx.stroke();
+  } else if (group.bhvr.name === "cover_shape") {
+    // Get the segment and segment index
+    const segment = group.bhvr.data.segments[robot.idx];
+    const segmentIdx = group.bhvr.data.segment_indexes[robot.idx];
+    // Draw the segment
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2 * scale;
+    ctx.beginPath();
+    for (let i = 0; i < segment.length; i++) {
+      const point = lonLatToCanvas(segment[i][0], segment[i][1]);
+      const pointX = point.x;
+      const pointY = point.y;
+      if (i === 0) {
+        ctx.moveTo(pointX, pointY);
+      } else {
+        ctx.lineTo(pointX, pointY);
+      }
+    }
+    ctx.stroke();
+
+    // Show current and next point
+    if (segmentIdx > 0 && segmentIdx < group.bhvr.data.segments[robot.idx].length) {
+      const currentPointCoords = group.bhvr.data.segments[robot.idx][segmentIdx];
+      const currentPoint = lonLatToCanvas(currentPointCoords[0], currentPointCoords[1]);
+      const denom = 20;
+      const size = (PPC / denom) * scale;
+      drawCross(ctx, currentPoint.x, currentPoint.y, size, color);
+    }
+    if (segmentIdx > 0 && segmentIdx < group.bhvr.data.segments[robot.idx].length - 1) {
+      const nextPointCoords = group.bhvr.data.segments[robot.idx][segmentIdx + 1];
+      const nextPoint = lonLatToCanvas(nextPointCoords[0], nextPointCoords[1]);
+      const denom = 20;
+      const size = (PPC / denom) * scale;
+      drawCross(ctx, nextPoint.x, nextPoint.y, size, color);
+    }
+  }
 
   ctx.restore();
 }
@@ -633,6 +725,9 @@ function drawStatus() {
         // }
         behaviorString = `Form & Follow Trajectory (${group.bhvr.params.formation_shape}) [${trajectoryStr}]`;
         break;
+      case "cover_shape":
+        behaviorString = `Cover Shape`;
+        break;
       default:
         behaviorString = "None";
     }
@@ -641,8 +736,8 @@ function drawStatus() {
     const statusText = `G${group.idx} [${robotsInGroup}] -> ${behaviorString}`;
     const color = group.robots.length > 1 ? COLORS[group.idx % COLORS.length] : '#000';
 
-    // ctx.fillStyle = color;
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+    ctx.fillStyle = color;
+    // ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
     ctx.fillText(statusText, 10, yOffset);
     yOffset += 30;
   });
@@ -666,7 +761,7 @@ function updateDisplay() {
     drawDestination(group);
     group.robots.forEach(robot => {
       const color = group.robots.length > 1 ? COLORS[group.idx % COLORS.length] : '#000';
-      drawRobot(robot, color);
+      drawRobot(group, robot, color);
     });
   });
   drawStatus();

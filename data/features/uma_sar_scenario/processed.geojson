@@ -106,7 +106,7 @@
         "oneway": "yes",
         "surface": "asphalt",
         "unique_name": "highway_Bulevar_Louis_Pasteur_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -158,7 +158,7 @@
         "sidewalk": "right",
         "surface": "asphalt",
         "unique_name": "highway_secondary_Avenida_Dolores_Rodriguez_de_Aragon_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -210,7 +210,7 @@
         "sidewalk": "right",
         "surface": "asphalt",
         "unique_name": "highway_secondary_Avenida_Dolores_Rodriguez_de_Aragon_2",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -284,7 +284,7 @@
         "oneway": "yes",
         "surface": "asphalt",
         "unique_name": "highway_Bulevar_Louis_Pasteur_2",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -356,7 +356,7 @@
         "sidewalk": "right",
         "surface": "asphalt",
         "unique_name": "highway_tertiary_Avenida_Dolores_Rodriguez_de_Aragon_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -432,7 +432,7 @@
       "properties": {
         "landuse": "grass",
         "unique_name": "landuse_grass_1",
-        "color": "#FFD700"
+        "color": "#FFFF00"
       }
     },
     {
@@ -454,7 +454,7 @@
       "properties": {
         "highway": "footway",
         "unique_name": "highway_footway_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -481,7 +481,7 @@
         "footway": "crossing",
         "highway": "footway",
         "unique_name": "highway_footway_crossing_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -504,7 +504,7 @@
         "footway": "crossing",
         "highway": "footway",
         "unique_name": "highway_footway_crossing_2",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -624,7 +624,7 @@
       "properties": {
         "landuse": "grass",
         "unique_name": "landuse_grass_2",
-        "color": "#FFD700"
+        "color": "#FFFF00"
       }
     },
     {
@@ -687,7 +687,7 @@
         "highway": "cycleway",
         "surface": "paved",
         "unique_name": "highway_cycleway_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -737,7 +737,7 @@
       "properties": {
         "highway": "footway",
         "unique_name": "highway_footway_2",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -759,7 +759,7 @@
       "properties": {
         "highway": "footway",
         "unique_name": "highway_footway_3",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -805,8 +805,8 @@
         "noname": "yes",
         "oneway": "yes",
         "surface": "asphalt",
-        "unique_name": "highway_unclassified_1",
-        "color": "#800000"
+        "unique_name": "highway_unclassified_noname_1",
+        "color": "#808080"
       }
     },
     {
@@ -869,7 +869,7 @@
         "footway": "sidewalk",
         "highway": "footway",
         "unique_name": "highway_footway_sidewalk_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -937,7 +937,7 @@
       "properties": {
         "landuse": "grass",
         "unique_name": "landuse_grass_3",
-        "color": "#FFD700"
+        "color": "#FFFF00"
       }
     },
     {
@@ -974,7 +974,7 @@
         "sidewalk": "both",
         "surface": "asphalt",
         "unique_name": "highway_Calle_Rafael_Puertas_Tricas_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -1018,7 +1018,7 @@
         "oneway": "yes",
         "surface": "asphalt",
         "unique_name": "highway_Bulevar_Louis_Pasteur_3",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -1048,7 +1048,7 @@
       "properties": {
         "highway": "footway",
         "unique_name": "highway_footway_4",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -1124,7 +1124,7 @@
       "properties": {
         "landuse": "grass",
         "unique_name": "landuse_grass_4",
-        "color": "#FFD700"
+        "color": "#FFFF00"
       }
     },
     {
@@ -1354,7 +1354,7 @@
       "properties": {
         "highway": "footway",
         "unique_name": "highway_footway_5",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -1381,7 +1381,7 @@
         "footway": "crossing",
         "highway": "footway",
         "unique_name": "highway_footway_crossing_3",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -1716,7 +1716,7 @@
       "properties": {
         "highway": "service",
         "unique_name": "highway_service_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -1983,7 +1983,7 @@
         "highway": "cycleway",
         "surface": "paved",
         "unique_name": "highway_cycleway_2",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -2035,7 +2035,7 @@
       "properties": {
         "landuse": "grass",
         "unique_name": "landuse_grass_5",
-        "color": "#FFD700"
+        "color": "#FFFF00"
       }
     },
     {
@@ -2085,7 +2085,7 @@
       "properties": {
         "highway": "footway",
         "unique_name": "highway_footway_6",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -2164,7 +2164,7 @@
         "sidewalk": "both",
         "surface": "asphalt",
         "unique_name": "highway_Calle_Rafael_Puertas_Tricas_2",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -2294,7 +2294,7 @@
       "properties": {
         "landuse": "grass",
         "unique_name": "landuse_grass_6",
-        "color": "#FFD700"
+        "color": "#FFFF00"
       }
     },
     {
@@ -2325,7 +2325,7 @@
         "footway": "crossing",
         "highway": "footway",
         "unique_name": "highway_footway_crossing_4",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -2355,7 +2355,7 @@
       "properties": {
         "highway": "footway",
         "unique_name": "highway_footway_7",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -2391,7 +2391,7 @@
       "properties": {
         "landuse": "grass",
         "unique_name": "landuse_grass_7",
-        "color": "#FFD700"
+        "color": "#FFFF00"
       }
     },
     {
@@ -2428,8 +2428,8 @@
         "lanes": "2",
         "noname": "yes",
         "surface": "asphalt",
-        "unique_name": "highway_roundabout_1",
-        "color": "#800000"
+        "unique_name": "highway_roundabout_noname_1",
+        "color": "#808080"
       }
     },
     {
@@ -2473,7 +2473,7 @@
       "properties": {
         "landuse": "grass",
         "unique_name": "landuse_grass_8",
-        "color": "#FFD700"
+        "color": "#FFFF00"
       }
     },
     {
@@ -2578,7 +2578,7 @@
         "footway": "sidewalk",
         "highway": "footway",
         "unique_name": "highway_footway_sidewalk_2",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -2601,7 +2601,7 @@
         "footway": "crossing",
         "highway": "footway",
         "unique_name": "highway_footway_crossing_5",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -2709,7 +2709,7 @@
       "properties": {
         "landuse": "grass",
         "unique_name": "landuse_grass_9",
-        "color": "#FFD700"
+        "color": "#FFFF00"
       }
     },
     {
@@ -2774,7 +2774,7 @@
         "oneway": "no",
         "surface": "asphalt",
         "unique_name": "highway_Calle_Doctor_Ortiz_Ramos_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -2888,8 +2888,8 @@
         "lanes": "2",
         "noname": "yes",
         "surface": "asphalt",
-        "unique_name": "highway_roundabout_2",
-        "color": "#800000"
+        "unique_name": "highway_roundabout_noname_2",
+        "color": "#808080"
       }
     },
     {
@@ -2988,7 +2988,7 @@
         "highway": "cycleway",
         "surface": "paved",
         "unique_name": "highway_cycleway_3",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -3214,7 +3214,7 @@
       "properties": {
         "highway": "track",
         "unique_name": "highway_track_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -3818,7 +3818,7 @@
         "name": "Calle Rafael Puertas Tricas",
         "surface": "asphalt",
         "unique_name": "highway_Calle_Rafael_Puertas_Tricas_3",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -4212,7 +4212,7 @@
       "properties": {
         "highway": "service",
         "unique_name": "highway_service_2",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -4336,7 +4336,7 @@
         "oneway": "yes",
         "surface": "asphalt",
         "unique_name": "highway_Calle_Arquitecto_Francisco_Penalosa_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -4460,7 +4460,7 @@
       "properties": {
         "landuse": "grass",
         "unique_name": "landuse_grass_10",
-        "color": "#FFD700"
+        "color": "#FFFF00"
       }
     },
     {
@@ -4571,8 +4571,8 @@
         "lanes": "3",
         "noname": "yes",
         "surface": "asphalt",
-        "unique_name": "highway_roundabout_3",
-        "color": "#800000"
+        "unique_name": "highway_roundabout_noname_3",
+        "color": "#808080"
       }
     },
     {
@@ -4608,7 +4608,7 @@
       "properties": {
         "landuse": "grass",
         "unique_name": "landuse_grass_11",
-        "color": "#FFD700"
+        "color": "#FFFF00"
       }
     },
     {
@@ -4655,7 +4655,7 @@
         "oneway": "yes",
         "surface": "asphalt",
         "unique_name": "highway_Calle_Arquitecto_Francisco_Penalosa_2",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -4685,7 +4685,7 @@
       "properties": {
         "highway": "track",
         "unique_name": "highway_track_2",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -4781,7 +4781,7 @@
       "properties": {
         "highway": "track",
         "unique_name": "highway_track_3",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -4815,7 +4815,7 @@
       "properties": {
         "highway": "track",
         "unique_name": "highway_track_4",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -5157,7 +5157,7 @@
       "properties": {
         "highway": "track",
         "unique_name": "highway_track_5",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -5187,7 +5187,7 @@
       "properties": {
         "highway": "path",
         "unique_name": "highway_path_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -5537,7 +5537,7 @@
       "properties": {
         "highway": "track",
         "unique_name": "highway_track_6",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -5587,7 +5587,7 @@
       "properties": {
         "highway": "track",
         "unique_name": "highway_track_7",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -5625,7 +5625,7 @@
       "properties": {
         "highway": "track",
         "unique_name": "highway_track_8",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -5658,7 +5658,7 @@
         "maxspeed": "80",
         "oneway": "yes",
         "unique_name": "highway_motorway_link_1",
-        "color": "#800000"
+        "color": "#808080"
       }
     },
     {
@@ -6115,7 +6115,7 @@
         "category": "Operational Environments",
         "name": "Stream",
         "unique_name": "operational_Stream_1",
-        "color": "#800080"
+        "color": "#FFA500"
       },
       "geometry": {
         "type": "Polygon",
@@ -6168,7 +6168,7 @@
         "category": "Operational Environments",
         "name": "Flood",
         "unique_name": "operational_Flood_1",
-        "color": "#800080"
+        "color": "#FFA500"
       },
       "geometry": {
         "type": "Polygon",
@@ -6205,7 +6205,7 @@
         "category": "Operational Environments",
         "name": "Fire",
         "unique_name": "operational_Fire_1",
-        "color": "#800080"
+        "color": "#FFA500"
       },
       "geometry": {
         "type": "Polygon",
@@ -6246,7 +6246,7 @@
         "category": "Operational Environments",
         "name": "Forensic Area",
         "unique_name": "operational_Forensic_Area_1",
-        "color": "#800080"
+        "color": "#FFA500"
       },
       "geometry": {
         "type": "Polygon",
@@ -6287,7 +6287,7 @@
         "category": "Operational Environments",
         "name": "Tunnel Accident",
         "unique_name": "operational_Tunnel_Accident_1",
-        "color": "#800080"
+        "color": "#FFA500"
       },
       "geometry": {
         "type": "Polygon",
@@ -6324,7 +6324,7 @@
         "category": "Operational Environments",
         "name": "Gas Leakage",
         "unique_name": "operational_Gas_Leakage_1",
-        "color": "#800080"
+        "color": "#FFA500"
       },
       "geometry": {
         "type": "Polygon",
@@ -6361,7 +6361,7 @@
         "category": "Operational Environments",
         "name": "Infrastructure Collapse",
         "unique_name": "operational_Infrastructure_Collapse_1",
-        "color": "#800080"
+        "color": "#FFA500"
       },
       "geometry": {
         "type": "Polygon",
@@ -6398,7 +6398,7 @@
         "category": "Operational Environments",
         "name": "Command, Communication, and Control Area",
         "unique_name": "operational_Command_Communication_and_Control_Area_1",
-        "color": "#800080"
+        "color": "#FFA500"
       },
       "geometry": {
         "type": "Polygon",
@@ -6435,7 +6435,7 @@
         "category": "Operational Environments",
         "name": "Coverage Area",
         "unique_name": "operational_Coverage_Area_1",
-        "color": "#800080"
+        "color": "#FFA500"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -6523,6 +6523,23 @@
         ]
       },
       "id": 15
+    },
+    {
+      "type": "Feature",
+      "id": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.488258361816406,
+          36.716045037134535
+        ]
+      },
+      "properties": {
+        "category": "Static Locations",
+        "name": "Bbox Center",
+        "unique_name": "bbox_center",
+        "color": "#000000"
+      }
     }
   ]
 }

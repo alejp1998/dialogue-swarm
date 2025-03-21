@@ -38,7 +38,7 @@ with open(SIM_CONFIGS_FILE, "r") as file:
 # Select the simulation configuration
 REGENERATE_FEATURES = False
 SIM_CONFIG_NAMES = ["uma_sar_scenario", "geelsa_greenhouses"]
-SIM_CONFIG_NAME = SIM_CONFIG_NAMES[0]
+SIM_CONFIG_NAME = SIM_CONFIG_NAMES[1]
 SIM_CONFIG = SIM_CONFIGS[SIM_CONFIG_NAME]
 
 # Save configuration to JSON file
@@ -67,24 +67,48 @@ else:
         features_geojson = json.load(file)
 
 # Map features to arena and remove outer linestring coords
-features_geojson = map_features_to_arena(features_geojson, tiles_adapted_bbox, ENV["arena_width"], ENV["arena_height"])
+# features_geojson = map_features_to_arena(features_geojson, tiles_adapted_bbox, ENV["arena_width"], ENV["arena_height"])
+
+
+# Calculate lon and lat per meter
+def calculate_lon_lat_per_meter(bbox):
+    """
+    Calculate the approximate conversion factors for longitude and latitude per meter.
+    """
+    x_min, y_min, x_max, y_max = bbox
+    x_center, y_center = (x_min + x_max) / 2, (y_min + y_max) / 2
+
+    # Convert meters to degrees (approximate)
+    lat_per_meter = 1 / 111320  # degrees per meter
+    lon_per_meter = 1 / (111320 * np.cos(np.radians(y_center)))  # degrees per meter
+
+    return lon_per_meter, lat_per_meter
 
 # Simulation functions
-def initialize_robot_positions(n, x_min=0, y_min=0, x_max=ENV["arena_width"], y_max=ENV["arena_height"], distance_from_edge=ENV["formation_radius"]):
-    x = np.random.uniform(x_min + distance_from_edge, x_max - distance_from_edge, n)
-    y = np.random.uniform(y_min + distance_from_edge, y_max - distance_from_edge, n)
-    return x, y
+def initialize_robot_positions(n, bbox, distance_from_edge=50):
+    """
+    Initialize robot positions within the given bounding box.
+    Distance from edge is given in meters.
+    """
+    x_min, y_min, x_max, y_max = bbox
+    lon_per_meter, lat_per_meter = calculate_lon_lat_per_meter(bbox)
 
-# Initialize destination positions with some distance from the edge
-def initialize_destinations(n, distance_from_edge=ENV["formation_radius"], arena_width=ENV["arena_width"], arena_height=ENV["arena_height"]):
-    x = np.random.uniform(distance_from_edge, arena_width - distance_from_edge, n)
-    y = np.random.uniform(distance_from_edge, arena_height - distance_from_edge, n)
+    distance_from_edge_lat = distance_from_edge * lat_per_meter
+    distance_from_edge_lon = distance_from_edge * lon_per_meter
+    x = np.random.uniform(x_min + distance_from_edge_lon, x_max - distance_from_edge_lon, n)
+    y = np.random.uniform(y_min + distance_from_edge_lat, y_max - distance_from_edge_lat, n)
     return x, y
 
 # Initialize the swarm
-def initialize_swarm(n=SETTINGS["number_of_robots"], x_i=SETTINGS["start_bbox"][0], y_i=SETTINGS["start_bbox"][1],
-                     x_f=SETTINGS["start_bbox"][2], y_f=SETTINGS["start_bbox"][3], max_speed=SETTINGS["max_speed"]):
-    x, y = initialize_robot_positions(n, x_i, y_i, x_f, y_f)
+def initialize_swarm(n=SETTINGS["number_of_robots"], bbox=bbox, max_speed=SETTINGS["max_speed"]):
+    x_min, y_min, x_max, y_max = bbox
+    lon_per_meter, lat_per_meter = calculate_lon_lat_per_meter(bbox)
+    METERS_FROM_EDGE, WIDTH, HEIGHT = 50, 20, 20
+    x_i, x_f = x_min + METERS_FROM_EDGE * lon_per_meter, x_min + (METERS_FROM_EDGE + WIDTH) * lon_per_meter
+    y_i, y_f = y_max - (METERS_FROM_EDGE + HEIGHT) * lat_per_meter, y_max - METERS_FROM_EDGE * lat_per_meter
+
+    start_bbox = (x_i, y_i, x_f, y_f)
+    x, y = initialize_robot_positions(n, start_bbox, distance_from_edge=0)
     robots = [Robot(idx, x, y, max_speed=max_speed) for idx, (x, y) in enumerate(zip(x, y))]
     swarm = Swarm(robots)
     
@@ -131,7 +155,7 @@ def simulation_loop():
             if simulation_state["running"]:
                 simulation_state["swarm"].step()
                 simulation_state["current_step"] += 1
-        time.sleep(0.01)
+        time.sleep(simulation_state["swarm"].step_ms / 1000.0)  # Convert ms to seconds
 
 sim_thread = Thread(target=simulation_loop)
 sim_thread.daemon = True
@@ -146,7 +170,7 @@ def get_state():
     with simulation_lock:
         groups = []
         for group in simulation_state["swarm"].groups:
-            robots = [{"idx": r.idx, "x": r.x, "y": r.y, "angle": r.angle, 
+            robots = [{"idx": r.idx, "x": r.x, "y": r.y, "angle": r.angle, "target_angle": r.target_angle, "angle_diff": r.angle_diff,
                       "target_x": r.target_x, "target_y": r.target_y, "battery_level": r.battery_level}
                      for r in group.robots]
             groups.append({

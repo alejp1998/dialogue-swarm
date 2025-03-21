@@ -232,6 +232,23 @@ def get_geojson_features(bbox, config_name=""):
     # Name and assign colors to features using an LLM model
     feature_collection_processed = name_features(features_descriptive_string, feature_collection)
 
+    # Add a feature with id 0 with the center coords of the bbox
+    center_coords = [(bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2]
+    feature_collection_processed["features"].append({
+        "type": "Feature",
+        "id": 0,
+        "geometry": {
+            "type": "Point",
+            "coordinates": center_coords
+        },
+        "properties": {
+            "category": "Static Locations",
+            "name": "Bbox Center",
+            "unique_name": "bbox_center",
+            "color": "#000000"  # Black color
+        }
+    })
+
     # Convert to GeoJSON string
     geojson_str_processed = geojson.dumps(feature_collection_processed, indent=2)
 
@@ -329,10 +346,10 @@ def map_features_to_arena(features_geojson, bbox, arena_width, arena_height):
     for feature in features:
         if "geometry" in feature:
             if feature["geometry"]["type"] == "MultiPolygon":
-                for i, part in enumerate(feature["geometry"]["coordinates"]):
-                    for j, coord in enumerate(part[0]):
+                for i, part in enumerate(feature["geometry"]["coordinates"][0]):
+                    for j, coord in enumerate(part):
                         x, y = lonLatToArena(coord[0], coord[1], bbox, arena_width, arena_height) 
-                        feature["geometry"]["coordinates"][i][0][j] = [x, y]
+                        feature["geometry"]["coordinates"][0][i][j] = [x, y]
             if feature["geometry"]["type"] == "Polygon":
                 for i, part in enumerate(feature["geometry"]["coordinates"]):
                     for j, coord in enumerate(part):

@@ -14,13 +14,7 @@
     },
     "settings": {
       "number_of_robots": 10,
-      "max_speed": 0.01,
-      "start_bbox": [
-        1,
-        1,
-        3,
-        3
-      ]
+      "max_speed": 120
     }
   },
   "geelsa_greenhouses": {
@@ -37,14 +31,8 @@
       "formation_radius": 2
     },
     "settings": {
-      "number_of_robots": 20,
-      "max_speed": 0.02,
-      "start_bbox": [
-        1,
-        0,
-        7,
-        5
-      ]
+      "number_of_robots": 5,
+      "max_speed": 180
     }
   }
 }
