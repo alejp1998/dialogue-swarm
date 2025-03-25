@@ -37,8 +37,8 @@ with open(SIM_CONFIGS_FILE, "r") as file:
 
 # Select the simulation configuration
 REGENERATE_FEATURES = False
-SIM_CONFIG_NAMES = ["uma_sar_scenario", "geelsa_greenhouses"]
-SIM_CONFIG_NAME = SIM_CONFIG_NAMES[1]
+SIM_CONFIG_NAMES = ["uma_sar_scenario", "geelsa_greenhouses", "valsain_plaza"]
+SIM_CONFIG_NAME = SIM_CONFIG_NAMES[0]
 SIM_CONFIG = SIM_CONFIGS[SIM_CONFIG_NAME]
 
 # Save configuration to JSON file
@@ -65,9 +65,6 @@ else:
     # Load features from the existing GeoJSON file
     with open(features_processed_geojson_file, "r") as file:
         features_geojson = json.load(file)
-
-# Map features to arena and remove outer linestring coords
-# features_geojson = map_features_to_arena(features_geojson, tiles_adapted_bbox, ENV["arena_width"], ENV["arena_height"])
 
 
 # Calculate lon and lat per meter

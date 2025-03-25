@@ -1,0 +1,171 @@
+624179465: {natural: scrub}
+83834937: {alt_name: Carretera forestal de Robledo a Valsaín, highway: tertiary, lanes: 2, name: Carretera forestal de Robledo a Balsaín, oneway: no, source: PNOA, source:date: 2009, surface: asphalt}
+1237507451: {highway: track}
+797984152: {highway: service, service: driveway}
+797984153: {highway: service, service: driveway}
+797984151: {highway: service, service: driveway}
+797984154: {highway: service, service: driveway}
+1282139480: {highway: track}
+1213259864: {building: yes}
+797984150: {access: private, highway: service, service: driveway}
+1282139481: {highway: track}
+1142009980: {highway: track}
+1142009979: {building: bunker, bunker_type: gun_emplacement, military: bunker, name: Búnker del Cementerio de Balsaín}
+966518224: {building: yes, historic: tomb}
+966518225: {building: yes, historic: tomb}
+797984146: {alt_name: Carretera forestal de Robledo a Valsaín, highway: tertiary, name: Carretera forestal de Robledo a Balsaín, oneway: no, source: PNOA, source:date: 2009, surface: asphalt}
+966518226: {building: roof, layer: 1}
+797984145: {highway: track}
+797984144: {highway: track}
+564070101: {highway: unclassified, maxspeed: 30, source: PNOA, source:date: 2009, surface: asphalt}
+83834949: {highway: track, source: PNOA, source:date: 2009, tracktype: grade2}
+1137869753: {highway: track}
+1127838249: {highway: path}
+83834961: {bicycle: yes, foot: yes, highway: track, source: ITACyL, source:date: 2009, tracktype: grade2}
+1282139455: {highway: track}
+83834958: {bicycle: yes, foot: yes, highway: track, source: PNOA, source:date: 2009, tracktype: grade2}
+564092568: {highway: residential, name: Paseo de las Acacias, source: PNOA, source:date: 2009}
+1146742574: {highway: service, service: driveway}
+1146742577: {highway: service, service: driveway}
+1282139479: {highway: track}
+1282139470: {building: farm_auxiliary}
+1282139468: {building: farm_auxiliary}
+46424188: {highway: tertiary, lanes: 2, lit: yes, name: Carretera de Robledo, source: PNOA, source:date: 2009, surface: asphalt}
+83834974: {highway: track, name: Sendero de los Reales Sitios, source: PNOA, source:date: 2009}
+1282139459: {building: farm_auxiliary}
+1282139469: {building: farm_auxiliary}
+1282139460: {building: farm_auxiliary}
+1137869754: {highway: track}
+1282139471: {highway: track}
+83834989: {highway: residential, name: Paseo de las Acacias, source: PNOA, source:date: 2009}
+1282139461: {building: farm_auxiliary}
+46424182: {bicycle: yes, foot: yes, highway: residential, name: Travesía de Robledo, source: PNOA, source:date: 2009, surface: compacted, tracktype: grade2}
+1282139474: {highway: track}
+1282139456: {building: farm_auxiliary}
+1146742581: {highway: track}
+1282139465: {building: farm_auxiliary}
+1146742584: {highway: track}
+1146742575: {highway: service, service: driveway}
+83834967: {highway: residential, name: Calle del Bosque, source: PNOA, source:date: 2009}
+1146742583: {highway: track}
+1146742580: {highway: track}
+1282139457: {building: farm_auxiliary}
+1282139463: {building: farm_auxiliary}
+1146742576: {highway: service, service: driveway}
+1282139464: {building: farm_auxiliary}
+187802306: {highway: track, incline: down, smoothness: bad, surface: compacted}
+1282139472: {highway: track}
+83834964: {bicycle: yes, foot: yes, highway: track, source: ITACyL, source:date: 2009, tracktype: grade2}
+1239622002: {building: yes}
+901724662: {highway: tertiary, lanes: 2, lit: yes, name: Carretera de Robledo, source: PNOA, source:date: 2009, surface: asphalt}
+1282139467: {building: farm_auxiliary}
+1282139473: {highway: track}
+1282139458: {building: farm_auxiliary}
+1282139462: {building: farm_auxiliary}
+1282139466: {building: farm_auxiliary}
+1257231838: {building: yes}
+1257231834: {building: yes}
+1137869752: {highway: service, name: Calle Sin Salida, service: alley}
+83834951: {highway: residential, source: PNOA, source:date: 2009, surface: compacted, tracktype: grade2}
+1257231839: {building: yes}
+1257231835: {building: yes}
+172542638: {highway: tertiary, name: Plaza de Valsaín, old_name: Plaza de José Antonio, source: PNOA, source:date: 2009}
+83834999: {highway: residential, lit: yes, name: Calle B, source: PNOA, source:date: 2009}
+1257231840: {building: yes}
+46424185: {highway: residential, name: Calle del Comandante Carmona, source: PNOA, source:date: 2009}
+46424186: {bicycle: yes, foot: yes, highway: tertiary, lanes: 2, lit: yes, name: Carretera de Robledo, oneway: no, source: PNOA, source:date: 2009, surface: asphalt}
+83834955: {highway: residential, lit: yes, name: Calle B, source: PNOA, source:date: 2009}
+1257231836: {building: yes}
+1257231841: {building: yes}
+1239618635: {highway: footway}
+1146742582: {highway: track}
+83834986: {highway: residential, incline: down, name: Pista Forestal de la Fuente de la Reina, smoothness: bad, tracktype: grade2}
+1257231842: {building: yes}
+1257231837: {building: yes}
+564070100: {highway: residential, name: Calle Cruz de la Gallega, source: PNOA, source:date: 2009}
+1146742579: {highway: service, service: driveway}
+1282139476: {highway: track}
+1239618636: {highway: footway}
+1357712905: {highway: residential, incline: down, name: Pista Forestal de la Fuente de la Reina, smoothness: bad, surface: asphalt}
+1257231843: {building: yes}
+564070098: {alt_name: Plaza de toros de Valsaín, building: yes, leisure: stadium, name: Plaza de toros de Balsaín, sport: toros, wikidata: Q101997652}
+456566290: {bicycle: yes, foot: yes, highway: path}
+1282139477: {highway: track}
+1282139478: {highway: track}
+1137869751: {highway: living_street}
+564092566: {highway: track}
+564070099: {building: yes}
+83834992: {alt_name: Plaza de Valsaín, highway: residential, name: Plaza de Balsaín, old_name: Plaza de José Antonio, source: PNOA, source:date: 2009, tracktype: grade1}
+624169222: {building: yes}
+83834985: {highway: track, tracktype: grade1}
+83834977: {highway: residential, source: PNOA, source:date: 2009, tracktype: grade1}
+1146742585: {highway: track}
+46424183: {highway: residential, lit: yes, name: Calle Conventillo, source: PNOA, source:date: 2009}
+1146742699: {highway: track}
+1137869755: {highway: residential, name: Calle Cuartelillo, source: PNOA, source:date: 2009}
+348959637: {highway: track, name: Sendero de los Reales Sitios, tracktype: grade3}
+83834969: {highway: track, tracktype: grade2}
+797984155: {bicycle: yes, foot: yes, highway: tertiary, lanes: 2, lit: yes, name: Carretera de Robledo, oneway: no, source: PNOA, source:date: 2009, surface: asphalt}
+331709567: {highway: track}
+83834968: {highway: track, name: Calle Chorro, surface: compacted, tracktype: grade3}
+1284943689: {highway: path}
+1316154215: {highway: unclassified, name: Sendero de los Reales Sitios, surface: asphalt}
+1243715610: {highway: path}
+1146742573: {alt_name: Iglesia antigua de Valsaín, amenity: place_of_worship, building: yes, denomination: catholic, name: Iglesia antigua de Balsaín, religion: christian, wikimedia_commons: File:Iglesia antigua de Valsain.jpg}
+83834971: {highway: residential, name: Calle E, tracktype: grade1}
+1316154221: {footway: sidewalk, highway: footway}
+1316154223: {footway: sidewalk, highway: footway, name: Sendero de los Reales Sitios}
+348959634: {bicycle: yes, foot: yes, highway: tertiary, lanes: 2, lit: yes, name: Carretera de Robledo, oneway: no, source: PNOA, source:date: 2009, surface: asphalt}
+1137869749: {highway: track}
+696379251: {access: permissive, alt_name: Palacio Real de Valsaín;Palacio de Valsaín;Palacio de Balsaín;Palacio del Bosque;Casa del Bosque, building: ruins, castle_type: palace, heritage: 3, heritage:operator: Junta de Castilla y León, historic: castle, name: Palacio Real de Balsaín, wikidata: Q9054569, wikimedia_commons: File:Ruinas Palacio Real Valsain, Valsain, Segovia, España, 2014.jpg, wikipedia: es:Palacio de Valsaín}
+46424184: {bicycle: yes, foot: yes, highway: residential, name: Calle C, source: PNOA, source:date: 2009}
+1137869750: {highway: track}
+1316154219: {crossing: uncontrolled, crossing:markings: yes, footway: crossing, highway: footway}
+1146742578: {highway: path}
+1316154226: {footway: sidewalk, highway: footway}
+83834994: {highway: residential, surface: compacted, tracktype: grade2}
+1316154222: {highway: track}
+1316154224: {bridge: yes, footway: sidewalk, highway: footway, layer: 1, name: Sendero de los Reales Sitios}
+49731753: {bicycle: yes, bridge: yes, foot: yes, highway: tertiary, lanes: 2, layer: 1, lit: yes, maxweight:signed: no, name: Carretera de Robledo, oneway: no, source: ITACyL, source:date: 2009, surface: asphalt}
+1316154225: {bridge: yes, footway: sidewalk, highway: footway, layer: 1}
+1137869757: {highway: residential, name: Calle D, surface: compacted}
+1137869756: {highway: residential, name: Calle D, tracktype: grade1}
+1243715608: {building: shed}
+1243715609: {building: shed}
+1149629671: {highway: path}
+1149629672: {highway: steps, incline: up}
+1316154216: {footway: sidewalk, highway: footway, name: Sendero de los Reales Sitios}
+1316154220: {footway: sidewalk, highway: footway}
+1316154218: {highway: track, incline: down, name: Camino de la Máquina, sac_scale: hiking, trail_visibility: excellent}
+1044454758: {addr:city: Balsaín, addr:postcode: 40100, addr:street: Carretera de Robledo, alt_name: Polideportivo de Balsaín;Polideportivo de Valsaín, building: yes, leisure: sports_centre, name: Polideportivo Municipal Los Esquiadores, operator: Ayuntamiento del Real Sitio de San Ildefonso, operator:type: government}
+46424181: {bicycle: yes, foot: yes, highway: tertiary, lanes: 2, lit: yes, name: Carretera de Robledo, oneway: no, source: ITACyL, source:date: 2009, surface: asphalt}
+1316114191: {footway: sidewalk, highway: footway, name: Sendero de los Reales Sitios}
+1128019813: {building: house}
+1127991234: {addr:city: Balsaín, addr:postcode: 40100, addr:street: Calle Barrio Nuevo, barrier: fence, leisure: park, opening_hours: 24/7}
+1149629680: {alt_name: Calle Praderas, highway: residential, lane_markings: no, lit: yes, name: Calle Barrio Nuevo, surface: asphalt}
+1316154217: {highway: path}
+623764802: {waterway: ditch}
+1128019814: {building: house}
+868283583: {highway: track, incline: up, smoothness: bad, tracktype: grade2}
+83834934: {bicycle: yes, foot: yes, highway: track, horse: no, motor_vehicle: no, segregated: no, smoothness: bad, source: ITACyL, source:date: 2009, tracktype: grade2}
+623764803: {natural: water}
+1128019815: {building: house}
+1243733391: {landuse: recreation_ground}
+1213265542: {highway: path, incline: down, name: Camino de la Máquina, sac_scale: hiking, trail_visibility: excellent}
+1149629674: {building: school}
+310443388: {intermittent: yes, name: Arroyo del Parque, waterway: stream}
+1149629675: {building: school}
+1149629676: {building: school}
+48865533: {highway: residential, lane_markings: no, lit: yes, name: Calle Barrio Nuevo, surface: asphalt}
+1149629686: {building: house}
+868283584: {bridge: yes, highway: track, incline: up, layer: 1, smoothness: bad, tracktype: grade2}
+1149629677: {building: school}
+1149629681: {highway: pedestrian, lit: yes, name: Calle Barrio Nuevo}
+1149629700: {building: house}
+1149629687: {building: house}
+48865534: {highway: residential, lane_markings: no, lit: yes, name: Calle Barrio Nuevo, surface: asphalt}
+48865537: {highway: residential, lane_markings: no, lit: yes, name: Calle Barrio Nuevo, source: PNOA, source:date: 2009, surface: asphalt}
+1149629669: {highway: path}
+83834997: {highway: track, incline: up, smoothness: bad, tracktype: grade2}
+624176405: {natural: scrub}
+33053372: {alt_name: Río Valsaín, boat: no, loc_name: Río Valsaín, name: Río Eresma, old_name: Río Balsaín, waterway: river}

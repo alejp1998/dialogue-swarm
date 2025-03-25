@@ -198,8 +198,9 @@ def get_geojson_features(bbox, config_name=""):
     feature_collection = overpass_to_geojson_featurecollection(overpass_data)
     geojson_str = geojson.dumps(feature_collection, indent=2)
 
-    # Save overpass GeoJSON
+    # Save overpass GeoJSON (create dir if it doesn't exist)
     file_path_geojson = features_dir + config_name + "/overpass.geojson"
+    os.makedirs(os.path.dirname(file_path_geojson), exist_ok=True)
     with open(file_path_geojson, "w") as f:
         f.write(geojson_str)
 

@@ -160,6 +160,12 @@ function toggleReset() {
 // -------------------- Initialization --------------------
 
 function addEventListeners() {
+  // Focus on the chat input field when the page loads
+  document.getElementById("chatInput").focus();
+  // Add event listener to the chat input field
+  document.getElementById("chatInput").addEventListener("focus", () => {
+    document.getElementById("chatInput").select();
+  });
   // Add event listener to send button
   document.getElementById("sendButton").onclick = sendChat;
 
@@ -232,7 +238,7 @@ function addEventListeners() {
 if (ENV === null || CONFIG === null || geoJSON === null) {
   console.log("Fetching initialization data...");
   // Fetch simulation config and GeoJSON data (once both are resolved, proceed with initialization)
-  Promise.all([fetchSimConfig(), fetchVisConfig(), loadAndProcessGeoJSON()])
+  Promise.all([fetchConfig(), loadAndProcessGeoJSON()])
     .then(() => {
       console.log("Initialization complete");
       addEventListeners();

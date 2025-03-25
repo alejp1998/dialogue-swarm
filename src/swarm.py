@@ -16,7 +16,10 @@ from typing import Dict, List, Tuple, Any
 import geojson
 import json
 
-import shapely
+from shapely import Polygon
+from shapely.geometry import shape, Point, LineString, Polygon
+from shapely.ops import transform
+from pyproj import CRS, Transformer
 from trajgenpy import Geometries
 
 # CONSTANTS
@@ -67,6 +70,9 @@ BEHAVIORS = {
 # Load system prompt
 with open("data/prompts/swarm_agent.txt", "r") as f:
     SYSTEM_PROMPT = f.read()
+# Load spatial awareness system prompt
+with open("data/prompts/spatial_awareness.txt", "r") as f:
+    SPATIAL_AWARENESS_SYSTEM_PROMPT = f.read()
 
 # CLIENT
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -92,7 +98,8 @@ class Robot:
         self.x = x
         self.y = y
         self.max_speed = max_speed
-        self.max_rotation_speed = 2.0  # rad/s
+        self.max_rotation_speed = np.pi # rad/s
+        self.min_rotation_speed = 0.5  # rad/s
         self.angle = 0.0  # Initial heading in radians
 
         self.target_x = x
@@ -104,6 +111,9 @@ class Robot:
         self.vy = 0.0
         self.rotation_speed = 0.0
         self.battery_level = 1.0
+
+        self.distance_th = 0.5  # 50 cm
+        self.rotation_th = 5.0 # 2 degrees
 
         self.update_target(x, y)
 
@@ -130,14 +140,14 @@ class Robot:
         self._update_battery_level()
 
         if not self.is_robot_aligned():
-            self.rotation_speed = np.sign(self.angle_diff) * max(min(abs(self.angle_diff), self.max_rotation_speed), 0.2)
+            self.rotation_speed = np.sign(self.angle_diff) * max(min(2*abs(self.angle_diff), self.max_rotation_speed), self.min_rotation_speed)
         else:
             if not self.is_robot_in_position():
                 # self.vx = (self.dx_in_meters / self.dist_in_meters) * self.max_speed
                 # self.vy = (self.dy_in_meters / self.dist_in_meters) * self.max_speed
                 self.vx = np.cos(self.angle) * self.max_speed
                 self.vy = np.sin(self.angle) * self.max_speed
-                self.rotation_speed = np.sign(self.angle_diff) * max(min(abs(self.angle_diff), self.max_rotation_speed), 0.2)
+                self.rotation_speed = np.sign(self.angle_diff) * max(min(2*abs(self.angle_diff), self.max_rotation_speed), self.min_rotation_speed)
 
         self._update_position(step_ms)
 
@@ -162,12 +172,12 @@ class Robot:
     def is_robot_in_position(self):
         """Check if robot is within a 0.25m tolerance of the target position."""
         self._calculate_distance_in_meters()
-        return self.dist_in_meters < 0.25 # 25cm tolerance
+        return self.dist_in_meters < self.distance_th
 
     def is_robot_aligned(self):
         """Check if robot is aligned with target within 0.1 degrees."""
         self._calculate_angle_diff()
-        return abs(self.angle_diff) < np.radians(0.5)  # 0.5 degrees tolerance
+        return abs(self.angle_diff) < np.radians(self.rotation_th)
 
     def _update_position(self, step_ms):
         """
@@ -229,8 +239,8 @@ class Group:
         if behavior_name == "form_and_follow_trajectory":
             # Assign formation positions
             n = len(self.robots)
-            coord = self.virtual_center
-            formation_pts = compute_formation_coordinate_offsets(coord, n, behavior_params["formation_shape"], behavior_params["formation_radius"])
+            behavior_dict["data"]["init_virtual_center"] = self.virtual_center
+            formation_pts = compute_formation_coordinate_offsets(self.virtual_center, n, behavior_params["formation_shape"], behavior_params["formation_radius"])
             
             # Create cost matrix
             cost_matrix = np.zeros((len(self.robots), len(formation_pts)))
@@ -304,6 +314,9 @@ class Group:
         """Perform one simulation step for the group"""
         bhvr = self.bhvr
 
+        # Update virtual center
+        self._update_virtual_center()
+
         # Calculate movement based on current behavior
         match bhvr["name"]:
             # State machine for formation and following trajectory
@@ -312,8 +325,8 @@ class Group:
                     case 0:
                         for robot in self.robots:
                             robot.update_target(
-                                self.virtual_center[0] + bhvr["data"]["formation_positions"][robot.idx][0],
-                                self.virtual_center[1] + bhvr["data"]["formation_positions"][robot.idx][1]
+                                bhvr["data"]["init_virtual_center"][0] + bhvr["data"]["formation_positions"][robot.idx][0],
+                                bhvr["data"]["init_virtual_center"][1] + bhvr["data"]["formation_positions"][robot.idx][1]
                             )
                             robot.move(step_ms)
                         
@@ -340,9 +353,6 @@ class Group:
                                 bhvr["params"]["trajectory"][bhvr["data"]["traj_index"]][1] + bhvr["data"]["formation_positions"][robot.idx][1]
                             )
                             robot.move(step_ms)
-
-                        # Update virtual center 
-                        self._update_virtual_center()
 
                         # Check transition to next state
                         if all(r.is_robot_in_position() for r in self.robots):
@@ -531,6 +541,10 @@ class SwarmAgent:
         self.features_geojson = features_geojson
         self._set_feature_name_lists()
         self._set_epsg_based_on_features()
+        self.spatial_awareness_tools = [
+            self.find_nearby_shapes_to_group,
+            self.find_nearby_shapes_to_shape
+        ]
         self.tools = [
             self.gen_group_by_ids,
             self.gen_groups_by_clustering,
@@ -542,11 +556,14 @@ class SwarmAgent:
         ]
         self.memory = []
         self.system_prompt = SYSTEM_PROMPT
+        self.spatial_awareness_system_prompt = SPATIAL_AWARENESS_SYSTEM_PROMPT
+
         
-    def _format_memory(self):
+    def _format_memory(self, memory=None):
         """Convert memory entries to proper message format"""
         formatted = []
-        for entry in self.memory:
+        memory = memory if memory else self.memory
+        for entry in memory:
             if "tool_call_id" in entry:
                 formatted.append({
                     "role": entry["role"],
@@ -566,6 +583,18 @@ class SwarmAgent:
                 })
         return formatted
     
+    def _get_spatial_awareness_tool_schemas(self):
+        return [
+            {
+                "type": "function",
+                "function": {
+                    "name": tool.__name__,
+                    "description": tool.__doc__,
+                    "parameters": self._get_params_schema(tool)
+                }
+            } for tool in self.spatial_awareness_tools
+        ]
+    
     def _get_tool_schemas(self):
         return [
             {
@@ -580,7 +609,25 @@ class SwarmAgent:
     
     def _get_params_schema(self, func):
         # Implement parameter schema extraction based on func annotations
-        if func.__name__ == "gen_group_by_ids":
+        if func.__name__ == "find_nearby_shapes_to_shape":
+            return {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                    }
+                },
+                "required": ["name"]
+            }
+        elif func.__name__ == "find_nearby_shapes_to_group":
+            return {
+                "type": "object",
+                "properties": {
+                    "group_idx": {"type": "integer"}
+                },
+                "required": ["group_idx"]
+            }
+        elif func.__name__ == "gen_group_by_ids":
             return {
                 "type": "object",
                 "properties": {
@@ -703,21 +750,15 @@ class SwarmAgent:
         point_names = []
 
         for feature in self.features_geojson["features"]:
-            if feature["geometry"]["type"] == "Polygon" or feature["geometry"]["type"] == "MultiPolygon":
-                try :
+            try :
+                if feature["geometry"]["type"] == "Polygon" or feature["geometry"]["type"] == "MultiPolygon":
                     polygon_names.append(feature["properties"]["unique_name"])
-                except KeyError:
-                    self.app.logger.warning(f"Feature without unique name with id: {feature["id"]} and properties: {feature["properties"]}")
-            elif feature["geometry"]["type"] == "LineString":
-                try :
+                elif feature["geometry"]["type"] == "LineString":
                     linestring_names.append(feature["properties"]["unique_name"])
-                except KeyError:
-                    self.app.logger.warning(f"Feature without unique name with id: {feature["id"]} and properties: {feature["properties"]}")
-            elif feature["geometry"]["type"] == "Point":
-                try :
+                elif feature["geometry"]["type"] == "Point":
                     point_names.append(feature["properties"]["unique_name"])
-                except KeyError:
-                    self.app.logger.warning(f"Feature without unique name with id: {feature["id"]} and properties: {feature["properties"]}")
+            except KeyError:
+                self.app.logger.warning(f"Feature without unique name with id: {feature["id"]} and properties: {feature["properties"]}")
                 
         # Sort them alphabetically
         polygon_names.sort()
@@ -747,14 +788,101 @@ class SwarmAgent:
         for group in self.swarm.groups:
             group_robot_idxs = " ,".join(map(str, [robot.idx for robot in group.robots]))
             groups_str += f"[{group.idx}: [{group_robot_idxs}], "
-        
-        # Build message history with correct structure
-        formatted_system_prompt = self.system_prompt.format(
+
+        # Build formatted spatial awareness system prompt
+        formatted_spatial_awareness_system_prompt = self.spatial_awareness_system_prompt.format(
             point_names=self.point_names,
             linestring_names=self.linestring_names,
             polygon_names=self.polygon_names,
             robot_idxs=robot_idxs, 
             groups_str=groups_str
+        )
+
+        # Spatial awareness messages
+        spatial_awareness_messages = [
+            {"role": "system", "content": formatted_spatial_awareness_system_prompt},
+            {"role": "user", "content": user_input}
+        ]
+        # Init spatial awareness memory
+        spatial_awareness_memory = []
+
+        # Get spatial awareness information
+        spatial_awareness_info = ""
+        try:
+            # Call the API for tool calls
+            response = client.chat.completions.create(
+                model=MODEL_NAME,
+                temperature=0,
+                max_tokens=2048,
+                messages=spatial_awareness_messages,
+                tools=self._get_spatial_awareness_tool_schemas()
+            )
+
+            response_message = response.choices[0].message
+            spatial_awareness_memory.append({"role": "user", "content": user_input})
+
+            # Check if there are tool calls
+            if response_message.tool_calls:
+                # Process tool calls
+                spatial_awareness_tool_responses = []
+                for tool_call in response_message.tool_calls:
+                    self.app.logger.info(f"Processing tool call: {tool_call.function.name}")
+                    func = next(t for t in self.spatial_awareness_tools if t.__name__ == tool_call.function.name)
+                    args = json.loads(tool_call.function.arguments)
+                    self.app.logger.info(f"Calling {tool_call.function.name} with {args}")
+                    result = func(**args)
+                    spatial_awareness_tool_responses.append({
+                        "tool_call_id": tool_call.id,
+                        "role": "tool",
+                        "name": tool_call.function.name,
+                        "content": result
+                    })
+
+                # Store assistant message with tool calls
+                spatial_awareness_memory.append({
+                    "role": "assistant",
+                    "content": None,
+                    "tool_calls": [
+                        {
+                            "id": call.id,
+                            "type": "function",
+                            "function": {
+                                "name": call.function.name,
+                                "arguments": call.function.arguments
+                            }
+                        } for call in response_message.tool_calls
+                    ]
+                })
+
+                # Store tool responses
+                spatial_awareness_memory.extend(spatial_awareness_tool_responses)
+                spatial_awareness_memory = self._format_memory(spatial_awareness_memory)
+                final_spatial_awareness_messages = [
+                    {"role": "system", "content": formatted_spatial_awareness_system_prompt},
+                    *spatial_awareness_memory
+                ]
+                # Get final response with full context
+                final_response = client.chat.completions.create(
+                    model=MODEL_NAME,
+                    temperature=0,
+                    max_tokens=2048,
+                    messages=final_spatial_awareness_messages
+                )
+                spatial_awareness_info = final_response.choices[0].message.content
+                self.app.logger.info(f"Spatial awareness info with calls: {spatial_awareness_info}")
+
+            else:
+                spatial_awareness_info = response_message.content
+                self.app.logger.info(f"Spatial awareness info without calls: {spatial_awareness_info}")
+        except Exception as e:
+            self.app.logger.error(f"Error: {e}")
+            spatial_awareness_info = "Spatial awareness information could not be retrieved."
+
+        # Build message history with correct structure
+        formatted_system_prompt = self.system_prompt.format(
+            robot_idxs=robot_idxs, 
+            groups_str=groups_str,
+            spatial_awareness_info=spatial_awareness_info
         )
 
         # self.app.logger.info(f"Formatted system prompt: {formatted_system_prompt}")
@@ -769,7 +897,7 @@ class SwarmAgent:
             response = client.chat.completions.create(
                 model=MODEL_NAME,
                 temperature=0,
-                max_tokens=4192,
+                max_tokens=4096,
                 messages=messages,
                 tools=self._get_tool_schemas()
             )
@@ -778,7 +906,6 @@ class SwarmAgent:
             self.memory.append({"role": "user", "content": user_input})
             
             if response_message.tool_calls:
-                
                 # Process tool calls
                 tool_responses = []
                 for tool_call in response_message.tool_calls:
@@ -840,6 +967,53 @@ class SwarmAgent:
             return "There was an error processing your request. Please try clarifying your request."
 
     # Tool implementations
+    def find_nearby_shapes_to_shape(self, name: str):
+        """
+        Get nearby shapes based on the name of the feature
+        """
+        # Get the GeoJSON feature with unique_name = name
+        source_feature = self._get_feature_by_unique_name(name)
+
+        # Get the nearby features
+        nearby_features = get_nearby_features_to_a_given_feature(source_feature, self.features_geojson["features"], epsg=self.epsg)
+        
+        # Get only the 10 closest features
+        nearby_features = nearby_features[:10]
+
+        # Stringify the nearby features in a string that gives name and distance
+        nearby_features_str = ""
+        for feature in nearby_features:
+            feature_name = feature["name"]
+            feature_distance = feature["distance"]
+            nearby_features_str += f"{feature_name} ({feature_distance:.2f} m), "
+        nearby_features_str = nearby_features_str[:-2]  # Remove last comma and space
+        return f"Nearby features to {name}: {nearby_features_str}"
+    
+    def find_nearby_shapes_to_group(self, group_idx: int):
+        """
+        Get nearby shapes based on the group index
+        """
+        # Get the group by index
+        group = self.swarm._get_group_by_idx(group_idx)
+        
+        # Get the virtual center of the group
+        group_virtual_center = group.virtual_center
+
+        # Get the nearby features
+        nearby_features = get_nearby_features_to_a_given_coord(group_virtual_center, self.features_geojson["features"], epsg=self.epsg)
+        
+        # Get only the 10 closest features
+        nearby_features = nearby_features[:10]
+
+        # Stringify the nearby features in a string that gives name and distance
+        nearby_features_str = ""
+        for feature in nearby_features:
+            feature_name = feature["name"]
+            feature_distance = feature["distance"]
+            nearby_features_str += f"{feature_name} ({feature_distance:.2f} m), "
+        nearby_features_str = nearby_features_str[:-2] # Remove last comma and space
+        return f"Nearby features to group {group_idx}: {nearby_features_str}"
+    
     def gen_group_by_ids(self, robot_idxs: List[int]):
         new_group = self.swarm.gen_group_by_ids(robot_idxs)
         return f"Drones {', '.join(map(str, robot_idxs))} grouped successfully in group {new_group.idx}"
@@ -904,10 +1078,10 @@ class SwarmAgent:
         elif feature["geometry"]["type"] == "LineString":
             coords = feature["geometry"]["coordinates"]
             # Check if the first or the last coordinate is the closest to the center of the group
-            # If the last one is the closest, invert the order of the coordinates
+            # If the last one is closer than the first one, reverse the order of the coordinates
             group_virtual_center = self.swarm._get_group_by_idx(group_idx).virtual_center
             closest_coord_idx = np.argmin([np.linalg.norm(np.array(coord) - np.array(group_virtual_center)) for coord in coords])
-            if closest_coord_idx == len(coords) - 1:
+            if closest_coord_idx > len(coords) // 2:
                 coords = coords[::-1]
         else:
             return "Invalid feature type"
@@ -976,7 +1150,7 @@ class SwarmAgent:
         if feature["geometry"]["type"] == "MultiPolygon":
             # Outer polygon
             poly_coords = feature["geometry"]["coordinates"][0][0]
-            poly = shapely.Polygon(poly_coords)
+            poly = Polygon(poly_coords)
 
             geo_poly = Geometries.GeoPolygon(poly)
             geo_poly.set_crs(self.epsg) # EPSG:2062 for coords in Spain
@@ -985,7 +1159,7 @@ class SwarmAgent:
             # Inner polygons or holes
             holes = []
             for coords in feature["geometry"]["coordinates"][0][1:]:
-                hole = shapely.Polygon(coords)
+                hole = Polygon(coords)
                 holes.append(hole)
             
             # Create geo holes multipolygon
@@ -1001,7 +1175,7 @@ class SwarmAgent:
         elif feature["geometry"]["type"] == "Polygon":
             # Polygon
             poly_coords = feature["geometry"]["coordinates"][0]
-            poly = shapely.Polygon(poly_coords)
+            poly = Polygon(poly_coords)
             geo_poly = Geometries.GeoPolygon(poly)
             geo_poly.set_crs(self.epsg) # EPSG:2062 for coords in Spain
             geo_poly.buffer(-2) # Distance in meters from the border of the polygon
@@ -1036,7 +1210,7 @@ class SwarmAgent:
         closest_coord_idx = np.argmin([np.linalg.norm(np.array(coord) - np.array(group_virtual_center)) for coord in coords])
         coords = coords[closest_coord_idx:] + coords[:closest_coord_idx]
 
-        self.app.logger.info(f"Coords: {coords}")
+        # self.app.logger.info(f"Coords: {coords}")
         self.swarm.assign_cover_shape_behavior_to_group(
             group_idx, coords
         )
@@ -1044,6 +1218,110 @@ class SwarmAgent:
         return f"cover_shape behavior assigned to group {group_idx} with feature name {name}"
 
 # AUXILIARY FUNCTIONS
+def checkIfCoordInPolygon(coords, polygon):
+    """
+    Check if a coordinate point is inside a polygon.
+    
+    Args:
+        coords (list): List of coordinates [lon, lat].
+        polygon (list): List of polygon coordinates [[lon1, lat1], [lon2, lat2], ...].
+        
+    Returns:
+        bool: True if the point is inside the polygon, False otherwise.
+    """
+    lon, lat = coords
+    poly = Polygon(polygon)
+    return poly.contains(Point(lon, lat))
+
+def transform_geometry(geom, source_epsg=4326, target_epsg=3857):
+    """
+    Transforms a Shapely geometry from source_epsg (WGS84) to target_epsg (meters).
+    Default target CRS is EPSG:3857 (Web Mercator).
+    """
+    transformer = Transformer.from_crs(CRS.from_epsg(source_epsg), CRS.from_epsg(target_epsg), always_xy=True)
+    return transform(transformer.transform, geom)  # Apply transformation
+
+def compute_distance(feature1, feature2, target_epsg=3857):
+    """
+    Computes the shortest distance between two GeoJSON features in meters.
+    
+    Parameters:
+    - feature1, feature2: GeoJSON-like dictionaries with 'geometry'.
+    - target_epsg: EPSG code for distance calculation (default: EPSG:3857).
+    
+    Returns:
+    - Distance in meters.
+    """
+    # Convert GeoJSON geometries to Shapely objects
+    geom1 = shape(feature1["geometry"])
+    geom2 = shape(feature2["geometry"])
+
+    # Reproject to a coordinate system that measures in meters
+    geom1_meters = transform_geometry(geom1, target_epsg=target_epsg)
+    geom2_meters = transform_geometry(geom2, target_epsg=target_epsg)
+
+    # Compute shortest distance in meters
+    return geom1_meters.distance(geom2_meters)
+
+def get_nearby_features_to_a_given_coord(coord, features, epsg):
+    """
+    Get the closest features to a given coordinate point.
+    """
+    # Create a GeoJSON feature for the coordinate point
+    feature_point = {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": coord
+        },
+        "properties": {}
+    }
+    
+    closest_features = []
+    
+    for feature in features:
+        # Skip features without unique_name
+        if "unique_name" not in feature["properties"]:
+            continue
+        feature_name = feature["properties"]["unique_name"]
+        
+        # Compute distance between source feature and current feature
+        target_epsg = int(epsg.split(":")[1])
+        distance = compute_distance(feature_point, feature, target_epsg=target_epsg)
+        
+        # Append to closest features list
+        closest_features.append({"name": feature_name, "distance": distance})
+
+    # Sort results by distance
+    return sorted(closest_features, key=lambda x: x["distance"])
+
+def get_nearby_features_to_a_given_feature(source_feature, features, epsg):
+    """
+    Get nearby features to a given source feature.
+    """
+    # Get the GeoJSON feature with unique_name = name
+    if source_feature is None:
+        return "Feature not found"
+    
+    nearby_features = []
+    
+    for feature in features:
+        if feature == source_feature:
+            continue  # Skip the source feature itself
+        # Skip features without unique_name
+        if "unique_name" not in feature["properties"]:
+            continue
+        feature_name = feature["properties"]["unique_name"]
+        
+        # Compute distance between source feature and current feature
+        target_epsg = int(epsg.split(":")[1])
+        distance = compute_distance(source_feature, feature, target_epsg=target_epsg)
+        
+        # Append to nearby features list
+        nearby_features.append({"name": feature_name, "distance": distance})
+
+    # Sort results by distance
+    return sorted(nearby_features, key=lambda x: x["distance"])
 
 def guess_utm_crs(lon, lat):
     zone = int((lon + 180) / 6) + 1  # Calculate UTM zone

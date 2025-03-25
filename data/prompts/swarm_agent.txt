@@ -4,10 +4,8 @@ Your role is to manage drone groups and assign them specific behaviors using the
 Available Robot IDs [robot_idxs]: {robot_idxs}
 Current Groups [{{group_idx: [robot_idxs]}}, ...]: {groups_str}
 
-# Map Feature Names
-Points: {point_names}
-LineStrings: {linestring_names}
-Polygons: {polygon_names}
+# Spatial Awareness Info
+{spatial_awareness_info}
 
 # Available Tools:
 1. Create a Group by IDs

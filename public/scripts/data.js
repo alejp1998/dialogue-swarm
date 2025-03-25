@@ -18,37 +18,31 @@ let bbox = null;
 let topLeft = null;
 let bottomRight = null;
 
-// -------------------- Read sim config --------------------
-async function fetchSimConfig() {
-  try {
-    const response = await fetch('/data/config/simulation.json');
-    if (!response.ok) {
-      throw new Error(`Failed to load config: ${response.statusText}`);
-    }
-    const data = await response.json();
-    ENV = data.env;
-    CONFIG = data.config;
-    console.log("ENV & CONFIG loaded successfully");
-  } catch (error) {
-    console.error("Error fetching sim config:", error);
-    return null;
-  }
-}
+// -------------------- Read config --------------------
 
-async function fetchVisConfig() {
+async function fetchConfig() {
   try {
-    const response = await fetch('/data/config/visualization.json');
-    if (!response.ok) {
-      throw new Error(`Failed to load config: ${response.statusText}`);
+    const simResponse = await fetch('/data/config/simulation.json');
+    if (!simResponse.ok) {
+      throw new Error(`Failed to load sim config: ${simResponse.statusText}`);
     }
-    const data = await response.json();
-    VIS = data;
+
+    const simData = await simResponse.json();
+    ENV = simData.env;
+    CONFIG = simData.config;
+    console.log("ENV & CONFIG loaded successfully");
+
+    const visResponse = await fetch('/data/config/visualization.json');
+    if (!visResponse.ok) {
+      throw new Error(`Failed to load vis config: ${visResponse.statusText}`);
+    }
+    const visData = await visResponse.json();
+    VIS = visData;
     console.log("VIS loaded successfully");
     set_osm_variables();
     console.log("OSM variables set successfully");
     loadTiles();
     console.log("Tiles loaded successfully");
-    return data;
   } catch (error) {
     console.error("Error fetching config:", error);
     return null;
@@ -144,15 +138,15 @@ async function loadAndProcessGeoJSON() {
     // Reorder GeoJSON data
     geoJSON = reorderGeoJSON(geoJSON);
     // Remove coords outside bbox for LineStrings
-    for(feature of geoJSON.features){
-      if (feature.geometry.type === 'LineString') {
-        feature.geometry.coordinates = removeCoordsOutsideBbox(bbox, feature.geometry.coordinates);
-        // Remove feature if no coordinates left
-        if (feature.geometry.coordinates.length === 0) {
-          geoJSON.features = geoJSON.features.filter(f => f !== feature);
-        }
-      }
-    }
+    // for(feature of geoJSON.features){
+    //   if (feature.geometry.type === 'LineString') {
+    //     feature.geometry.coordinates = removeCoordsOutsideBbox(bbox, feature.geometry.coordinates);
+    //     // Remove feature if no coordinates left
+    //     if (feature.geometry.coordinates.length === 0) {
+    //       geoJSON.features = geoJSON.features.filter(f => f !== feature);
+    //     }
+    //   }
+    // }
     console.log("GeoJSON data processed successfully");
   }
 }

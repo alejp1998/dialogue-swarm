@@ -51,6 +51,13 @@ function computeHexagonVertices(r) {
 
 // -------------------- Canvas Variables --------------------
 
+const arenaWidth = 10;
+const arenaHeight = 10;
+let visibleArenaMinX = 0;
+let visibleArenaMinY = 0;
+let visibleArenaMaxX = arenaWidth;
+let visibleArenaMaxY = arenaHeight;
+
 const canvasContainer = document.getElementById('canvasContainer');
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -66,6 +73,9 @@ let useSatellite = false;
 // Canvas interaction variables
 let zoomLevel = 1;
 const zoomSensitivity = 0.5; // Adjust for zoom speed
+let lastMousePoint = null;
+let lastMouseCoords = null;
+let closestFeatures = [];
 
 let panOffsetX = 0;
 let panOffsetY = 0;
@@ -95,8 +105,8 @@ function setCanvasSize() {
   canvas.style.top = `${(containerHeight - canvasDisplayHeight) / 2}px`;
 
   // Keep your original render resolution (consider adding devicePixelRatio scaling)
-  canvas.width = ENV['arena_width'] * PPC;
-  canvas.height = ENV['arena_height'] * PPC;
+  canvas.width = arenaWidth * PPC;
+  canvas.height = arenaHeight * PPC;
 }
 
 // -------------------- OSM Background --------------------
@@ -161,7 +171,6 @@ function drawCanvas() {
     // ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
     // ctx.fill();
     // ctx.closePath();
-
 }
 
 // -------------------- GeoJSON Drawing Functions --------------------
@@ -172,10 +181,20 @@ function lonLatToCanvas(lon, lat) {
   const max_lon = bbox[2];
   const max_lat = bbox[3];
 
-  const x = ((lon - min_lon) / (max_lon - min_lon)) * ENV['arena_width'] * PPC;
-  const y = ((max_lat - lat) / (max_lat - min_lat)) * ENV['arena_height'] * PPC;
+  const x = ((lon - min_lon) / (max_lon - min_lon)) * arenaWidth * PPC;
+  const y = ((max_lat - lat) / (max_lat - min_lat)) * arenaHeight * PPC;
 
   return { x, y };
+}
+
+function canvasToLonLat(x, y) {
+  const min_lon = bbox[0];
+  const min_lat = bbox[1];
+  const max_lon = bbox[2];
+  const max_lat = bbox[3];
+  const lon = min_lon + (x / (arenaWidth * PPC)) * (max_lon - min_lon);
+  const lat = max_lat - (y / (arenaHeight * PPC)) * (max_lat - min_lat);
+  return { lon, lat };
 }
 
 function calculateCentroid(points) {
@@ -386,6 +405,7 @@ function drawGeoJSON() {
   // Draw names
   const scaledFontSize = Math.floor(Math.max(6, Math.min(40, 30 / zoomLevel)));
   const lineWidth = scaledFontSize / 10;
+  
   if (showNames) {
     namesToDraw.forEach((name, idx) => {
       if (idx % 2 === 0) {
@@ -407,6 +427,34 @@ function drawGeoJSON() {
       }
     });
   }
+
+  // Draw the closest features
+  if (closestFeatures.length > 0) {
+    closestFeatures.forEach(feature => {
+      const closestPoint = feature.closestPoint;
+      const textX = closestPoint.x;
+      const textY = closestPoint.y;
+      const text = feature.name;
+      // Draw a cross at the closest coordinates
+      const denom = 20;
+      const size = (PPC / denom) * (1 / zoomLevel);
+      drawCross(ctx, textX, textY, size, 'rgba(255, 0, 0, 1)');
+      // Draw the name
+      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+      // ctx.strokeStyle = 'rgba(0, 0, 0, 1)';
+      ctx.lineWidth = lineWidth;
+      ctx.font = `${scaledFontSize*0.75}px Arial`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      // ctx.strokeText(text, textX, textY);
+      ctx.fillText(text, textX, textY - size * 4);
+    });
+  }
+
+  // Draw the last mouse point as a big cross
+  if (lastMousePoint) {
+    drawCross(ctx, lastMousePoint.x, lastMousePoint.y, 30/zoomLevel, 'rgba(255, 0, 0, 1)');
+  }
 }
 
 // -------------------- Drawing Functions --------------------
@@ -426,7 +474,7 @@ function drawDashedLine(ctx, start, end, dashLength = 5) {
 function drawCross(ctx, x, y, size, color) {
   ctx.save();
   ctx.strokeStyle = color;
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 2 / zoomLevel;
   ctx.beginPath();
   ctx.moveTo(x - size, y - size);
   ctx.lineTo(x + size, y + size);
@@ -441,7 +489,7 @@ function drawGrid() {
   ctx.save();
   ctx.strokeStyle = 'rgba(200,200,200,1)';
   ctx.lineWidth = 1;
-  for (let i = 0; i <= ENV['arena_width']; i++) {
+  for (let i = 0; i <= arenaWidth; i++) {
     ctx.beginPath();
     ctx.moveTo(i * PPC, 0);
     ctx.lineTo(i * PPC, ENV['arena_height'] * PPC);
@@ -450,7 +498,7 @@ function drawGrid() {
   for (let j = 0; j <= ENV['arena_height']; j++) {
     ctx.beginPath();
     ctx.moveTo(0, j * PPC);
-    ctx.lineTo(ENV['arena_width'] * PPC, j * PPC);
+    ctx.lineTo(arenaHeight * PPC, j * PPC);
     ctx.stroke();
   }
   ctx.restore();
@@ -521,14 +569,7 @@ function drawDestination(group) {
     ctx.save();
 
     // Draw cross shape
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 3 * scale;
-    ctx.beginPath();
-    ctx.moveTo(px - size, py - size);
-    ctx.lineTo(px + size, py + size);
-    ctx.moveTo(px + size, py - size);
-    ctx.lineTo(px - size, py + size);
-    ctx.stroke();
+    drawCross(ctx, px, py, size, color);
 
     // Draw index label with a circle background
     ctx.fillStyle = color;
@@ -538,17 +579,17 @@ function drawDestination(group) {
     ctx.fillText(i, px, py - size * 2);
 
     // Draw line connecting destinations
-    if (i > 0) {
-      const prevDest = lonLatToCanvas(trajectory[i - 1][0], trajectory[i - 1][1]);
-      const prevPx = prevDest.x;
-      const prevPy = prevDest.y;
-      ctx.beginPath();
-      ctx.moveTo(prevPx, prevPy);
-      ctx.lineTo(px, py);
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 2 * scale;
-      ctx.stroke();
-    }
+    // if (i > 0) {
+    //   const prevDest = lonLatToCanvas(trajectory[i - 1][0], trajectory[i - 1][1]);
+    //   const prevPx = prevDest.x;
+    //   const prevPy = prevDest.y;
+    //   ctx.beginPath();
+    //   ctx.moveTo(prevPx, prevPy);
+    //   ctx.lineTo(px, py);
+    //   ctx.strokeStyle = color;
+    //   ctx.lineWidth = 2 * scale;
+    //   ctx.stroke();
+    // }
 
     ctx.restore();
   }
@@ -778,6 +819,122 @@ function resetView() {
   updateDisplay();
 }
 
+function calculateVisibleArena() {
+  // Compute visible arena bounds
+  visibleArenaMinX = -panOffsetX / (PPC * zoomLevel);
+  visibleArenaMinY = -panOffsetY / (PPC * zoomLevel);
+  visibleArenaMaxX = (-panOffsetX + canvas.width) / (PPC * zoomLevel);
+  visibleArenaMaxY = (-panOffsetY + canvas.height) / (PPC * zoomLevel);
+  // console.log('Visible arena:', visibleArenaMinX, visibleArenaMinY, visibleArenaMaxX, visibleArenaMaxY);
+}
+
+// Is coord inside polygon?
+// Check if a point is inside a polygon given by its vertices
+function checkIfPointInPolygon(point, perimeterPoints) {
+  const [x, y] = point; // Extract point coordinates
+  let inside = false;
+
+  for (let i = 0, j = perimeterPoints.length - 1; i < perimeterPoints.length; j = i++) {
+      const [xi, yi] = [perimeterPoints[i].x, perimeterPoints[i].y]; // Current vertex
+      const [xj, yj] = [perimeterPoints[j].x, perimeterPoints[j].y]; // Previous vertex
+
+      // Check if the point is between the y-values of two edges and compute intersection
+      const intersect = ((yi > y) !== (yj > y)) &&
+                        (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+
+      if (intersect) {
+          inside = !inside;
+      }
+  }
+  return inside;
+}
+
+// Get closest features to canvas coords
+function getClosestFeatures(x, y) {
+  // Compute distances and store in an array
+  let distances = [];
+
+  geoJSON.features.forEach(feature => {
+    let points = feature.geometry.points;
+    let holes = [];
+    let closestDistance = Infinity;
+    let closestPoint = null;
+
+    if (feature.geometry.type === 'MultiPolygon' || feature.geometry.type === 'Polygon') {
+      if (feature.geometry.type === 'MultiPolygon') {
+        holes = points.slice(1);
+        points = points[0];
+      } else {
+        points = points;
+      }
+      // Check if x and y are in the polygon
+      const isPointInPolygon = checkIfPointInPolygon([x, y], points);
+      if (isPointInPolygon) {
+        // Check if x and y are in any of the holes
+        let pointHole = null;
+        holes.forEach(hole => {
+          // console.log('Checking hole:', hole);
+          if (checkIfPointInPolygon([x, y], hole)) {
+            pointHole = hole;
+          }
+        });
+        // console.log('Is point in ' + feature.properties.unique_name + ' polygon:', isPointInPolygon);
+        if (pointHole) {
+          // console.log('Is point in hole:', pointHole);
+          pointHole.forEach(point => {
+            const distance = Math.sqrt(Math.pow(x - point.x, 2) + Math.pow(y - point.y, 2));
+            if (distance < closestDistance) {
+              closestDistance = distance;
+              closestPoint = point;
+            }
+          });
+        } else {
+          closestDistance = 0;
+          closestPoint = { x, y };
+        }
+      } else {
+        points.forEach(point => {
+          const distance = Math.sqrt(Math.pow(x - point.x, 2) + Math.pow(y - point.y, 2));
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestPoint = point;
+          }
+        });
+      }
+    }
+
+    if (feature.geometry.type === 'LineString') {
+      points.forEach(point => {
+        const distance = Math.sqrt(Math.pow(x - point.x, 2) + Math.pow(y - point.y, 2));
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestPoint = point;
+        }
+      });
+    }
+
+    if (feature.geometry.type === 'Point') {
+      const point = points[0];
+      const distance = Math.sqrt(Math.pow(x - point.x, 2) + Math.pow(y - point.y, 2));
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestPoint = point;
+      }
+    }
+
+    if (closestDistance < Infinity) {
+      distances.push({ 
+        name: feature.properties.unique_name, 
+        distance: closestDistance, 
+        closestPoint: closestPoint
+      });
+    }
+  });
+
+  // Sort by distance and return the top 3 closest feature names
+  return distances.sort((a, b) => a.distance - b.distance).slice(0, 5);
+}
+
 // -------------------- Event Listeners --------------------
 
 function addCanvasEventListeners() {
@@ -792,17 +949,54 @@ function addCanvasEventListeners() {
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
+    // Convert mouse position relative to the zoomed/panned space
     const preZoomMouseX = (mouseX - panOffsetX) / zoomLevel;
     const preZoomMouseY = (mouseY - panOffsetY) / zoomLevel;
 
+    // Zooming logic
     const zoomChange = e.deltaY > 0 ? -zoomSensitivity : zoomSensitivity;
     const newZoomLevel = Math.max(0.5, zoomLevel + zoomChange);
 
+    // Adjust pan offset to keep the zoom centered on the cursor
     panOffsetX = mouseX - preZoomMouseX * newZoomLevel;
     panOffsetY = mouseY - preZoomMouseY * newZoomLevel;
 
     zoomLevel = newZoomLevel;
+
+    // Compute visible arena bounds
+    calculateVisibleArena();
+
     updateDisplay();
+  });
+
+
+  // Double click event
+  canvas.addEventListener('dblclick', (e) => {
+    // Prevent default double-click behavior
+    e.preventDefault();
+
+    // Get the mouse position relative to the canvas
+    const rect = canvas.getBoundingClientRect();
+    // Take into account the zoom level and pan offset
+    const arenaX = ((e.clientX - rect.left) / rect.width) * (visibleArenaMaxX - visibleArenaMinX) + visibleArenaMinX;
+    const arenaY = ((e.clientY - rect.top) / rect.height) * (visibleArenaMaxY - visibleArenaMinY) + visibleArenaMinY;
+    const px = arenaX * PPC;
+    const py = arenaY * PPC;
+    // console.log('Double clicked at:', px, py);
+    lastMousePoint = { x: px, y: py };
+    lastMouseCoords = canvasToLonLat(px, py);
+
+    // Get the closest feature to the clicked point
+    closestFeatures = getClosestFeatures(px, py);
+  });
+
+  // Reset dblclick variables when double-clicking outside the canvas
+  document.addEventListener('dblclick', (e) => {
+    if (!canvas.contains(e.target)) {
+      lastMousePoint = null;
+      lastMouseCoords = null;
+      closestFeatures = [];
+    }
   });
 
   canvasContainer.addEventListener('mousedown', (e) => {
@@ -815,6 +1009,9 @@ function addCanvasEventListeners() {
     if (!isDragging) return;
     panOffsetX = e.clientX - dragStartX;
     panOffsetY = e.clientY - dragStartY;
+
+    // Compute visible arena bounds
+    calculateVisibleArena();
     
     updateDisplay();
   });
