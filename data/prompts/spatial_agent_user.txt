@@ -1,0 +1,11 @@
+# Current Context:
+Robot IDs [robot_idxs]: {robot_idxs}
+Groups [{{group_idx: [robot_idxs]}}, ...]: {groups_str}
+
+# Map Feature Names by Type
+Points: {point_names}
+LineStrings: {linestring_names}
+Polygons: {polygon_names}
+
+# User Input
+{user_input}

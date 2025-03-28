@@ -9,7 +9,8 @@ import time
 import numpy as np
 
 # Import Swarm and Robot classes
-from src.swarm import SwarmAgent, Swarm, Robot
+from src.agents import MultiAgent
+from src.swarm import Swarm, Robot
 from src.overpass import compute_square_bbox, get_geojson_features, map_features_to_arena
 
 # Create the Flask application
@@ -129,7 +130,7 @@ initial_messages = [
 ]
 
 # Agent Initialization
-agent = SwarmAgent(app, swarm, features_geojson)
+agent = MultiAgent(app, swarm, features_geojson)
 
 # Agent variables initialization
 agent_state = {
@@ -191,7 +192,7 @@ def control():
         if command == 'reset':
             simulation_state["swarm"] = initialize_swarm()
             simulation_state["current_step"] = 0
-            agent_state["agent"] = SwarmAgent(app, simulation_state["swarm"], features_geojson)
+            agent_state["agent"] = MultiAgent(app, simulation_state["swarm"], features_geojson)
             agent_state["messages"] = initial_messages.copy()
         elif command == 'pause':
             simulation_state["running"] = not simulation_state["running"]

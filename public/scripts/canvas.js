@@ -606,8 +606,10 @@ function drawRobot(group, robot, color) {
   const canvasCoordsTarget = lonLatToCanvas(robot.target_x, robot.target_y);
 
   // Convert angle since y-axis is inverted
-  const canvasAngle = -robot.angle;
-  const canvasTargetAngle = -robot.target_angle;
+  // Source angle is in degrees from 0 to 360 where 0 is north and 90 is east
+  // Canvas angle is in radians from 0 to 2*PI where 0 is east and PI/2 is north
+  const canvasAngle =  (robot.angle * Math.PI / 180) - Math.PI / 2;
+  const canvasTargetAngle = (robot.target_angle * Math.PI / 180) - Math.PI / 2;
 
   // Convert coordinates to pixels
   const px = canvasCoords.x;
@@ -617,25 +619,25 @@ function drawRobot(group, robot, color) {
   const targetX = canvasCoordsTarget.x;
   const targetY = canvasCoordsTarget.y;
 
-  // Draw a dashed linevery far from robot in the direction of the target
-  ctx.setLineDash([5, 5]);
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 1 * scale;
-  ctx.beginPath();
-  ctx.moveTo(px, py);
-  ctx.lineTo(px + Math.cos(canvasTargetAngle) * (PPC * 100 * scale), py + Math.sin(canvasTargetAngle) * (PPC * 100 * scale));
-  ctx.stroke();
-  ctx.setLineDash([]);
+  // // Draw a dashed linevery far from robot in the direction of the target
+  // ctx.setLineDash([5, 5]);
+  // ctx.strokeStyle = color;
+  // ctx.lineWidth = 1 * scale;
+  // ctx.beginPath();
+  // ctx.moveTo(px, py);
+  // ctx.lineTo(px + Math.cos(canvasTargetAngle) * (PPC * 100 * scale), py + Math.sin(canvasTargetAngle) * (PPC * 100 * scale));
+  // ctx.stroke();
+  // ctx.setLineDash([]);
 
-  // Draw a dashed line from robot in the direction of the angle 
-  ctx.setLineDash([5, 5]);
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 1 * scale;
-  ctx.beginPath();
-  ctx.moveTo(px, py);
-  ctx.lineTo(px + Math.cos(canvasAngle) * (PPC * 100 * scale), py + Math.sin(canvasAngle) * (PPC * 100 * scale));
-  ctx.stroke();
-  ctx.setLineDash([]);
+  // // Draw a dashed line from robot in the direction of the angle 
+  // ctx.setLineDash([5, 5]);
+  // ctx.strokeStyle = color;
+  // ctx.lineWidth = 1 * scale;
+  // ctx.beginPath();
+  // ctx.moveTo(px, py);
+  // ctx.lineTo(px + Math.cos(canvasAngle) * (PPC * 100 * scale), py + Math.sin(canvasAngle) * (PPC * 100 * scale));
+  // ctx.stroke();
+  // ctx.setLineDash([]);
 
   ctx.save();
 
